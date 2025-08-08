@@ -1,0 +1,366 @@
+.industryCasesPage {
+  padding: 24px 0;
+  width: 1600px;
+  margin: 0 auto;
+}
+
+.pageHeader {
+  text-align: center;
+  margin-bottom: 48px;
+
+  h1 {
+    font-size: 36px;
+    margin-bottom: 16px;
+  }
+
+  p {
+    font-size: 18px;
+    color: #666;
+  }
+}
+
+.filterSection {
+  background-color: #f5f5f5;
+  padding: 16px 24px;
+  margin-bottom: 32px;
+  border-radius: 8px;
+
+  .industryTabs {
+    margin-bottom: 16px;
+  }
+
+  .searchAndSort {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .searchBox {
+      width: 300px;
+    }
+  }
+}
+
+// ... existing code ...
+.featuredCasesSection {
+  margin-bottom: 64px;
+
+  h2 {
+    font-size: 28px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  // 新增列表样式
+  .casesList {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .caseListItem {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    }
+  }
+
+  .mainImageContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 300px;
+  }
+
+  .mainImage {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .caseContent {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .caseInfo {
+    flex: 1;
+    margin-bottom: 24px;
+  }
+
+  .relatedImages {
+    margin-top: auto;
+
+    h4 {
+      font-size: 16px;
+      margin-bottom: 12px;
+      color: #333;
+    }
+
+    .relatedImagesGrid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .relatedImage {
+      width: 100%;
+      height: 196px;
+      object-fit: cover;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  // 移除轮播相关样式
+  .carouselContainer, .featuredCaseSlide, .caseImages, .beforeAfterContainer {
+    display: none;
+  }
+}
+// ... existing code ...
+
+.industrySolutionsSection {
+  margin-bottom: 64px;
+
+  h2 {
+    font-size: 28px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .solutionContent {
+    padding: 24px;
+    background-color: #fafafa;
+    border-radius: 8px;
+    margin-top: 16px;
+
+    h3 {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    .solutionDescription {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 24px;
+    }
+
+    .solutionHighlight {
+      margin-top: 24px;
+      padding: 16px;
+      background-color: #e6f7ff;
+      border-radius: 8px;
+      font-size: 16px;
+      color: #1890ff;
+    }
+  }
+}
+
+.customerReviewsSection {
+  margin-bottom: 64px;
+
+  h2 {
+    font-size: 28px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .reviewCard {
+    height: 100%;
+
+    .reviewHeader {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+
+      .companyLogo {
+        width: 80px;
+        height: 40px;
+        object-fit: contain;
+        margin-right: 16px;
+      }
+
+      .contactInfo {
+        .companyName {
+          font-weight: bold;
+          margin-bottom: 4px;
+        }
+
+        .contactPerson {
+          font-size: 14px;
+          color: #666;
+        }
+      }
+    }
+
+    .reviewContent {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+  }
+}
+
+.customerLogosSection {
+  margin-bottom: 64px;
+
+  h2 {
+    font-size: 28px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .logosGrid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 32px;
+
+    .logoItem {
+      width: 120px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #fff;
+      border: 1px solid #eee;
+      border-radius: 4px;
+
+      img {
+        max-width: 100px;
+        max-height: 40px;
+        object-fit: contain;
+      }
+    }
+  }
+}
+
+.ctaSection {
+  text-align: center;
+  padding: 48px 24px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+
+  h2 {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+
+  p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 32px;
+  }
+
+  .ctaButtons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 32px;
+
+    .primaryCta {
+      width: 240px;
+    }
+
+    .secondaryCta {
+      width: 240px;
+    }
+  }
+
+  .contactOptions {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+
+    .contactItem {
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+
+      svg {
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+.caseDetail {
+  padding: 16px;
+
+  h2 {
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+
+  .caseSection {
+    margin-bottom: 24px;
+
+    h3 {
+      font-size: 18px;
+      margin-bottom: 16px;
+      color: #1890ff;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+  }
+
+  .techParams {
+    list-style: none;
+    padding: 0;
+
+    li {
+      margin-bottom: 8px;
+      font-size: 16px;
+
+      span {
+        font-weight: bold;
+        margin-right: 8px;
+      }
+    }
+  }
+
+  .imageComparison {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 16px;
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+  }
+
+  blockquote {
+    border-left: 4px solid #1890ff;
+    padding-left: 16px;
+    font-style: italic;
+    color: #666;
+  }
+
+  .benefits {
+    font-weight: bold;
+    color: #1890ff;
+  }
+
+  .ctaContainer {
+    text-align: center;
+    margin-top: 32px;
+  }
+}

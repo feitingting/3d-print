@@ -1,0 +1,157 @@
+.model-library-page {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 32px;
+
+  h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+    color: rgba(0, 0, 0, 0.85);
+  }
+
+  p {
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 16px;
+  }
+}
+
+.search-container {
+  margin-bottom: 32px;
+}
+
+.search-input {
+  max-width: 600px;
+  margin: 0 auto;
+  display: block;
+}
+
+.model-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 280px);
+  grid-gap: 24px;
+  justify-content: center;
+}
+
+.model-card {
+  overflow: hidden;
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.model-image-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.model-image {
+  width: 100%;
+  height: auto;
+  transition: transform 0.5s ease;
+
+  .model-card:hover & {
+    transform: scale(1.05);
+  }
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.model-image-container:hover .image-overlay {
+  opacity: 1;
+}
+
+.preview-button {
+  background-color: #fff;
+  color: #1890ff;
+  width: 56px;
+  height: 56px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease 0.1s;
+
+  .image-overlay:hover & {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.model-info {
+  padding: 16px;
+  flex-grow: 1;
+}
+
+.model-name {
+  font-size: 16px;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.model-meta {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.model-actions {
+  padding: 0 16px 16px;
+  margin-top: auto;
+}
+
+.loading-container {
+  text-align: center;
+  padding: 64px 0;
+}
+
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 64px 0;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .model-grid {
+    grid-template-columns: repeat(auto-fill, 240px);
+  }
+
+  .page-header h1 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .model-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .model-card {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+}

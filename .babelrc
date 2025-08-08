@@ -1,0 +1,12 @@
+{
+  "plugins": [
+    [
+      "import",
+      {
+        "libraryName": "ant-design-pro",
+        "libraryDirectory": "es",
+        "style": true
+      }
+    ]
+  ]
+}
