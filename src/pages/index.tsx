@@ -144,8 +144,19 @@ const HomePage: React.FC = (props: any) => {
               { path: '/about', name: '关于我们' }
             ]}
             menuItemRender={(item, dom) => (
-              <span style={{ padding: '0 20px', fontSize: 16 }}
-                onClick={() => history.push(item.path)}>{dom}</span>
+              <div 
+                style={{ 
+                  padding: '0 20px', 
+                  fontSize: 16, 
+                  cursor: 'pointer',
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}
+                onClick={() => history.push(item.path)}
+              >
+                {dom}
+              </div>
             )}
             rightContentRender={() => (
               <div className={styles.loginButtonGroup}>
