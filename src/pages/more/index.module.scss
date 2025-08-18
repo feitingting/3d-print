@@ -1,0 +1,123 @@
+.waterfallContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 250px);
+  grid-gap: 20px;
+  justify-content: center;
+}
+
+.imageItem {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.imageItem:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #1890ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// 响应式调整
+@media (max-width: 768px) {
+  .gallery {
+    grid-template-columns: repeat(auto-fill, 200px);
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .imageItem {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+}
+
+// 网格布局容器
+.columnContainer {
+  columns: 4 200px; /* 4列，每列最小200px */
+  column-gap: 8px; /* 添加列间距 */
+  padding: 20px;
+}
+
+// 多列布局项
+.columnItem {
+  width: 100%; /* 宽度填满列 */
+  margin-bottom: 8px; /* 添加底部间距 */
+  break-inside: avoid; /* 避免元素跨列断裂 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+}
+
+.flexContainer {
+  columns: 4 200px; /* 4列，每列最小200px */
+  column-gap: 12px; /* 添加列间距 */
+  padding: 20px;
+}
+
+// Flex布局项 - 新增
+.flexItem {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-bottom: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  filter: brightness(1.15);
+ // transform: scale(1.02);
+}
+
+.flexItem:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}

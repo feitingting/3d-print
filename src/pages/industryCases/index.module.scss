@@ -73,7 +73,7 @@
   .mainImageContainer {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     height: 100%;
     min-height: 300px;
   }
@@ -81,7 +81,8 @@
   .mainImage {
     width: 100%;
     height: auto;
-    max-height: 400px;
+    // height: 100%;
+    max-height: 420px;
     object-fit: cover;
     border-radius: 8px;
   }
@@ -127,10 +128,14 @@
   }
 
   // 移除轮播相关样式
-  .carouselContainer, .featuredCaseSlide, .caseImages, .beforeAfterContainer {
+  .carouselContainer,
+  .featuredCaseSlide,
+  .caseImages,
+  .beforeAfterContainer {
     display: none;
   }
-}
+} 
+
 // ... existing code ...
 
 .industrySolutionsSection {
@@ -187,12 +192,6 @@
       align-items: center;
       margin-bottom: 16px;
 
-      .companyLogo {
-        width: 80px;
-        height: 40px;
-        object-fit: contain;
-        margin-right: 16px;
-      }
 
       .contactInfo {
         .companyName {
@@ -362,5 +361,238 @@
   .ctaContainer {
     text-align: center;
     margin-top: 32px;
+  }
+}
+
+// 案例卡片容器
+.caseListItem {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+  position: relative;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  // 查看更多按钮容器
+  .viewMoreContainer {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    z-index: 1;
+
+    // 查看更多按钮样式
+    .viewMoreButton {
+      color: #666;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 4px 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: #f9f9f9;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: #e9e9e9;
+        color: #333;
+      }
+    }
+  }
+}
+
+// 主图片容器
+.mainImageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  min-height: 300px;
+}
+
+// 主图片样式
+.mainImage {
+  width: 100%;
+  height: auto;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+// 特殊图片样式（object-fit: contain）
+.mainImageContain {
+  object-fit: contain;
+}
+
+// 案例内容区域
+.caseContent {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+// 案例信息
+.caseInfo {
+  flex: 1;
+  margin-bottom: 24px;
+}
+
+// 相关图片区域
+.relatedImages {
+  margin-top: auto;
+
+  h4 {
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: #333;
+  }
+}
+
+// 相关图片网格
+.relatedImagesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+// 相关图片
+.relatedImage {
+  width: 100%;
+  height: 196px;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+// 行业标签样式
+.industryTag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 12px;
+
+  &.medical {
+    background-color: #e6f7ff;
+    color: #1890ff;
+  }
+
+  &.aerospace {
+    background-color: #f6ffed;
+    color: #52c41a;
+  }
+
+  &.automotive {
+    background-color: #fff7e6;
+    color: #fa8c16;
+  }
+
+  &.education {
+    background-color: #f9f0ff;
+    color: #722ed1;
+  }
+}
+
+// 高亮文本
+.highlight {
+  color: #1890ff;
+  font-weight: 500;
+  margin: 12px 0;
+}
+
+// 解决方案内容
+.solutionContent {
+  padding: 24px;
+  background-color: #fafafa;
+  border-radius: 8px;
+  margin-top: 16px;
+
+  h3 {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+
+  .solutionDescription {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 24px;
+  }
+
+  .solutionHighlight {
+    margin-top: 24px;
+    padding: 16px;
+    background-color: #e6f7ff;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #1890ff;
+  }
+}
+
+// 客户评价卡片
+.reviewCard {
+  height: 100%;
+}
+
+// 评价头部
+.reviewHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+
+  .companyLogo {
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    object-fit: contain;
+    margin-right: 16px;
+  }
+
+  .contactInfo {
+    .companyName {
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    .contactPerson {
+      color: #666;
+      font-size: 14px;
+    }
+  }
+}
+
+// 评价内容
+.reviewContent {
+  color: #333;
+  line-height: 1.6;
+}
+
+// 客户LOGO网格
+.logosGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 24px;
+  align-items: center;
+}
+
+// LOGO项
+.logoItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+
+  img {
+    max-width: 100%;
+    max-height: 60px;
+    object-fit: contain;
   }
 }

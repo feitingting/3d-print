@@ -1,5 +1,6 @@
 .homeLayout {
   min-height: 100vh;
+  overflow-x: hidden;
 
   .carouselText {
     position: absolute;
@@ -9,7 +10,8 @@
     z-index: 2;
     width: 40%;
     color: #fff;
-    h2{
+
+    h2 {
       font-size: 26px;
     }
 
@@ -32,9 +34,9 @@
       position: relative;
 
       img {
-        width: 100%;
+        width: 1920px;
         height: 600px;
-        object-fit: cover;
+        object-fit: contain;
       }
 
       &-text {
@@ -56,11 +58,13 @@
       font-size: 28px;
       margin-bottom: 48px;
     }
-    .caseGrid{
-      img{
+
+    .caseGrid {
+      img {
         width: 400px;
       }
-      .meta{
+
+      .meta {
         margin-bottom: 50px;
       }
     }
@@ -87,6 +91,55 @@
       }
     }
   }
+
+  .caseCard {
+    padding: 20px;
+    display: flex;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+
+    img {
+      border-radius: 8px;
+    
+    }
+  }
+
+  .caseCardOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    z-index: 10;
+    opacity: 0;
+    animation: fadeOutOverlay 0.3s ease-in-out forwards;
+
+    &.visible {
+      opacity: 1;
+      pointer-events: auto;
+      animation: fadeInOverlay 0.5s ease-in-out forwards;
+    }
+
+    // 添加淡入动画
+    &.fadeIn {
+      animation: fadeInOverlay 0.5s ease-in-out forwards;
+    }
+
+    // 添加淡出动画
+    &.fadeOut {
+      animation: fadeOutOverlay 0.5s ease-in-out forwards;
+    }
+  }
+
+  .caseCardContent {
+    position: relative;
+    z-index: 1;
+  }
+
 }
 
 .carousel {
@@ -96,10 +149,15 @@
   &Item {
     position: relative;
 
+    :global(.ant-image-img) {
+      height: 600px;
+    }
+
     img {
-      width: 100%;
+      width: 1920px;
       object-fit: cover;
-      filter: brightness(0.8);
+
+      // filter: brightness(0.8);
     }
 
     .overlay {
@@ -165,6 +223,15 @@
 
 // 移动端适配
 @media (max-width: 768px) {
+  .caseCardOverlay {
+    border-radius: 4px;
+  }
+
+  .caseCardButton {
+    font-size: 14px;
+    padding: 6px 20px;
+  }
+
   .carousel {
     height: 400px;
 
@@ -213,9 +280,9 @@
   background: #fff;
   border-radius: 8px;
   padding: 24px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s;
-
+ 
   &:hover {
     transform: translateY(-4px);
   }
@@ -231,6 +298,7 @@
     height: 200px;
     object-fit: contain;
     margin: 16px 0;
+    border-radius: 4px;
   }
 
   p {
@@ -242,5 +310,30 @@
       color: #999;
       font-size: 13px;
     }
+  }
+}
+
+// 添加新的动画关键帧
+@keyframes fadeInOverlay {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOutOverlay {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.75);
   }
 }

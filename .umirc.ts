@@ -136,10 +136,15 @@ export default defineConfig({
           component:'@/pages/modelDetail',
           title:'模型详情'
         },
-         { 
+        { 
           path:'/industryCases',
           component:'@/pages/industryCases',
           title:'行业案例'
+        },
+         { 
+          path:'/more',
+          component:'@/pages/more',
+          title:'更多'
         },
       ],
     },

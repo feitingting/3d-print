@@ -268,3 +268,72 @@
     }
   }
 }
+
+// 在文件末尾添加登录弹窗样式
+.loginModal {
+  :global {
+    .ant-modal-header {
+      border-bottom: none;
+    }
+    
+    .ant-modal-body {
+      min-height: 400px;
+      padding: 24px 32px;
+    }
+  }
+}
+
+.loginForm {
+  :global {
+    .ant-form-item {
+      margin-bottom: 16px;
+    }
+    
+    .ant-input-affix-wrapper {
+      padding: 8px 12px;
+    }
+  }
+  .loginBtn{
+    margin-top: 100px;
+  }
+}
+
+.loginTabs {
+  :global {
+    .ant-tabs-nav {
+      margin-bottom: 24px;
+    }
+  }
+}
+
+.captchaButton {
+  min-width: 100px;
+  margin-left: 8px;
+}
+
+.registerLink {
+  text-align: center;
+  margin-top: 16px;
+  color: #666;
+  
+  a {
+    color: #1890ff;
+    cursor: pointer;
+    
+    &:hover {
+      color: #40a9ff;
+    }
+  }
+}
+
+.loginButtonGroup {
+  display: flex;
+  gap: 16px;
+  height: 64px;
+  align-items: center;
+}
+
+.loginButton {
+  min-width: 100px;
+ // height: 64px;
+}

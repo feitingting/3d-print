@@ -33,12 +33,12 @@ const carouselItems = [
     title: '批量生产支持',
     desc: '工业级打印集群 · 日产能5000+标准件'
   },
-  {
-    key: 5,
-    image: require('@/assets/home/banner-5.png'),
-    title: '专业后处理',
-    desc: '打磨/喷砂/上色 全流程工艺支持'
-  },
+  // {
+  //   key: 5,
+  //   image: require('@/assets/home/banner-5.png'),
+  //   title: '专业后处理',
+  //   desc: '打磨/喷砂/上色 全流程工艺支持'
+  // },
   {
     key: 6,
     image: require('@/assets/home/banner-6.png'),
@@ -107,9 +107,7 @@ export default () => {
               <Image src={item.image}
                 preview={false}
                 style={{
-                  objectFit: 'contain',
-                  height: '100%',
-                  width: '100%'
+                  objectFit: 'fill',
                 }}
                 alt={item.title} />
               {/* <div className={styles.carouselText}>
@@ -148,7 +146,7 @@ export default () => {
                   onMouseLeave={() => setHoveredIndex(null)}
                 >
                   <Card
-                    style={{ padding: '20px', display: 'flex' }}
+                    className={styles.caseCard}
                     cover={<img alt={caseItem.title1} src={caseItem.image} />}
                     hoverable
                   >
@@ -158,21 +156,9 @@ export default () => {
 
                   {/* 查看更多文字 - 位于卡片右下方 */}
                   {hoveredIndex === index && (
-                    <div
-                      style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        backgroundColor: 'rgba(0, 0, 0, 0.4)',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: '8px',
-                        zIndex: 10
-                      }}
-                    >
+                    <div        
+                      className={`${styles.caseCardOverlay} ${hoveredIndex === index ? styles.visible  : styles.fadeOut}`}>
+
                       <Button
                        // type="primary"
                         size="large"
