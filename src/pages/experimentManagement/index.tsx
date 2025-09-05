@@ -430,11 +430,11 @@ const ExperimentManagement: React.FC = () => {
     init();
   }, []);
 
-  return (
+  return ( 
     <div>
       <div
         style={{
-          display: 'flex',
+          display: 'flex', 
           alignItems: 'center',
           justifyContent: 'space-between',
           marginBottom: 12,

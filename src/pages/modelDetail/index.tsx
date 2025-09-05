@@ -147,18 +147,32 @@ const ModelDetail: React.FC = () => {
         box.getCenter(center);
         mesh.position.sub(center);
 
+        // 将模型中心移动到原点(0,0,0)
+        mesh.position.sub(center);
+        
+        // 确保模型底部在网格上
         const size = new THREE.Vector3();
         box.getSize(size);
+
+        const bottomOffset = size.y / 2; // 模型底部到中心的距离
+        mesh.position.y = bottomOffset; // 将模型底部放在网格上
+
+         // 缩放模型
         const maxDim = Math.max(size.x, size.y, size.z);
         const scale = 40 / maxDim;
         mesh.scale.set(scale, scale, scale);
         // 添加到场景
         if (sceneRef.current) {
-          sceneRef.current.add(mesh);
+          // 调整网格位置
+          if (gridRef.current) {
+            gridRef.current.position.y = 0; // 确保网格在y=0平面
+          }
           // 调整相机位置
           if (cameraRef.current) {
             cameraRef.current.position.z = maxDim > 0 ? maxDim * 2 : 50;
           }
+          sceneRef.current.add(mesh);
+         
         }
         message.success('3D模型加载成功');
       } catch (error) {
@@ -222,8 +236,13 @@ const ModelDetail: React.FC = () => {
     sceneRef.current = scene;
 
     // 创建相机
-    const camera = new THREE.PerspectiveCamera(75, containerRef.current.clientWidth / containerRef.current.clientHeight, 0.1, 1000);
-    camera.position.z = 50;
+    const camera = new THREE.PerspectiveCamera(90, containerRef.current.clientWidth / containerRef.current.clientHeight, 0.1, 1000);
+     // 设置相机初始位置
+    camera.position.set(0, 30, 50);
+    camera.lookAt(0, 0, 0);
+    cameraRef.current = camera;
+
+    // camera.position.z = 50;
     cameraRef.current = camera;
 
     // 创建渲染器
@@ -243,14 +262,22 @@ const ModelDetail: React.FC = () => {
     scene.add(directionalLight);
 
     // 添加网格辅助线
-    const grid = new THREE.GridHelper(100, 10);
+    const grid = new THREE.GridHelper(100, 20, 0x888888, 0x444444);
+    grid.position.y = 0; // 确保网格在y=0平面
     gridRef.current = grid;
     scene.add(grid);
+
+    // 添加坐标轴辅助线
+    const axesHelper = new THREE.AxesHelper(50);
+    scene.add(axesHelper);
 
     // 添加控制器
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.25;
+    controls.target.set(0, 0, 0); // 控制器目标点设为原点
+    controls.minDistance = 10; // 最小缩放距离
+    controls.maxDistance = 200; // 最大缩放距离
     controlsRef.current = controls;
 
     // 加载STL模型

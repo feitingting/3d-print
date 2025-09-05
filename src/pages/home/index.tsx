@@ -33,12 +33,12 @@ const carouselItems = [
     title: '批量生产支持',
     desc: '工业级打印集群 · 日产能5000+标准件'
   },
-  // {
-  //   key: 5,
-  //   image: require('@/assets/home/banner-5.png'),
-  //   title: '专业后处理',
-  //   desc: '打磨/喷砂/上色 全流程工艺支持'
-  // },
+  {
+    key: 5,
+    image: require('@/assets/home/banner-5.png'),
+    title: '专业后处理',
+    desc: '打磨/喷砂/上色 全流程工艺支持'
+  },
   {
     key: 6,
     image: require('@/assets/home/banner-6.png'),
@@ -47,8 +47,9 @@ const carouselItems = [
   },
 ];
 
+
 // 行业案例数据
-const cases = [
+const cases = [  
   {
     title1: '航空航天部件',
     desc1: '钛合金轻量化部件打印',
@@ -74,6 +75,7 @@ const cases = [
     title1: '动漫手办',
     desc1: '高精度角色模型定制',
     title2: '收藏品级手办制作',
+    
     desc2: '1:8比例动漫角色手办，细节还原度99%，表面光滑度Ra0.8μm，支持批量定制',
     image: require('@/assets/home/case4.png')
   },
@@ -160,6 +162,7 @@ export default () => {
                       className={`${styles.caseCardOverlay} ${hoveredIndex === index ? styles.visible  : styles.fadeOut}`}>
 
                       <Button
+                      
                        // type="primary"
                         size="large"
                         onClick={() => history.push('/industryCases')}

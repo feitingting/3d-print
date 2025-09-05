@@ -64,7 +64,7 @@ class HttpService {
           await response.json();
 
         if (data.status === 200) {
-          return data.result as T;
+           return data.result as T;
         } else {
           message.error(data.message || '请求失败');
           return null;
@@ -126,7 +126,7 @@ class HttpService {
   // }
 
   get<T = any>(endpoint: string): Promise<T | null> {
-    return this.request<T>('GET', endpoint);
+  return this.request<T>('GET', endpoint);
   }
 
   post<T = any>(

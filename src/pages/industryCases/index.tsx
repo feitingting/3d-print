@@ -105,7 +105,7 @@ const industrySolutions = {
       },
     ],
     stats: '帮助30+医疗机构缩短手术准备时间40%',
-  },
+  },  
   aerospace: {
     title: '轻量化航空部件的快速原型与生产',
     description: '为航空航天行业提供高性能、轻量化的3D打印零部件解决方案。',

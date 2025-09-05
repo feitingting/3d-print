@@ -11,30 +11,27 @@ import {
 } from '@ant-design/icons';
 import { history } from 'umi';
 // 在根组件添加语言配置
-import { Carousel, Card, Row, Col, Layout, Menu, Button, Image,ConfigProvider, Modal, Form, Input, Tabs, message } from 'antd';
+import { Carousel, Card, Row, Col, Layout, Menu, Button, Image, ConfigProvider, Modal, Form, Input, Tabs, message } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
-import {  PrinterOutlined, ToolOutlined, BulbOutlined, UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
+import { PrinterOutlined, ToolOutlined, BulbOutlined, UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
 import ProLayout from '@ant-design/pro-layout';
 import styles from './index.module.scss';
+// 在文件顶部导入新增的API
+import { userLogin, userRegister, sendVerificationCode } from '@/api/auth';
+import { generateCaptcha, isValidEmail, sendVerificationEmail } from '@/utils/emailService';
+import axios from 'axios';
 
-const { Header, Sider, Content,Footer } = Layout;
+const { Header, Sider, Content, Footer } = Layout;
 const { TabPane } = Tabs;
 
 const HomePage: React.FC = (props: any) => {
   const [loginModalVisible, setLoginModalVisible] = useState(false);
-  const [loginForm] = Form.useForm();
-  const [registerForm] = Form.useForm();
-  const [captchaLoading, setCaptchaLoading] = useState(false);
-  const [captchaCountdown, setCaptchaCountdown] = useState(0);
-  // 控制显示登录还是注册表单
-  const [formType, setFormType] = useState<'login' | 'register'>('login'); 
-   
 
   // 邮箱验证规则
   const emailRules = [
     { required: true, message: '请输入邮箱地址' },
     { type: 'email', message: '请输入有效的邮箱地址' }
-  ];
+  ] as any;
 
   // 密码验证规则
   const passwordRules = [
@@ -45,73 +42,264 @@ const HomePage: React.FC = (props: any) => {
   // 显示登录弹窗
   const showLoginModal = () => {
     setLoginModalVisible(true);
-    setFormType('login'); // 默认显示登录表单
+    // setFormType('login'); // 默认显示登录表单
   };
 
-  // 关闭登录弹窗
-  const handleCloseLoginModal = () => {
-    setLoginModalVisible(false);
-    loginForm.resetFields();
-    registerForm.resetFields();
-     setFormType('login'); // 重置为登录表单
-  };
 
   // 处理登录
   const handleLogin = async (values: any) => {
     try {
-      // 这里可以添加实际的登录API调用
-      console.log('登录信息:', values);
+      const { result } = await userLogin(values);
       message.success('登录成功！');
       setLoginModalVisible(false);
+      // 可以在这里添加登录成功后的跳转逻辑
     } catch (error) {
-      message.error('登录失败，请重试');
+      message.error('登录失败，请检查邮箱和密码是否正确');
     }
   };
 
-  // 处理注册
-  const handleRegister = async (values: any) => {
-    try {
-      // 这里可以添加实际的注册API调用
-      console.log('注册信息:', values);
-      message.success('注册成功！');
-      setLoginModalVisible(false);
-    } catch (error) {
-      message.error('注册失败，请重试');
-    }
-  };
-
-  // 发送验证码
-  const sendCaptcha = async () => {
-    try {
-      const email = registerForm.getFieldValue('email');
-      if (!email) {
-        message.error('请先输入邮箱地址');
-        return;
+  useEffect(() => {
+    const unlisten = history.listen((location, action) => {
+      // 只在页面切换时触发，不包括浏览器前进后退
+      if (action == "PUSH") {
+        window.scrollTo({
+          top: 0,
+          // behavior:'smooth'
+        })
       }
+    });
+    return unlisten;
+  }, [])
 
-      setCaptchaLoading(true);
-      // 模拟发送验证码
-      setTimeout(() => {
-        message.success('验证码已发送到您的邮箱');
+  const LoginModal = (props: any) => {
+    const [loginForm] = Form.useForm();
+    const [registerForm] = Form.useForm();
+    const [captchaCountdown, setCaptchaCountdown] = useState(0);
+
+    // const [loginModalVisible, setLoginModalVisible] = useState(false);
+    const [captchaLoading, setCaptchaLoading] = useState(false);
+    // 控制显示登录还是注册表单
+    const [formType, setFormType] = useState<'login' | 'register'>('login');
+    useEffect(()=>{
+       if(formType=='login'){
+         loginForm.resetFields();
+       }else{
+         registerForm.resetFields();
+       }
+    },[formType])
+
+    // 关闭登录弹窗
+    const handleCloseLoginModal = () => {
+      setLoginModalVisible(false);
+      loginForm.resetFields();
+      //  registerForm.resetFields();
+      setFormType('login'); // 重置为登录表单
+    };
+
+    // 处理注册
+    const handleRegister = async (values: any) => {
+      try {
+        const { result } = await userRegister(values);
+        if(result){
+            message.success('注册成功！请登录');
+            setFormType('login'); // 注册成功后切换到登录表单
+            loginForm.setFieldsValue({ email: values.email }); // 预填充邮箱
+        }
+      } catch (error) {
+        message.error('注册失败，请重试');
+      }
+    };
+
+    // 发送验证码
+    const sendCaptcha = async () => {
+      debugger;
+      try {
+        const email = await registerForm.getFieldValue('email');
+        if (!email) {
+          message.error('请先输入邮箱地址');
+          return;
+        }
+
+        if (!isValidEmail(email)) {
+          message.error('请输入有效的邮箱地址');
+          return;
+        }
+
+        setCaptchaLoading(true);
+
+        // 调用API发送验证码
+        const captchaCode = generateCaptcha();
+
+        // 发送邮件
+        const success = await sendVerificationEmail(email, captchaCode);
+
+        if (success) {
+          message.success('验证码已发送到您的邮箱');
+          setCaptchaCountdown(60);
+
+          // 倒计时
+          const timer = setInterval(() => {
+            setCaptchaCountdown(prev => {
+              if (prev <= 1) {
+                clearInterval(timer);
+                return 0;
+              }
+              return prev - 1;
+            });
+          }, 1000);
+        } else {
+          message.error('发送验证码失败，请稍后重试');
+        }
+
         setCaptchaLoading(false);
-        setCaptchaCountdown(60);
-        
-        // 倒计时
-        const timer = setInterval(() => {
-          setCaptchaCountdown(prev => {
-            if (prev <= 1) {
-              clearInterval(timer);
-              return 0;
-            }
-            return prev - 1;
-          });
-        }, 1000);
-      }, 1000);
-    } catch (error) {
-      message.error('发送验证码失败');
-      setCaptchaLoading(false);
-    }
-  };
+      } catch (error) {
+        message.error('发送验证码失败，请稍后重试');
+        setCaptchaLoading(false);
+      }
+    };
+
+    return (
+      <Modal
+        title="登录/注册"
+        open={ props.visible }
+       // destroyOnClose={false}
+        onCancel={handleCloseLoginModal}
+        footer={null}
+        width={600}
+        className={styles.loginModal}
+      >
+        {formType === 'login' ? (
+          <>
+            <Form
+              form={loginForm}
+              onFinish={handleLogin}
+              key={formType}
+              className={styles.loginForm}
+            >
+              <Form.Item
+                name="email"
+                rules={emailRules}
+                initialValue={''}
+              >
+                <Input
+                  prefix={<MailOutlined />}
+                  placeholder="请输入邮箱"
+                  size="large"
+                />
+              </Form.Item>
+              <Form.Item
+                name="password"
+                rules={passwordRules}
+              >
+                <Input.Password
+                  prefix={<LockOutlined />}
+                  placeholder="请输入密码"
+                  size="large"
+                />
+              </Form.Item>
+              <Form.Item>
+                <Button
+                  className={styles.loginBtn}
+                  type="primary"
+                  htmlType="submit" size="large" block
+                >
+                  登录
+                </Button>
+              </Form.Item>
+            </Form>
+            <div className={styles.registerLink}>
+              <span>
+                还没有账号？ <a onClick={() => setFormType('register')}>前去注册</a>
+              </span>
+            </div>
+          </>
+        ) : (
+          <>
+            <Form
+              form={registerForm}
+               key={formType}
+               onFinish={handleRegister}
+               className={styles.loginForm}
+            >
+              <Form.Item
+                name="email"
+                rules={emailRules}
+                initialValue={'3r343434343'}
+              >
+                <Input
+                  prefix={<MailOutlined />}
+                  placeholder="请输入邮箱"
+                  size="large"
+                />
+              </Form.Item>
+              <Form.Item
+                name="captcha"
+                rules={[{ required: true, message: '请输入验证码' }]}
+              >
+                <Input
+                  addonAfter={
+                    <Button
+                      type="link"
+                      size="small"
+                      onClick={sendCaptcha}
+                      loading={captchaLoading}
+                      disabled={captchaCountdown > 0}
+                      className={styles.captchaButton}
+                    >
+                      {captchaCountdown > 0 ? `${captchaCountdown}s` : '获取验证码'}
+                    </Button>
+                  }
+                  placeholder="请输入验证码"
+                  size="large"
+                />
+              </Form.Item>
+              <Form.Item
+                name="password"
+                rules={passwordRules}
+              >
+                <Input.Password
+                  prefix={<LockOutlined />}
+                  placeholder="请输入密码"
+                  size="large"
+                />
+              </Form.Item>
+              <Form.Item
+                name="confirmPassword"
+                dependencies={['password']}
+                rules={[
+                  { required: true, message: '请确认密码' },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue('password') === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(new Error('两次输入的密码不一致'));
+                    },
+                  }),
+                ]}
+              >
+                <Input.Password
+                  prefix={<LockOutlined />}
+                  placeholder="请确认密码"
+                  size="large"
+                />
+              </Form.Item>
+              <Form.Item>
+                <Button type="primary" htmlType="submit" size="large" block>
+                  注册
+                </Button>
+              </Form.Item>
+            </Form>
+            <div className={styles.registerLink}>
+              <span>
+                已有账号？ <a onClick={() => setFormType('login')}>去登录</a>
+              </span>
+            </div>
+          </>
+        )}
+      </Modal>
+    )
+  }
 
   return (
     <ConfigProvider locale={zhCN}>
@@ -120,7 +308,7 @@ const HomePage: React.FC = (props: any) => {
           {/* 头部导航 */}
           <ProLayout
             logo={(
-              <div 
+              <div
                 // onClick={()=>history.push('/home')}
                 style={{
                   display: 'flex', flexDirection: 'column', alignItems: 'center',
@@ -144,32 +332,32 @@ const HomePage: React.FC = (props: any) => {
               { path: '/about', name: '关于我们' }
             ]}
             menuItemRender={(item, dom) => (
-              <div 
-                style={{ 
-                  padding: '0 20px', 
-                  fontSize: 16, 
+              <div
+                style={{
+                  padding: '0 20px',
+                  fontSize: 16,
                   cursor: 'pointer',
                   height: '100%',
                   display: 'flex',
                   alignItems: 'center'
                 }}
-                onClick={() => history.push(item.path)}
+                onClick={() => history.push(item.path as string)}
               >
                 {dom}
               </div>
             )}
             rightContentRender={() => (
               <div className={styles.loginButtonGroup}>
-                <Button 
-                  className={styles.loginButton} 
+                <Button
+                  className={styles.loginButton}
                   size="large"
                   onClick={showLoginModal}
                 >
                   登录/注册
                 </Button>
-                <Button size="large" 
-                        onClick={()=>history.push('/more')}
-                        type="primary">在线下单</Button>
+                <Button size="large"
+                  onClick={() => history.push('/more')}
+                  type="primary">在线下单</Button>
               </div>
             )}
             navTheme="light"  // 设置导航主题
@@ -177,145 +365,14 @@ const HomePage: React.FC = (props: any) => {
             siderWidth={0}   // 隐藏侧边栏
           />
         </header>
-
-        {/* 登录弹窗 */}
-        <Modal
-          title="登录/注册"
-          open={loginModalVisible}
-          onCancel={handleCloseLoginModal}
-          footer={null}
-          width={600}
-          className={styles.loginModal}
-        >
-          {formType === 'login' ? (
-            <>
-              <Form
-                form={loginForm}
-                onFinish={handleLogin}
-                className={styles.loginForm}
-              >
-                <Form.Item
-                  name="email"
-                  rules={emailRules}
-                >
-                  <Input
-                    prefix={<MailOutlined />}
-                    placeholder="请输入邮箱"
-                    size="large"
-                  />
-                </Form.Item>
-                <Form.Item
-                  name="password"
-                  rules={passwordRules}
-                >
-                  <Input.Password
-                    prefix={<LockOutlined />}
-                    placeholder="请输入密码"
-                    size="large"
-                  />
-                </Form.Item>
-                <Form.Item>
-                  <Button 
-                     className={ styles.loginBtn} 
-                     type="primary" 
-                     htmlType="submit" size="large" block
-                  >
-                    登录
-                  </Button>
-                </Form.Item>
-              </Form>
-              <div className={styles.registerLink}>
-                <span>
-                  还没有账号？ <a onClick={() => setFormType('register')}>前去注册</a>
-                </span>
-              </div>
-            </>
-          ) : (
-            <>
-              <Form
-                form={registerForm}
-                onFinish={handleRegister}
-                className={styles.loginForm}
-              >
-                <Form.Item
-                  name="email"
-                  rules={emailRules}
-                >
-                  <Input
-                    prefix={<MailOutlined />}
-                    placeholder="请输入邮箱"
-                    size="large"
-                  />
-                </Form.Item>
-                <Form.Item
-                  name="captcha"
-                  rules={[{ required: true, message: '请输入验证码' }]}
-                >
-                  <Input
-                    addonAfter={
-                      <Button
-                        type="link"
-                        size="small"
-                        onClick={sendCaptcha}
-                        loading={captchaLoading}
-                        disabled={captchaCountdown > 0}
-                        className={styles.captchaButton}
-                      >
-                        {captchaCountdown > 0 ? `${captchaCountdown}s` : '获取验证码'}
-                      </Button>
-                    }
-                    placeholder="请输入验证码"
-                    size="large"
-                  />
-                </Form.Item>
-                <Form.Item
-                  name="password"
-                  rules={passwordRules}
-                >
-                  <Input.Password
-                    prefix={<LockOutlined />}
-                    placeholder="请输入密码"
-                    size="large"
-                  />
-                </Form.Item>
-                <Form.Item
-                  name="confirmPassword"
-                  dependencies={['password']}
-                  rules={[
-                    { required: true, message: '请确认密码' },
-                    ({ getFieldValue }) => ({
-                      validator(_, value) {
-                        if (!value || getFieldValue('password') === value) {
-                          return Promise.resolve();
-                        }
-                        return Promise.reject(new Error('两次输入的密码不一致'));
-                      },
-                    }),
-                  ]}
-                >
-                  <Input.Password
-                    prefix={<LockOutlined />}
-                    placeholder="请确认密码"
-                    size="large"
-                  />
-                </Form.Item>
-                <Form.Item>
-                  <Button type="primary" htmlType="submit" size="large" block>
-                    注册
-                  </Button>
-                </Form.Item>
-              </Form>
-              <div className={styles.registerLink}>
-                <span>
-                  已有账号？ <a onClick={() => setFormType('login')}>去登录</a>
-                </span>
-              </div>
-            </>
-          )}
-        </Modal>
-
         <Content>
-           {props.children}
+          {props.children}
+          {
+            loginModalVisible && 
+            <LoginModal 
+              visible={loginModalVisible} />
+          }
+        
         </Content>
         {/* 底部导航 */}
         <Footer className={styles.footer}>
