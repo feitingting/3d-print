@@ -2,12 +2,12 @@
   "private": true,
   "scripts": {
     "start": "export NODE_OPTIONS=--openssl-legacy-provider && umi dev",
-    "build": "set NODE_OPTIONS=--openssl-legacy-provider && umi build",
+    "build": "export NODE_OPTIONS=--openssl-legacy-provider && umi build",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "test": "umi-test",
     "test:coverage": "umi-test --coverage",
-    "docker:build": "docker build --no-cache -f frontend/Dockerfile -t react-frontend .",
+    "docker:build": "docker build --platform linux/amd64 -f frontend/Dockerfile -t 3d-print .",
     "docker:run": "docker rm -f my-react-app || true && docker run -d -p 8080:80 --name my-react-app react-frontend --network=reaction-net"
   },
   "gitHooks": {

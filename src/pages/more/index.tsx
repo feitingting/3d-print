@@ -7,7 +7,9 @@ const importAll = (r: any) => {
 };
 
 // 假设所有图片都在assets/more目录下
-const images = importAll(require.context('@/assets/more', false, /\.(png|jpe?g|svg)$/));
+const images = Array.from({length: 26}, (_, i) => 
+  `http://maphium.com/assets/more/${i.toString().padStart(2, '0')}.jpg`
+);
 
 const WaterfallGallery: React.FC = () => {
   const [imageDimensions, setImageDimensions] = useState<{[key: string]: {width: number, height: number}}>({});

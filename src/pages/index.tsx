@@ -224,7 +224,7 @@ const HomePage: React.FC = (props: any) => {
               <Form.Item
                 name="email"
                 rules={emailRules}
-                initialValue={'3r343434343'}
+                initialValue={''}
               >
                 <Input
                   prefix={<MailOutlined />}
@@ -314,7 +314,7 @@ const HomePage: React.FC = (props: any) => {
                   display: 'flex', flexDirection: 'column', alignItems: 'center',
                   justifyContent: 'space-between', paddingTop: '5px', paddingBottom: '2px'
                 }}>
-                <img src={require('@/assets/home/logo.png')} alt="Logo" style={{ height: '80px' }} />
+                <img src={'http://maphium.com/assets/home/logo.png'} style={{ height: '80px' }} />
                 {/* <span style={{ fontSize: '12px', lineHeight: '12px', color: '#000', marginTop: '2px', fontWeight: 600 }}>Dream it, Print it.</span> */}
               </div>
             )}

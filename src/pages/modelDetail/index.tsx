@@ -46,9 +46,9 @@ const getModelDetail = async (id: string): Promise<ModelDetail> => {
     category: '工业设计',
     description: '这是一个高精度3D模型，适用于各种工业设计场景。',
     images: [
-      require(`@/assets/library/${id}.jpg`),
-      require(`@/assets/library/${id}.jpg`),
-      require(`@/assets/library/${id}.jpg`),
+      `http://maphium.com/assets/library/${id}.jpg`,
+      `http://maphium.com/assets/library/${id}.jpg`,
+      `http://maphium.com/assets/library/${id}.jpg`
     ]
   };
 };
@@ -125,29 +125,19 @@ const ModelDetail: React.FC = () => {
 
         const loader = new STLLoader();
         const geometry = loader.parse(arrayBuffer);
-
-        // 检查模型复杂度是否合理
-        // const triangleCount = geometry.attributes.position.count / 3;
-        // if (triangleCount > 1000000) {
-        //   throw new Error(`模型过于复杂(${triangleCount}个三角形)，请优化模型`);
-        // }
-
         // 创建材质和网格
         const material = new THREE.MeshPhongMaterial({
           color: 0x87CEEB,
           specular: 0x111111,
-          shininess: 200
+          shininess: 800
         });
         const mesh = new THREE.Mesh(geometry, material);
         modelRef.current = mesh;
 
-        // 模型居中与缩放
         const box = new THREE.Box3().setFromObject(mesh);
         const center = new THREE.Vector3();
+        // 将模型中心移动到缩放后的包围盒中心
         box.getCenter(center);
-        mesh.position.sub(center);
-
-        // 将模型中心移动到原点(0,0,0)
         mesh.position.sub(center);
         
         // 确保模型底部在网格上
@@ -159,8 +149,12 @@ const ModelDetail: React.FC = () => {
 
          // 缩放模型
         const maxDim = Math.max(size.x, size.y, size.z);
-        const scale = 40 / maxDim;
+        const scale = 20 / maxDim;
+        // 缩放后居中
         mesh.scale.set(scale, scale, scale);
+        box.setFromObject(mesh); 
+        box.getCenter(center);
+        mesh.position.sub(center);
         // 添加到场景
         if (sceneRef.current) {
           // 调整网格位置
@@ -169,7 +163,7 @@ const ModelDetail: React.FC = () => {
           }
           // 调整相机位置
           if (cameraRef.current) {
-            cameraRef.current.position.z = maxDim > 0 ? maxDim * 2 : 50;
+            cameraRef.current.position.z = maxDim > 0 ? maxDim * 2 : 0;
           }
           sceneRef.current.add(mesh);
          
@@ -283,7 +277,7 @@ const ModelDetail: React.FC = () => {
     // 加载STL模型
     // const loader = new STLLoader();
     // try {
-    //   const stlPath = require(`@/assets/library/${modelId}.stl`);
+    //   const stlPath = require(`http://maphium.com/assets/library/${modelId}.stl`);
 
     //   loader.load(stlPath, (geometry) => {
     //     // 获取材质颜色

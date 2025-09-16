@@ -11,37 +11,37 @@ const { Header, Content, Footer } = Layout;
 const carouselItems = [
   {
     key: 1,
-    image: require('@/assets/home/banner-1.png'),
+    image: 'http://maphium.com/assets/home/banner-1.png',
     title: '工业级精密打印',
     desc: '50μm超高精度 · 支持复杂结构成型'
   },
   {
     key: 2,
-    image: require('@/assets/home/banner-2.png'),
+    image: 'http://maphium.com/assets/home/banner-2.png',
     title: '极速在线报价',
     desc: 'AI智能估价 · 30秒获取详细报价单'
   },
   {
     key: 3,
-    image: require('@/assets/home/banner-3.png'),
+    image: 'http://maphium.com/assets/home/banner-3.png',
     title: '百种打印材料',
     desc: '工程塑料/金属粉末/柔性材料 一应俱全'
   },
   {
     key: 4,
-    image: require('@/assets/home/banner-4.png'),
+    image: 'http://maphium.com/assets/home/banner-4.png',
     title: '批量生产支持',
     desc: '工业级打印集群 · 日产能5000+标准件'
   },
   {
     key: 5,
-    image: require('@/assets/home/banner-5.png'),
+    image: 'http://maphium.com/assets/home/banner-5.png',
     title: '专业后处理',
     desc: '打磨/喷砂/上色 全流程工艺支持'
   },
   {
     key: 6,
-    image: require('@/assets/home/banner-6.png'),
+    image: 'http://maphium.com/assets/home/banner-6.png',
     title: '7×24技术咨询',
     desc: '资深工程师团队 · 全程技术护航'
   },
@@ -55,21 +55,21 @@ const cases = [
     desc1: '钛合金轻量化部件打印',
     title2: '航空航天原型',
     desc2: '卫星支架结构件快速成型，耐温范围-70℃~300℃，交付周期缩短50%',
-    image: require('@/assets/home/case1.png')
+    image: 'http://maphium.com/assets/home/case1.png'
   },
   {
     title1: '医疗假体',
     desc1: '个性化骨科植入物定制',
     title2: '医疗器械制造',
     desc2: '为某三甲医院定制骨科手术导板，精度达0.1mm，缩短手术时间30%',
-    image: require('@/assets/home/case2.png')
+    image: 'http://maphium.com/assets/home/case2.png'
   },
   {
     title1: '无人机配件',
     desc1: '高强度碳纤维无人机部件',
     title2: '无人机轻量化设计',
     desc2: '为专业无人机厂商定制的高强度轻量化部件，重量减轻40%，强度提升25%',
-    image: require('@/assets/home/case3.png')
+    image: 'http://maphium.com/assets/home/case3.png'
   },
   {
     title1: '动漫手办',
@@ -77,21 +77,21 @@ const cases = [
     title2: '收藏品级手办制作',
     
     desc2: '1:8比例动漫角色手办，细节还原度99%，表面光滑度Ra0.8μm，支持批量定制',
-    image: require('@/assets/home/case4.png')
+    image: 'http://maphium.com/assets/home/case4.png'
   },
   {
     title1: '珠宝首饰',
     desc1: '个性化定制珠宝设计',
     title2: '精密贵金属打印',
     desc2: '18K金定制吊坠，精度达0.05mm，支持复杂镂空设计，7个工作日快速交付',
-    image: require('@/assets/home/case5.png')
+    image: 'http://maphium.com/assets/home/case5.png'
   },
   {
     title1: '艺术雕塑',
     desc1: '现代艺术创作与复刻',
     title2: '复杂艺术形态实现',
     desc2: '为艺术家定制的复杂形态雕塑，采用树脂材料打印，表面光滑度Ra0.6μm，支持多种颜色和材质选择',
-    image: require('@/assets/home/case6.png')
+    image: 'http://maphium.com/assets/home/case6.png'
   }
 ];
 
@@ -184,7 +184,7 @@ export default () => {
             <Col xs={24} md={8}>
               <div className={styles.equipmentCard}>
                 <h3>SLS 激光烧结设备</h3>
-                <img src={require('@/assets/home/device1.png')} />
+                <img src={'http://maphium.com/assets/home/device1.png'} />
                 <p>成型尺寸：400×400×450mm</p>
                 <p>层厚精度：0.08-0.15mm</p>
               </div>
@@ -192,7 +192,7 @@ export default () => {
             <Col xs={24} md={8}>
               <div className={styles.equipmentCard}>
                 <h3>DLP 光固化设备</h3>
-                <img src={require('@/assets/home/device2.png')} />
+                <img src={'http://maphium.com/assets/home/device2.png'} />
                 <p>成型尺寸：192×120×400mm</p>
                 <p>分辨率：2560×1600</p>
               </div>
@@ -200,7 +200,7 @@ export default () => {
             <Col xs={24} md={8}>
               <div className={styles.equipmentCard}>
                 <h3>FDM 熔融沉积设备</h3>
-                <img src={require('@/assets/home/device3.png')} />
+                <img src={'http://maphium.com/assets/home/device3.png'} />
                 <p>成型尺寸：300×300×400mm</p>
                 <p>层厚精度：0.05-0.4mm</p>
               </div>

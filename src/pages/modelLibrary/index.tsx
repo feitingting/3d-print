@@ -21,7 +21,7 @@ const mockModels: ModelItem[] = [
   {
     id: '1',
     name: '机械臂关节模型',
-    imageUrl: require('@/assets/library/1.jpg'),
+    imageUrl: 'http://maphium.com/assets/library/1.jpg',
     description: '高精度机械臂关节3D打印模型',
     category: '机械零件',
     fileSize: '2.4MB',
@@ -30,7 +30,7 @@ const mockModels: ModelItem[] = [
   {
     id: '2',
     name: '无人机外壳',
-    imageUrl: require('@/assets/library/2.jpg'),
+    imageUrl: 'http://maphium.com/assets/library/2.jpg',
     description: '轻量化无人机外壳设计',
     category: '电子产品',
     fileSize: '3.7MB',
@@ -39,7 +39,7 @@ const mockModels: ModelItem[] = [
   {
     id: '3',
     name: '齿轮组件',
-    imageUrl: require('@/assets/library/3.jpg'),
+    imageUrl: 'http://maphium.com/assets/library/3.jpg',
     description: '高精度齿轮传动组件',
     category: '机械零件',
     fileSize: '1.8MB',
@@ -48,7 +48,7 @@ const mockModels: ModelItem[] = [
   {
     id: '4',
     name: '手机支架',
-    imageUrl: require('@/assets/library/4.jpg'),
+    imageUrl: 'http://maphium.com/assets/library/4.jpg',
     description: '可调节角度手机支架',
     category: '生活用品',
     fileSize: '1.2MB',
@@ -57,7 +57,7 @@ const mockModels: ModelItem[] = [
   {
     id: '5',
     name: '机器人头部',
-    imageUrl: require('@/assets/library/5.jpg'),
+    imageUrl: 'http://maphium.com/assets/library/5.jpg',
     description: '人形机器人头部结构',
     category: '机器人',
     fileSize: '4.2MB',
@@ -66,7 +66,7 @@ const mockModels: ModelItem[] = [
   {
     id: '6',
     name: '水杯模型',
-    imageUrl: require('@/assets/library/6.jpg'),
+    imageUrl: 'http://maphium.com/assets/library/6.jpg',
     description: '创意水杯设计',
     category: '生活用品',
     fileSize: '0.9MB',
@@ -75,7 +75,7 @@ const mockModels: ModelItem[] = [
   {
     id: '7',
     name: '汽车轮毂',
-    imageUrl: require('@/assets/library/7.jpg'),
+    imageUrl: 'http://maphium.com/assets/library/7.jpg',
     description: '赛车级轮毂模型',
     category: '汽车零件',
     fileSize: '5.8MB',
@@ -84,7 +84,7 @@ const mockModels: ModelItem[] = [
   {
     id: '8',
     name: '游戏手柄外壳',
-    imageUrl: require('@/assets/library/8.jpg'),
+    imageUrl: 'http://maphium.com/assets/library/8.jpg',
     description: '自定义游戏手柄外壳',
     category: '电子产品',
     fileSize: '2.7MB',
@@ -126,6 +126,7 @@ const ModelLibrary: React.FC = () => {
 
   // 处理预览模型
   const handlePreview = (id: string) => {
+    
     message.info(`预览模型 ${id}`);
      // 跳转到模型详情页，携带模型ID参数
     history.push({
