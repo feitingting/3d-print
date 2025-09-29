@@ -11,9 +11,9 @@ import {
 } from '@ant-design/icons';
 import { history } from 'umi';
 // 在根组件添加语言配置
-import { Carousel, Card, Row, Col, Layout, Menu, Button, Image, ConfigProvider, Modal, Form, Input, Tabs, message } from 'antd';
+import { Carousel, Card, Row, Col, Layout, Menu, Button, Image, ConfigProvider, Modal, Form, Input, Tabs, message, Dropdown, Avatar } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
-import { PrinterOutlined, ToolOutlined, BulbOutlined, UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
+import { PrinterOutlined, ToolOutlined, BulbOutlined, UserOutlined, LockOutlined, MailOutlined, FileTextOutlined, LogoutOutlined } from '@ant-design/icons';
 import ProLayout from '@ant-design/pro-layout';
 import styles from './index.module.scss';
 // 在文件顶部导入新增的API
@@ -49,12 +49,16 @@ const HomePage: React.FC = (props: any) => {
   // 处理登录
   const handleLogin = async (values: any) => {
     try {
-      const { result } = await userLogin(values);
-      message.success('登录成功！');
+      const result = await userLogin(values);
+      if (result?.token) {
+        localStorage.setItem('token', result.token);
+        localStorage.setItem('userInfo', JSON.stringify(result.userInfo));
+        message.success('登录成功！');
+      }
       setLoginModalVisible(false);
       // 可以在这里添加登录成功后的跳转逻辑
     } catch (error) {
-      message.error('登录失败，请检查邮箱和密码是否正确');
+      // message.error('登录失败，请检查邮箱和密码是否正确');
     }
   };
 
@@ -80,13 +84,13 @@ const HomePage: React.FC = (props: any) => {
     const [captchaLoading, setCaptchaLoading] = useState(false);
     // 控制显示登录还是注册表单
     const [formType, setFormType] = useState<'login' | 'register'>('login');
-    useEffect(()=>{
-       if(formType=='login'){
-         loginForm.resetFields();
-       }else{
-         registerForm.resetFields();
-       }
-    },[formType])
+    useEffect(() => {
+      if (formType == 'login') {
+        loginForm.resetFields();
+      } else {
+        registerForm.resetFields();
+      }
+    }, [formType])
 
     // 关闭登录弹窗
     const handleCloseLoginModal = () => {
@@ -100,10 +104,10 @@ const HomePage: React.FC = (props: any) => {
     const handleRegister = async (values: any) => {
       try {
         const { result } = await userRegister(values);
-        if(result){
-            message.success('注册成功！请登录');
-            setFormType('login'); // 注册成功后切换到登录表单
-            loginForm.setFieldsValue({ email: values.email }); // 预填充邮箱
+        if (result) {
+          message.success('注册成功！请登录');
+          setFormType('login'); // 注册成功后切换到登录表单
+          loginForm.setFieldsValue({ email: values.email }); // 预填充邮箱
         }
       } catch (error) {
         message.error('注册失败，请重试');
@@ -161,8 +165,8 @@ const HomePage: React.FC = (props: any) => {
     return (
       <Modal
         title="登录/注册"
-        open={ props.visible }
-       // destroyOnClose={false}
+        open={props.visible}
+        // destroyOnClose={false}
         onCancel={handleCloseLoginModal}
         footer={null}
         width={600}
@@ -217,9 +221,9 @@ const HomePage: React.FC = (props: any) => {
           <>
             <Form
               form={registerForm}
-               key={formType}
-               onFinish={handleRegister}
-               className={styles.loginForm}
+              key={formType}
+              onFinish={handleRegister}
+              className={styles.loginForm}
             >
               <Form.Item
                 name="email"
@@ -314,7 +318,7 @@ const HomePage: React.FC = (props: any) => {
                   display: 'flex', flexDirection: 'column', alignItems: 'center',
                   justifyContent: 'space-between', paddingTop: '5px', paddingBottom: '2px'
                 }}>
-                <img src={'http://maphium.com/assets/home/logo.png'} style={{ height: '80px' }} />
+                <img src={'http://maphium.com/assets/home/logo.jpg'} style={{ height: '80px' }} />
                 {/* <span style={{ fontSize: '12px', lineHeight: '12px', color: '#000', marginTop: '2px', fontWeight: 600 }}>Dream it, Print it.</span> */}
               </div>
             )}
@@ -346,20 +350,60 @@ const HomePage: React.FC = (props: any) => {
                 {dom}
               </div>
             )}
-            rightContentRender={() => (
-              <div className={styles.loginButtonGroup}>
-                <Button
-                  className={styles.loginButton}
-                  size="large"
-                  onClick={showLoginModal}
-                >
-                  登录/注册
-                </Button>
-                <Button size="large"
-                  onClick={() => history.push('/more')}
-                  type="primary">在线下单</Button>
-              </div>
-            )}
+            rightContentRender={() => {
+              const token = localStorage.getItem('token');
+
+              if (token) {
+                return (
+                  <Dropdown
+                    overlay={
+                      <Menu>
+                        <Menu.Item 
+                          key="orders" 
+                          icon={<FileTextOutlined />}
+                          onClick={() => history.push('/order-list')}
+                        >
+                          我的订单
+                        </Menu.Item>
+                        <Menu.Divider />
+                        <Menu.Item 
+                          key="logout" 
+                          icon={<LogoutOutlined />}
+                          onClick={() => {
+                            localStorage.removeItem('token');
+                            localStorage.removeItem('userEmail');
+                            window.location.reload();
+                          }}
+                        >
+                          退出登录
+                        </Menu.Item>
+                      </Menu>
+                    }
+                    placement="bottomRight"
+                  >
+                    <Avatar
+                      style={{ cursor: 'pointer' }}
+                      src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png"
+                    />
+                  </Dropdown>
+                );
+              }
+
+              return (
+                <div className={styles.loginButtonGroup}>
+                  <Button
+                    className={styles.loginButton}
+                    size="large"
+                    onClick={showLoginModal}
+                  >
+                    登录/注册
+                  </Button>
+                  <Button size="large"
+                    onClick={() => history.push('/more')}
+                    type="primary">在线下单</Button>
+                </div>
+              );
+            }}
             navTheme="light"  // 设置导航主题
             headerHeight={80} // 设置导航栏高度
             siderWidth={0}   // 隐藏侧边栏
@@ -368,11 +412,11 @@ const HomePage: React.FC = (props: any) => {
         <Content>
           {props.children}
           {
-            loginModalVisible && 
-            <LoginModal 
+            loginModalVisible &&
+            <LoginModal
               visible={loginModalVisible} />
           }
-        
+
         </Content>
         {/* 底部导航 */}
         <Footer className={styles.footer}>

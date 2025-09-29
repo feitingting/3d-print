@@ -149,3 +149,57 @@ export const batchAgvTransport = async (params: any): Promise<any> => {
 export const startAgvBlanking = async (params: any): Promise<any> => {
   return httpService.post('/agv/blanking', params);
 };
+
+// 3D打印订单相关接口
+export interface OrderRequest {
+  serviceName: string;
+  process: string;
+  material: string;
+  infill: string;
+  quantity: number;
+  modelInfo: {
+    volume: number;
+    surfaceArea: number;
+    boundingBox: {
+      width: number;
+      height: number;
+      depth: number;
+    };
+  };
+  priceCalculation: {
+    materialCost: number;
+    processingFee: number;
+    totalCost: number;
+    finalPrice: number;
+    breakdown: {
+      materialCost: number;
+      processingFee: number;
+      processCoefficient: number;
+      infillCoefficient: number;
+      quantity: number;
+    };
+  };
+  estimatedTime: number;
+  customerInfo?: {
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+  };
+  [key: string]: any;
+}
+
+// 提交3D打印订单
+export const submitPrintOrder = async (params: OrderRequest): Promise<any> => {
+  return httpService.post('/print/order', params);
+};
+
+// 查询订单状态
+export const getOrderStatus = async (orderId: string): Promise<any> => {
+  return httpService.get(`/print/order/${orderId}`);
+};
+
+// 获取用户订单列表
+export const getUserOrders = async (params: any): Promise<any> => {
+  return httpService.post('/print/orders', params);
+};

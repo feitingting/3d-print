@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useHistory, useLocation } from 'umi';
-import { Card, Spin, Switch, Select, Radio, Carousel, Button, message, Typography, Divider } from 'antd';
+import { Card, Spin, Switch, Select, Radio, Carousel, Button, message, Typography, Divider, Slider } from 'antd';
 import { LeftOutlined, RightOutlined, ReloadOutlined } from '@ant-design/icons';
 import './index.less';
 import * as THREE from 'three';
@@ -25,11 +25,134 @@ interface ModelDetail {
 
 // 模拟材质数据
 const materials = [
-  { value: 'pla', label: 'PLA (聚乳酸)', color: 0x87CEEB },
-  { value: 'abs', label: 'ABS (丙烯腈丁二烯苯乙烯)', color: 0x9ACD32 },
-  { value: 'petg', label: 'PETG (聚对苯二甲酸乙二醇酯)', color: 0xFFD700 },
-  { value: 'nylon', label: '尼龙 (PA6/PA12)', color: 0xF5DEB3 },
-  { value: 'metal_aluminum', label: '金属-铝合金', color: 0xD2B48C },
+  { 
+    value: 'pla', 
+    label: 'PLA (聚乳酸)', 
+    color: 0x87CEEB,
+    properties: { 
+      roughness: 0.9, 
+      metalness: 0.0, 
+      transmission: 0,
+      clearcoat: 0.1,
+      clearcoatRoughness: 0.1,
+      sheen: 0.0,
+      sheenRoughness: 1.0,
+      emissive: 0x000000,
+      emissiveIntensity: 0
+    }
+  },
+  { 
+    value: 'abs', 
+    label: 'ABS (丙烯腈丁二烯苯乙烯)', 
+    color: 0x2E8B57,
+    properties: { 
+      roughness: 0.7, 
+      metalness: 0.0, 
+      transmission: 0,
+      clearcoat: 0.2,
+      clearcoatRoughness: 0.2,
+      sheen: 0.0,
+      sheenRoughness: 1.0,
+      emissive: 0x000000,
+      emissiveIntensity: 0
+    }
+  },
+  { 
+    value: 'petg', 
+    label: 'PETG (聚对苯二甲酸乙二醇酯)', 
+    color: 0xFFD700,
+    properties: { 
+      roughness: 0.2, 
+      metalness: 0.0, 
+      transmission: 0.15,
+      clearcoat: 0.8,
+      clearcoatRoughness: 0.1,
+      sheen: 0.5,
+      sheenRoughness: 0.3,
+      emissive: 0x000000,
+      emissiveIntensity: 0
+    }
+  },
+  { 
+    value: 'nylon', 
+    label: '尼龙 (PA6/PA12)', 
+    color: 0xF5DEB3,
+    properties: { 
+      roughness: 0.5, 
+      metalness: 0.1, 
+      transmission: 0,
+      clearcoat: 0.3,
+      clearcoatRoughness: 0.3,
+      sheen: 0.2,
+      sheenRoughness: 0.8,
+      emissive: 0x000000,
+      emissiveIntensity: 0
+    }
+  },
+  { 
+    value: 'metal_aluminum', 
+    label: '金属-铝合金', 
+    color: 0xC0C0C0,
+    properties: { 
+      roughness: 0.05, 
+      metalness: 0.95, 
+      transmission: 0,
+      clearcoat: 0.1,
+      clearcoatRoughness: 0.05,
+      sheen: 0.0,
+      sheenRoughness: 1.0,
+      emissive: 0x000000,
+      emissiveIntensity: 0
+    }
+  },
+  { 
+    value: 'wood_pla', 
+    label: '木纹PLA', 
+    color: 0x8B4513,
+    properties: { 
+      roughness: 0.95, 
+      metalness: 0.0, 
+      transmission: 0,
+      clearcoat: 0.0,
+      clearcoatRoughness: 0.1,
+      sheen: 0.0,
+      sheenRoughness: 1.0,
+      emissive: 0x000000,
+      emissiveIntensity: 0
+    }
+  },
+  { 
+    value: 'carbon_fiber', 
+    label: '碳纤维PLA', 
+    color: 0x2F2F2F,
+    properties: { 
+      roughness: 0.3, 
+      metalness: 0.8, 
+      transmission: 0,
+      clearcoat: 0.9,
+      clearcoatRoughness: 0.1,
+      sheen: 0.7,
+      sheenRoughness: 0.2,
+      emissive: 0x000000,
+      emissiveIntensity: 0
+    }
+  },
+  { 
+    value: 'transparent_pla', 
+    label: '透明PLA', 
+    color: 0xFFFFFF,
+    properties: { 
+      roughness: 0.1, 
+      metalness: 0.0, 
+      transmission: 0.8,
+      clearcoat: 0.9,
+      clearcoatRoughness: 0.05,
+      sheen: 0.0,
+      sheenRoughness: 1.0,
+      emissive: 0x000000,
+      emissiveIntensity: 0
+    }
+  },
 ];
 
 // 获取模型详情数据（模拟API请求）
@@ -69,6 +192,8 @@ const ModelDetail: React.FC = () => {
   const [selectedMaterial, setSelectedMaterial] = useState('pla');
   const [rotationAxis, setRotationAxis] = useState('x');
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isHollow, setIsHollow] = useState(false);
+  const [infillPercentage, setInfillPercentage] = useState(20);
   const containerRef = useRef<HTMLDivElement>(null) as any;
   const carouselRef = useRef<any>(null);
 
@@ -78,6 +203,7 @@ const ModelDetail: React.FC = () => {
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const controlsRef = useRef<OrbitControls | null>(null);
   const modelRef = useRef<THREE.Mesh | null>(null);
+  const hollowModelRef = useRef<THREE.LineSegments | null>(null);
   const gridRef = useRef<THREE.GridHelper | null>(null);
   const animateRef = useRef<number | null>(null);
 
@@ -125,36 +251,58 @@ const ModelDetail: React.FC = () => {
 
         const loader = new STLLoader();
         const geometry = loader.parse(arrayBuffer);
-        // 创建材质和网格
-        const material = new THREE.MeshPhongMaterial({
-          color: 0x87CEEB,
-          specular: 0x111111,
-          shininess: 800
+        
+        // 创建实心模型 - 使用PLA默认材质
+        const defaultMaterial = materials.find(m => m.value === 'pla');
+        const solidMaterial = new THREE.MeshPhysicalMaterial({
+          color: defaultMaterial?.color || 0x87CEEB,
+          roughness: defaultMaterial?.properties.roughness || 0.9,
+          metalness: defaultMaterial?.properties.metalness || 0.0,
+          transmission: defaultMaterial?.properties.transmission || 0,
+          clearcoat: defaultMaterial?.properties.clearcoat || 0.1,
+          clearcoatRoughness: defaultMaterial?.properties.clearcoatRoughness || 0.1,
+          sheen: defaultMaterial?.properties.sheen || 0.0,
+          sheenRoughness: defaultMaterial?.properties.sheenRoughness || 1.0,
+          emissive: new THREE.Color(defaultMaterial?.properties.emissive || 0x000000),
+          emissiveIntensity: defaultMaterial?.properties.emissiveIntensity || 0
         });
-        const mesh = new THREE.Mesh(geometry, material);
-        modelRef.current = mesh;
+        const solidMesh = new THREE.Mesh(geometry, solidMaterial);
+        modelRef.current = solidMesh;
 
-        const box = new THREE.Box3().setFromObject(mesh);
+        // 创建空心模型（使用EdgeGeometry显示边缘）
+        const hollowGeometry = new THREE.EdgesGeometry(geometry);
+        const hollowMaterial = new THREE.LineBasicMaterial({ 
+          color: 0x87CEEB,
+          linewidth: 2
+        });
+        const hollowMesh = new THREE.LineSegments(hollowGeometry, hollowMaterial);
+        hollowModelRef.current = hollowMesh;
+
+        const box = new THREE.Box3().setFromObject(solidMesh);
         const center = new THREE.Vector3();
         // 将模型中心移动到缩放后的包围盒中心
         box.getCenter(center);
-        mesh.position.sub(center);
+        solidMesh.position.sub(center);
+        hollowMesh.position.sub(center);
         
         // 确保模型底部在网格上
         const size = new THREE.Vector3();
         box.getSize(size);
 
         const bottomOffset = size.y / 2; // 模型底部到中心的距离
-        mesh.position.y = bottomOffset; // 将模型底部放在网格上
+        solidMesh.position.y = bottomOffset; // 将模型底部放在网格上
+        hollowMesh.position.y = bottomOffset; // 空心模型同样位置
 
          // 缩放模型
         const maxDim = Math.max(size.x, size.y, size.z);
         const scale = 20 / maxDim;
         // 缩放后居中
-        mesh.scale.set(scale, scale, scale);
-        box.setFromObject(mesh); 
+        solidMesh.scale.set(scale, scale, scale);
+        hollowMesh.scale.set(scale, scale, scale);
+        box.setFromObject(solidMesh); 
         box.getCenter(center);
-        mesh.position.sub(center);
+        solidMesh.position.sub(center);
+        hollowMesh.position.sub(center);
         // 添加到场景
         if (sceneRef.current) {
           // 调整网格位置
@@ -165,7 +313,10 @@ const ModelDetail: React.FC = () => {
           if (cameraRef.current) {
             cameraRef.current.position.z = maxDim > 0 ? maxDim * 2 : 0;
           }
-          sceneRef.current.add(mesh);
+          // 默认显示实心模型
+          sceneRef.current.add(solidMesh);
+          // 空心模型暂时隐藏
+          hollowMesh.visible = false;
          
         }
         message.success('3D模型加载成功');
@@ -349,28 +500,100 @@ const ModelDetail: React.FC = () => {
   // 处理材质选择变化
   const handleMaterialChange = (value: string) => {
     setSelectedMaterial(value);
-    if (modelRef.current) {
-      const color = materials.find(m => m.value === value)?.color || 0xCCCCCC;
-      (modelRef.current.material as THREE.MeshPhongMaterial).color.set(color);
+    const materialData = materials.find(m => m.value === value);
+    
+    if (modelRef.current && materialData) {
+      const material = modelRef.current.material as THREE.MeshPhysicalMaterial;
+      
+      // 应用所有材质属性
+      material.color.set(materialData.color);
+      material.roughness = materialData.properties.roughness;
+      material.metalness = materialData.properties.metalness;
+      material.transmission = materialData.properties.transmission;
+      
+      // 应用高级材质属性
+      if (material.clearcoat !== undefined) {
+        material.clearcoat = materialData.properties.clearcoat;
+        material.clearcoatRoughness = materialData.properties.clearcoatRoughness;
+      }
+      
+      if (material.sheen !== undefined) {
+        material.sheen = materialData.properties.sheen;
+        material.sheenRoughness = materialData.properties.sheenRoughness;
+      }
+      
+      if (material.emissive !== undefined) {
+        material.emissive.setHex(materialData.properties.emissive);
+        material.emissiveIntensity = materialData.properties.emissiveIntensity;
+      }
+      
+      // 根据材质类型调整透明度
+      if (materialData.properties.transmission > 0) {
+        material.transparent = true;
+        material.opacity = 1 - materialData.properties.transmission * 0.3;
+      } else {
+        material.transparent = false;
+        material.opacity = 1;
+      }
+      
+      material.needsUpdate = true;
+    }
+    
+    // 同时更新空心模型的颜色
+    if (hollowModelRef.current && materialData) {
+      const hollowMaterial = hollowModelRef.current.material as THREE.LineBasicMaterial;
+      hollowMaterial.color.set(materialData.color);
+      
+      // 根据材质调整线宽
+      if (materialData.value === 'metal_aluminum' || materialData.value === 'carbon_fiber') {
+        hollowMaterial.linewidth = 3; // 金属和碳纤维用更粗的线条
+      } else if (materialData.value === 'transparent_pla') {
+        hollowMaterial.linewidth = 1; // 透明材质用细线条
+        hollowMaterial.opacity = 0.7;
+        hollowMaterial.transparent = true;
+      } else {
+        hollowMaterial.linewidth = 2; // 默认线宽
+        hollowMaterial.opacity = 1;
+        hollowMaterial.transparent = false;
+      }
     }
   };
 
   // 处理旋转轴变化
   const handleRotationChange = (e: any) => {
     setRotationAxis(e.target.value);
+    const rotationValue = Math.PI / 2;
+    
+    // 同时旋转实心和空心模型
     if (modelRef.current) {
       switch(e.target.value) {
         case 'x':
-          modelRef.current.rotation.set(Math.PI / 2, 0, 0);
+          modelRef.current.rotation.set(rotationValue, 0, 0);
           break;
         case 'y':
-          modelRef.current.rotation.set(0, Math.PI / 2, 0);
+          modelRef.current.rotation.set(0, rotationValue, 0);
           break;
         case 'z':
-          modelRef.current.rotation.set(0, 0, Math.PI / 2);
+          modelRef.current.rotation.set(0, 0, rotationValue);
           break;
         default:
           modelRef.current.rotation.set(0, 0, 0);
+      }
+    }
+    
+    if (hollowModelRef.current) {
+      switch(e.target.value) {
+        case 'x':
+          hollowModelRef.current.rotation.set(rotationValue, 0, 0);
+          break;
+        case 'y':
+          hollowModelRef.current.rotation.set(0, rotationValue, 0);
+          break;
+        case 'z':
+          hollowModelRef.current.rotation.set(0, 0, rotationValue);
+          break;
+        default:
+          hollowModelRef.current.rotation.set(0, 0, 0);
       }
     }
   };
@@ -380,6 +603,40 @@ const ModelDetail: React.FC = () => {
     setShowGrid(checked);
     if (gridRef.current) {
       gridRef.current.visible = checked;
+    }
+  };
+
+  // 处理空心/实心切换
+  const handleHollowChange = (checked: boolean) => {
+    setIsHollow(checked);
+    if (modelRef.current && hollowModelRef.current && sceneRef.current) {
+      if (checked) {
+        // 显示空心模型，隐藏实心模型
+        modelRef.current.visible = false;
+        hollowModelRef.current.visible = true;
+        if (!sceneRef.current.children.includes(hollowModelRef.current)) {
+          sceneRef.current.add(hollowModelRef.current);
+        }
+      } else {
+        // 显示实心模型，隐藏空心模型
+        modelRef.current.visible = true;
+        hollowModelRef.current.visible = false;
+        if (sceneRef.current.children.includes(hollowModelRef.current)) {
+          sceneRef.current.remove(hollowModelRef.current);
+        }
+      }
+    }
+  };
+
+  // 处理填充率变化
+  const handleInfillChange = (value: number) => {
+    setInfillPercentage(value);
+    // 这里可以根据填充率调整模型的透明度或显示效果
+    if (modelRef.current && !isHollow) {
+      const material = modelRef.current.material as THREE.MeshPhysicalMaterial;
+      material.opacity = 0.5 + (value / 100) * 0.5; // 透明度从0.5到1.0
+      material.transparent = true;
+      material.needsUpdate = true;
     }
   };
 
@@ -402,8 +659,13 @@ const ModelDetail: React.FC = () => {
       sceneRef.current.remove(modelRef.current);
       modelRef.current = null;
     }
-    // 触发3D场景重新初始化
-    setSelectedMaterial(selectedMaterial);
+    if (hollowModelRef.current && sceneRef.current) {
+      sceneRef.current.remove(hollowModelRef.current);
+      hollowModelRef.current = null;
+    }
+    // 重新加载STL模型
+    const stlUrl = `/assets/library/${modelId}.stl`;
+    loadSTLModel(stlUrl);
   };
 
   // if (loading) {
@@ -483,14 +745,65 @@ const ModelDetail: React.FC = () => {
                     <Select
                       value={selectedMaterial}
                       onChange={handleMaterialChange}
-                      style={{ width: 160 }}
+                      style={{ width: 200 }}
                     >
                       {materials.map(material => (
                         <Option key={material.value} value={material.value}>
-                          {material.label}
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <div 
+                              style={{ 
+                                width: '12px', 
+                                height: '12px', 
+                                backgroundColor: `#${material.color.toString(16).padStart(6, '0')}`,
+                                borderRadius: '2px',
+                                border: '1px solid #ddd'
+                              }}
+                            />
+                            <span>{material.label}</span>
+                          </div>
                         </Option>
                       ))}
                     </Select>
+                  </div>
+
+                  <div className="operation-item">
+                    <Text>空心/实心：</Text>
+                    <Switch 
+                      checked={isHollow} 
+                      onChange={handleHollowChange}
+                      checkedChildren="空心" 
+                      unCheckedChildren="实心"
+                    />
+                  </div>
+
+                  <div className="operation-item infill-slider-item">
+                    <div className="slider-label">
+                      <Text>填充率：{infillPercentage}%</Text>
+                    </div>
+                    <div className="slider-container">
+                      <Slider
+                        min={0}
+                        max={100}
+                        value={infillPercentage}
+                        onChange={handleInfillChange}
+                        disabled={isHollow}
+                        marks={{
+                          0: '0%',
+                          25: '25%',
+                          50: '50%',
+                          75: '75%',
+                          100: '100%'
+                        }}
+                        style={{ 
+                          width: '100%',
+                          margin: '8px 0',
+                          display: 'block'
+                        }}
+                        trackStyle={{ backgroundColor: '#1890ff' }}
+                        handleStyle={{ borderColor: '#1890ff' }}
+                        railStyle={{ backgroundColor: '#f5f5f5' }}
+                      />
+                    </div>
                   </div>
 
                   <div className="operation-item">

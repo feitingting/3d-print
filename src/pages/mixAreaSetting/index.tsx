@@ -71,7 +71,7 @@ const MixAreaSetting: React.FC = () => {
               // 根据选择的 posType 设置 pos
               pos: values.module1Type.posType === 0 ? [1, 2, 3, 4] : [17],
             },
-            module2Type: {
+            module2Type: {      
               posType: values.module2Type.posType,
               // 根据选择的 posType 设置 pos
               pos: values.module2Type.posType === 0 ? [5, 6, 7, 8] : [18],

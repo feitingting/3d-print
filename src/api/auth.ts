@@ -8,10 +8,6 @@ import { httpService } from '../http-service/index';
 export const userLogin = async (params: { email: string; password: string }): Promise<any> => {
   try {
     const response = await httpService.post('/auth/login', params);
-    if (response?.token) {
-      localStorage.setItem('token', response.token);
-      localStorage.setItem('userInfo', JSON.stringify(response.userInfo));
-    }
     return response;
   } catch (error) {
     console.error('登录失败:', error);

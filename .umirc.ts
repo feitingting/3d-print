@@ -146,6 +146,8 @@ export default defineConfig({
           component:'@/pages/more',
           title:'更多'
         },
+        { path: '/payment', component: '@/pages/payment' },
+        { path: '/order-list', component: '@/pages/orderList' }
       ],
     },
   ],
