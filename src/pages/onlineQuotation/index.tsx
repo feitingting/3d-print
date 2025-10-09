@@ -9,8 +9,19 @@ import { useEffect, useRef, useState } from 'react';
 import { Row, Col, Spin, Alert } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { history } from '@@/core/umiExports';
-import { calculatePrintingPrice, calculateModelInfo, formatPrice, estimatePrintTime, ModelInfo, PriceCalculation } from '../../utils/priceCalculation';
-import { submitPrintOrder } from '../../api';
+import { 
+    calculatePrintingPrice, 
+    calculateModelInfo, 
+    formatPrice, 
+    estimatePrintTime, 
+    ModelInfo, 
+    PriceCalculation,
+    getMaterialDisplayName,
+    getProcessDisplayName,
+    getComplexityDisplayName,
+    getSizeLevelDisplayName
+} from '../../utils/priceCalculation';
+import { submitPrintOrder, uploadSTLFile } from '../../api';
 
 const { Option } = Select;
 const { Title, Text } = Typography;
@@ -249,6 +260,7 @@ const OnlineQuotation: React.FC = () => {
     const [modelInfo, setModelInfo] = useState<ModelInfo | null>(null);
     const [priceCalculation, setPriceCalculation] = useState<PriceCalculation | null>(null);
     const [currentFile, setCurrentFile] = useState<File | null>(null);
+    const [uploadedFileUrl, setUploadedFileUrl] = useState<string | null>(null);
     const [isHollow, setIsHollow] = useState(false);
     const [infillPercentage, setInfillPercentage] = useState(20);
     const [selectedProcess, setSelectedProcess] = useState<string>('');
@@ -408,12 +420,75 @@ const OnlineQuotation: React.FC = () => {
         }
     }, [activeParams, modelInfo, isHollow, infillPercentage]);
 
+    // 清理旧模型的所有相关数据
+    const clearPreviousModel = () => {
+        try {
+            // 清理实心模型
+            if (modelRef.current) {
+                // 清理几何体资源
+                if (modelRef.current.geometry) {
+                    modelRef.current.geometry.dispose();
+                }
+                
+                // 清理材质资源
+                if (modelRef.current.material) {
+                    if (Array.isArray(modelRef.current.material)) {
+                        modelRef.current.material.forEach(material => material.dispose());
+                    } else {
+                        modelRef.current.material.dispose();
+                    }
+                }
+                
+                // 从场景中移除
+                sceneRef.current?.remove(modelRef.current);
+                modelRef.current = null;
+            }
+
+            // 清理空心模型
+            if (hollowModelRef.current) {
+                // 清理几何体资源
+                if (hollowModelRef.current.geometry) {
+                    hollowModelRef.current.geometry.dispose();
+                }
+                
+                // 清理材质资源
+                if (hollowModelRef.current.material) {
+                    if (Array.isArray(hollowModelRef.current.material)) {
+                        hollowModelRef.current.material.forEach(material => material.dispose());
+                    } else {
+                        hollowModelRef.current.material.dispose();
+                    }
+                }
+                
+                // 从场景中移除
+                sceneRef.current?.remove(hollowModelRef.current);
+                hollowModelRef.current = null;
+            }
+
+            // 重置相关状态
+            setModelInfo(null);
+            setPriceCalculation(null);
+            setActiveParams(null);
+            setIsHollow(false);
+            setInfillPercentage(20);
+            setUploadedFileUrl(null);
+            
+            console.log('Previous model cleared successfully');
+        } catch (error) {
+            console.error('Error clearing previous model:', error);
+        }
+    };
+
     // 处理STL文件加载
     const loadSTLModel = (file: File) => {
         if (!sceneRef.current || !cameraRef.current) return;
 
         setLoadingModel(true);
         setPreviewVisible(true);
+        
+        // 清理前一个模型的所有数据
+        clearPreviousModel();
+        
         setCurrentFile(file);
 
         const loader = new STLLoader();
@@ -421,11 +496,6 @@ const OnlineQuotation: React.FC = () => {
 
         reader.onload = (event: any) => {
             try {
-                // 移除旧模型
-                if (modelRef.current) {
-                    sceneRef.current!.remove(modelRef.current);
-                }
-
                 // 加载新模型
                 const geometry = loader.parse(event.target.result);
                 
@@ -603,12 +673,39 @@ const OnlineQuotation: React.FC = () => {
     };
 
     // 处理文件上传前的验证
-    const beforeUpload = (file: File) => {
+    const beforeUpload = async (file: File) => {
         const isSTL = file.type === 'application/sla' || file.name.endsWith('.stl');
         if (!isSTL) {
             message.error('请上传STL格式的3D模型文件！');
             return false;
         }
+        
+        // 显示替换提示
+        if (currentFile) {
+            message.info('正在替换当前模型...');
+        }
+
+        // 上传文件到服务器
+        try {
+            message.loading('正在上传文件到服务器...', 0);
+            const uploadResponse = await uploadSTLFile(file);
+            
+            if (uploadResponse.status === 200) {
+                setUploadedFileUrl(uploadResponse.result.fileUrl);
+                message.destroy();
+                message.success('文件上传成功！');
+            } else {
+                message.destroy();
+                message.error(uploadResponse.message || '文件上传失败');
+                return false;
+            }
+        } catch (error) {
+            message.destroy();
+            message.error('文件上传失败，请重试');
+            console.error('Upload error:', error);
+            return false;
+        }
+        
         loadSTLModel(file);
         return false; // 阻止自动上传，我们手动处理
     };
@@ -628,6 +725,11 @@ const OnlineQuotation: React.FC = () => {
                 return;
             }
 
+            if (!uploadedFileUrl) {
+                message.error('文件未成功上传到服务器，请重新上传');
+                return;
+            }
+
             const orderData = {
                 serviceName: '3D打印服务',
                 process: values.process,
@@ -638,6 +740,7 @@ const OnlineQuotation: React.FC = () => {
                 modelInfo,
                 priceCalculation,
                 estimatedTime: estimatePrintTime(modelInfo, values.process),
+                modelFileUrl: uploadedFileUrl,
             };
 
             // 提交订单到后端
@@ -795,16 +898,74 @@ const OnlineQuotation: React.FC = () => {
                                 name="modelFile"
                                 label="上传模型"
                                 rules={[{ required: true, message: '请上传3D模型文件' }]}
-                                extra="请上传STL格式的3D模型文件，文件大小不超过20MB"
+                                extra="请上传STL格式的3D模型文件"
                             >
                                 <Upload
                                     name="modelFile"
                                     beforeUpload={beforeUpload}
-                                    showUploadList={true}
+                                    showUploadList={{
+                                        showPreviewIcon: false,
+                                        showRemoveIcon: true,
+                                        showDownloadIcon: false,
+                                    }}
+                                    maxCount={1}
+                                    fileList={currentFile ? [{
+                                        uid: '1',
+                                        name: currentFile.name,
+                                        status: 'done',
+                                        size: currentFile.size,
+                                        type: currentFile.type,
+                                    }] : []}
+                                    onRemove={() => {
+                                        clearPreviousModel();
+                                        setCurrentFile(null);
+                                        message.info('模型已移除');
+                                        return true;
+                                    }}
                                 >
-                                    <Button icon={<UploadOutlined />}>点击上传STL文件</Button>
+                                    <Button icon={<UploadOutlined />}>
+                                        {currentFile ? '替换STL文件' : '点击上传STL文件'}
+                                    </Button>
                                 </Upload>
                             </Form.Item>
+
+                            {/* 当前模型信息显示 */}
+                            {currentFile && modelInfo && (
+                                <Form.Item label="当前模型信息">
+                                    <Card size="small" style={{ marginTop: 8 }}>
+                                        <Row gutter={[16, 8]}>
+                                            <Col span={12}>
+                                                <Text strong>文件名:</Text> {currentFile.name}
+                                            </Col>
+                                            <Col span={12}>
+                                                <Text strong>文件大小:</Text> {(currentFile.size / 1024 / 1024).toFixed(2)} MB
+                                            </Col>
+                                            <Col span={8}>
+                                                <Text strong>体积:</Text> {modelInfo.volume.toFixed(2)} cm³
+                                            </Col>
+                                            <Col span={8}>
+                                                <Text strong>表面积:</Text> {modelInfo.surfaceArea.toFixed(2)} cm²
+                                            </Col>
+                                            <Col span={8}>
+                                                <Text strong>尺寸:</Text> {modelInfo.boundingBox.width.toFixed(1)} × {modelInfo.boundingBox.height.toFixed(1)} × {modelInfo.boundingBox.depth.toFixed(1)} cm
+                                            </Col>
+                                        </Row>
+                                        <div style={{ marginTop: 8, textAlign: 'right' }}>
+                                            <Button 
+                                                size="small" 
+                                                danger 
+                                                onClick={() => {
+                                                    clearPreviousModel();
+                                                    setCurrentFile(null);
+                                                    message.info('模型已清除');
+                                                }}
+                                            >
+                                                清除模型
+                                            </Button>
+                                        </div>
+                                    </Card>
+                                </Form.Item>
+                            )}
 
                             <Form.Item className="submit-button">
                                 <Button 
@@ -930,7 +1091,7 @@ const OnlineQuotation: React.FC = () => {
                             {/* 价格计算显示 */}
                             {priceCalculation && (
                                 <Col span={24}>
-                                    <Card title="价格计算" size="small">
+                                    <Card title="价格计算详情" size="small">
                                         <Row gutter={[16, 16]}>
                                             <Col span={12}>
                                                 <Statistic
@@ -962,18 +1123,50 @@ const OnlineQuotation: React.FC = () => {
                                         <Divider />
                                         <Space direction="vertical" size="small" style={{ width: '100%' }}>
                                             <Text type="secondary">
-                                                工艺系数: {priceCalculation.breakdown.processCoefficient}x
+                                                <strong>材料:</strong> {getMaterialDisplayName(activeParams?.material || '')}
                                             </Text>
                                             <Text type="secondary">
-                                                填充系数: {priceCalculation.breakdown.infillCoefficient}x
+                                                <strong>工艺:</strong> {getProcessDisplayName(activeParams?.process || '')}
                                             </Text>
                                             <Text type="secondary">
-                                                数量: {priceCalculation.breakdown.quantity} 件
+                                                <strong>复杂度:</strong> {getComplexityDisplayName(priceCalculation.breakdown.complexity)}
+                                            </Text>
+                                            <Text type="secondary">
+                                                <strong>尺寸等级:</strong> {getSizeLevelDisplayName(priceCalculation.breakdown.sizeLevel)}
+                                            </Text>
+                                            <Text type="secondary">
+                                                <strong>工艺系数:</strong> {priceCalculation.breakdown.processCoefficient}x
+                                            </Text>
+                                            <Text type="secondary">
+                                                <strong>填充系数:</strong> {priceCalculation.breakdown.infillCoefficient.toFixed(2)}x
+                                            </Text>
+                                            <Text type="secondary">
+                                                <strong>复杂度系数:</strong> {priceCalculation.breakdown.complexityCoefficient}x
+                                            </Text>
+                                            <Text type="secondary">
+                                                <strong>尺寸系数:</strong> {priceCalculation.breakdown.sizeCoefficient}x
+                                            </Text>
+                                            <Text type="secondary">
+                                                <strong>支撑系数:</strong> {priceCalculation.breakdown.supportCoefficient.toFixed(2)}x
+                                            </Text>
+                                            <Text type="secondary">
+                                                <strong>数量:</strong> {priceCalculation.breakdown.quantity} 件
                                             </Text>
                                             {activeParams?.process && modelInfo && (
                                                 <Text type="secondary">
-                                                    预计打印时间: {estimatePrintTime(modelInfo, activeParams.process)} 小时
+                                                    <strong>预估打印时间:</strong> {estimatePrintTime(modelInfo, activeParams.process, priceCalculation.breakdown.infillCoefficient)} 小时
                                                 </Text>
+                                            )}
+                                            {modelInfo?.calculationInfo && (
+                                                <>
+                                                    <Divider style={{ margin: '8px 0' }} />
+                                                    <Text type="secondary" style={{ fontSize: '12px' }}>
+                                                        <strong>计算方法:</strong> 体积({modelInfo.calculationInfo.volumeMethod}) | 表面积({modelInfo.calculationInfo.surfaceAreaMethod})
+                                                    </Text>
+                                                    <Text type={modelInfo.calculationInfo.isValid ? 'success' : 'warning'} style={{ fontSize: '12px' }}>
+                                                        <strong>计算结果:</strong> {modelInfo.calculationInfo.isValid ? '有效' : '可能不准确'}
+                                                    </Text>
+                                                </>
                                             )}
                                         </Space>
                                     </Card>

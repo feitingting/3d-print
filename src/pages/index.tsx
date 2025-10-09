@@ -323,7 +323,7 @@ const HomePage: React.FC = (props: any) => {
               </div>
             )}
             title="3DPrintPro"
-            style={{ height: '80px' }}
+            style={{ height: '80px' }} 
             layout="top"  // 修改布局模式为顶部导航
             fixedHeader={true} // 固定导航栏
             location={{ pathname: '/' }}

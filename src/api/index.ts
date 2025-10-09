@@ -203,3 +203,19 @@ export const getOrderStatus = async (orderId: string): Promise<any> => {
 export const getUserOrders = async (params: any): Promise<any> => {
   return httpService.post('/print/orders', params);
 };
+
+// 创建支付会话
+export const createCheckoutSession = async (orderDetails?: any): Promise<any> => {
+  return httpService.post('/checkout/session', orderDetails);
+};
+
+// 上传STL文件
+export const uploadSTLFile = async (file: File): Promise<any> => {
+  const formData = new FormData();
+  formData.append('file', file);
+  return httpService.post('/upload-stl', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};

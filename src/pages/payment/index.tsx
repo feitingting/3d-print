@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Card, Button, Descriptions, Typography, Alert, Space, Divider, Row, Col, Statistic, message } from "antd";
 import { PayCircleOutlined, CheckCircleOutlined, CloseCircleOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { history } from 'umi';
-import { createCheckoutSession } from '@/api';
+import { getMaterialDisplayName, getProcessDisplayName, getComplexityDisplayName, getSizeLevelDisplayName } from '@/utils/priceCalculation';
+import { httpService } from '@/http-service/index';
 import './index.module.scss';
 
 const { Title, Text } = Typography;
@@ -13,6 +14,7 @@ interface OrderDetails {
     process: string;
     material: string;
     infill: string;
+    infillPercentage?: number; // 填充百分比
     quantity: number;
     status: string;
     modelInfo: {
@@ -29,6 +31,15 @@ interface OrderDetails {
         processingFee: number;
         totalCost: number;
         finalPrice: number;
+        breakdown?: {
+            processCoefficient: number;
+            infillCoefficient: number;
+            complexityCoefficient: number;
+            sizeCoefficient: number;
+            supportCoefficient: number;
+            complexity: string;
+            sizeLevel: string;
+        };
     };
     estimatedTime: number;
     customerInfo?: {
@@ -37,20 +48,30 @@ interface OrderDetails {
         phone: string;
         address: string;
     };
+    modelFile?: File;
 }
 
 const PaymentPage = () => {
-    const [message, setMessage] = useState("");
+    const [alertMessage, setAlertMessage] = useState("");
     const [messageType, setMessageType] = useState<'success' | 'error' | 'warning' | 'info'>('info');
     const [orderDetails, setOrderDetails] = useState<OrderDetails | null>(null);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        // 从localStorage获取订单信息
+        // 首先尝试从history.state获取订单信息
+        const locationState = (history as any).location?.state;
+        if (locationState?.orderDetails) {
+            console.log('从history.state获取订单信息:', locationState.orderDetails);
+            setOrderDetails(locationState.orderDetails);
+            return;
+        }
+
+        // 如果没有，则从localStorage获取订单信息
         const currentOrder = localStorage.getItem('currentOrder');
         if (currentOrder) {
             try {
                 const order = JSON.parse(currentOrder);
+                console.log('从localStorage获取订单信息:', order);
                 setOrderDetails(order);
             } catch (error) {
                 console.error('解析订单信息失败:', error);
@@ -61,10 +82,10 @@ const PaymentPage = () => {
             // 检查支付结果
             const query = new URLSearchParams(window.location.search);
             if (query.get("success")) {
-                setMessage("支付成功！您将收到一封确认邮件。");
+                setAlertMessage("支付成功！您将收到一封确认邮件。");
                 setMessageType('success');
             } else if (query.get("canceled")) {
-                setMessage("订单已取消 - 您可以继续浏览并在准备好时重新支付。");
+                setAlertMessage("订单已取消 - 您可以继续浏览并在准备好时重新支付。");
                 setMessageType('warning');
             } else {
                 message.error('未找到订单信息');
@@ -78,11 +99,13 @@ const PaymentPage = () => {
         
         setLoading(true);
         try {
-            const result = await createCheckoutSession();
+            // 直接调用httpService创建支付会话
+            const result = await httpService.post('/checkout/session', orderDetails as any);
+            
             if (result && result.url) {
                 // 清除localStorage中的订单信息
                 localStorage.removeItem('currentOrder');
-                // 跳转到Stripe支付页面
+                // 跳转到支付页面
                 window.location.href = result.url;
             } else {
                 message.error('创建支付会话失败');
@@ -99,12 +122,12 @@ const PaymentPage = () => {
         history.push('/order-list');
     };
 
-    if (message) {
+    if (alertMessage) {
         return (
             <div style={{ padding: '24px', maxWidth: '600px', margin: '0 auto' }}>
                 <Card>
                     <Alert
-                        message={message}
+                        message={alertMessage}
                         type={messageType}
                         icon={
                             messageType === 'success' ? <CheckCircleOutlined /> :
@@ -155,14 +178,19 @@ const PaymentPage = () => {
                                 <Text type="warning">待支付</Text>
                             </Descriptions.Item>
                             <Descriptions.Item label="工艺">
-                                {orderDetails.process}
+                                {getProcessDisplayName(orderDetails.process)}
                             </Descriptions.Item>
                             <Descriptions.Item label="材料">
-                                {orderDetails.material}
+                                {getMaterialDisplayName(orderDetails.material)}
                             </Descriptions.Item>
-                            <Descriptions.Item label="填充率">
-                                {orderDetails.infill}%
+                            <Descriptions.Item label="填充类型">
+                                {orderDetails.infill === 'hollow' ? '空心' : '实心'}
                             </Descriptions.Item>
+                            {orderDetails.infillPercentage !== undefined && (
+                                <Descriptions.Item label="填充率">
+                                    {orderDetails.infillPercentage}%
+                                </Descriptions.Item>
+                            )}
                             <Descriptions.Item label="数量">
                                 {orderDetails.quantity}件
                             </Descriptions.Item>
@@ -184,6 +212,18 @@ const PaymentPage = () => {
                                 {orderDetails.modelInfo.boundingBox.height.toFixed(1)} × 
                                 {orderDetails.modelInfo.boundingBox.depth.toFixed(1)} mm
                             </Descriptions.Item>
+                            {orderDetails.modelFileUrl && (
+                                <Descriptions.Item label="模型文件" span={2}>
+                                    <a 
+                                        href={orderDetails.modelFileUrl} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        style={{ color: '#1890ff' }}
+                                    >
+                                        下载模型文件
+                                    </a>
+                                </Descriptions.Item>
+                            )}
                         </Descriptions>
                     </Card>
                 </Col>
@@ -205,6 +245,23 @@ const PaymentPage = () => {
                                         ¥{orderDetails.priceCalculation.totalCost.toFixed(2)}
                                     </Descriptions.Item>
                                 </Descriptions>
+                                
+                                {/* 详细分解信息 */}
+                                {orderDetails.priceCalculation.breakdown && (
+                                    <>
+                                        <Divider style={{ margin: '12px 0' }} />
+                                        <Text type="secondary" style={{ fontSize: '12px' }}>
+                                            <div>工艺系数: {orderDetails.priceCalculation.breakdown.processCoefficient}x</div>
+                                            <div>填充系数: {orderDetails.priceCalculation.breakdown.infillCoefficient.toFixed(2)}x</div>
+                                            <div>复杂度系数: {orderDetails.priceCalculation.breakdown.complexityCoefficient}x</div>
+                                            <div>尺寸系数: {orderDetails.priceCalculation.breakdown.sizeCoefficient}x</div>
+                                            <div>支撑系数: {orderDetails.priceCalculation.breakdown.supportCoefficient.toFixed(2)}x</div>
+                                            <div>复杂度: {getComplexityDisplayName(orderDetails.priceCalculation.breakdown.complexity)}</div>
+                                            <div>尺寸等级: {getSizeLevelDisplayName(orderDetails.priceCalculation.breakdown.sizeLevel)}</div>
+                                        </Text>
+                                    </>
+                                )}
+                                
                                 <Divider />
                                 <Statistic
                                     title="最终价格"
