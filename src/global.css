@@ -1,0 +1,118 @@
+/* 全局样式 - 统一输入框高度为44px */
+
+/* 基础输入框 */
+.ant-input {
+  height: 44px !important;
+  font-size: 15px !important;
+  padding: 10px 12px !important;
+  line-height: 22px !important;
+}
+
+/* 数字输入框 */
+.ant-input-number {
+  height: 44px !important;
+  font-size: 15px !important;
+}
+
+.ant-input-number-input {
+  height: 42px !important;
+  font-size: 15px !important;
+  padding: 10px 12px !important;
+}
+
+/* 选择框 */
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  height: 44px !important;
+  /* padding: 6px 12px !important; */
+}
+
+.ant-select-single .ant-select-selector .ant-select-selection-search-input {
+  height: 42px !important;
+}
+
+.ant-select-single .ant-select-selector .ant-select-selection-item {
+  line-height: 42px !important;
+  display: flex !important;
+  align-items: center !important;
+  height: 42px !important;
+}
+
+.ant-select-single .ant-select-selector .ant-select-selection-placeholder {
+  line-height: 42px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* 日期选择器 */
+.ant-picker {
+  height: 44px !important;
+  padding: 10px 12px !important;
+}
+
+.ant-picker-input > input {
+  font-size: 15px !important;
+  height: auto !important;
+}
+
+/* 带前缀/后缀的输入框 */
+.ant-input-affix-wrapper {
+  height: 44px !important;
+  padding: 10px 12px !important;
+}
+
+.ant-input-affix-wrapper > input.ant-input {
+  height: auto !important;
+  padding: 0 !important;
+}
+
+.ant-input-affix-wrapper .ant-input-prefix,
+.ant-input-affix-wrapper .ant-input-suffix {
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* 密码输入框 */
+.ant-input-password {
+  height: 44px !important;
+}
+
+.ant-input-password .ant-input {
+  height: auto !important;
+  padding: 0 !important;
+}
+
+/* 搜索框 */
+.ant-input-search .ant-input-group .ant-input-affix-wrapper {
+  height: 44px !important;
+}
+
+/* 文本域保持原样，不需要固定高度 */
+.ant-input-textarea textarea {
+  font-size: 15px !important;
+  padding: 10px 12px !important;
+}
+
+/* 下拉选项高度 */
+.ant-select-dropdown .ant-select-item {
+  min-height: 44px !important;
+  padding: 10px 12px !important;
+  font-size: 15px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Form标签字体 */
+.ant-form-item-label > label {
+  font-size: 15px !important;
+  font-weight: 500 !important;
+}
+
+/* 确保输入框获得焦点时的样式 */
+.ant-input:focus,
+.ant-input-focused,
+.ant-select-focused .ant-select-selector,
+.ant-picker-focused {
+  border-color: #40a9ff !important;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1) !important;
+}
+

@@ -22,6 +22,7 @@ import {
     getSizeLevelDisplayName
 } from '../../utils/priceCalculation';
 import { submitPrintOrder, uploadSTLFile } from '../../api';
+import { MATERIALS, getMaterialByValue } from '@/data/materials';
 
 const { Option } = Select;
 const { Title, Text } = Typography;
@@ -114,137 +115,19 @@ const printingProcesses = [
     },
 ];
 
-// 3D打印材料选项（与模型详情页面保持一致）
-const materials = [
-    { 
-        value: 'pla', 
-        label: 'PLA (聚乳酸)', 
-        color: 0x87CEEB,
-        properties: { 
-            roughness: 0.9, 
-            metalness: 0.0, 
-            transmission: 0,
-            clearcoat: 0.1,
-            clearcoatRoughness: 0.1,
-            sheen: 0.0,
-            sheenRoughness: 1.0,
-            emissive: 0x000000,
-            emissiveIntensity: 0
-        }
-    },
-    { 
-        value: 'abs', 
-        label: 'ABS (丙烯腈丁二烯苯乙烯)', 
-        color: 0x2E8B57,
-        properties: { 
-            roughness: 0.7, 
-            metalness: 0.0, 
-            transmission: 0,
-            clearcoat: 0.2,
-            clearcoatRoughness: 0.2,
-            sheen: 0.0,
-            sheenRoughness: 1.0,
-            emissive: 0x000000,
-            emissiveIntensity: 0
-        }
-    },
-    { 
-        value: 'petg', 
-        label: 'PETG (聚对苯二甲酸乙二醇酯)', 
-        color: 0xFFD700,
-        properties: { 
-            roughness: 0.2, 
-            metalness: 0.0, 
-            transmission: 0.15,
-            clearcoat: 0.8,
-            clearcoatRoughness: 0.1,
-            sheen: 0.5,
-            sheenRoughness: 0.3,
-            emissive: 0x000000,
-            emissiveIntensity: 0
-        }
-    },
-    { 
-        value: 'nylon', 
-        label: '尼龙 (PA6/PA12)', 
-        color: 0xF5DEB3,
-        properties: { 
-            roughness: 0.5, 
-            metalness: 0.1, 
-            transmission: 0,
-            clearcoat: 0.3,
-            clearcoatRoughness: 0.3,
-            sheen: 0.2,
-            sheenRoughness: 0.8,
-            emissive: 0x000000,
-            emissiveIntensity: 0
-        }
-    },
-    { 
-        value: 'metal_aluminum', 
-        label: '金属-铝合金', 
-        color: 0xC0C0C0,
-        properties: { 
-            roughness: 0.05, 
-            metalness: 0.95, 
-            transmission: 0,
-            clearcoat: 0.1,
-            clearcoatRoughness: 0.05,
-            sheen: 0.0,
-            sheenRoughness: 1.0,
-            emissive: 0x000000,
-            emissiveIntensity: 0
-        }
-    },
-    { 
-        value: 'wood_pla', 
-        label: '木纹PLA', 
-        color: 0x8B4513,
-        properties: { 
-            roughness: 0.95, 
-            metalness: 0.0, 
-            transmission: 0,
-            clearcoat: 0.0,
-            clearcoatRoughness: 0.1,
-            sheen: 0.0,
-            sheenRoughness: 1.0,
-            emissive: 0x000000,
-            emissiveIntensity: 0
-        }
-    },
-    { 
-        value: 'carbon_fiber', 
-        label: '碳纤维PLA', 
-        color: 0x2F2F2F,
-        properties: { 
-            roughness: 0.3, 
-            metalness: 0.8, 
-            transmission: 0,
-            clearcoat: 0.9,
-            clearcoatRoughness: 0.1,
-            sheen: 0.7,
-            sheenRoughness: 0.2,
-            emissive: 0x000000,
-            emissiveIntensity: 0
-        }
-    },
-    { 
-        value: 'transparent_pla', 
-        label: '透明PLA', 
-        color: 0xFFFFFF,
-        properties: { 
-            roughness: 0.1, 
-            metalness: 0.0, 
-            transmission: 0.8,
-            clearcoat: 0.9,
-            clearcoatRoughness: 0.05,
-            sheen: 0.0,
-            sheenRoughness: 1.0,
-            emissive: 0x000000,
-            emissiveIntensity: 0
-        }
-    },
-];
+// 3D打印材料选项（使用共享数据源）
+const materials = MATERIALS.map(m => ({
+    value: m.value,
+    label: m.label,
+    color: m.color || 0xCCCCCC,
+    properties: {
+        ...m.materialProps,
+        sheen: 0.0,
+        sheenRoughness: 1.0,
+        emissive: 0x000000,
+        emissiveIntensity: 0
+    }
+}));
 
 // 填充类型选项
 const infillTypes = [
@@ -271,6 +154,22 @@ const OnlineQuotation: React.FC = () => {
     const controlsRef = useRef<OrbitControls | null>(null);
     const modelRef = useRef<THREE.Mesh | null>(null);
     const hollowModelRef = useRef<THREE.LineSegments | null>(null);
+
+    // 获取从材料页面传递过来的参数
+    useEffect(() => {
+        const locationState = history.location.state as any;
+        if (locationState?.selectedMaterial) {
+            // 自动填充材料字段
+            form.setFieldsValue({
+                material: locationState.selectedMaterial
+            });
+            // 显示提示信息
+            const materialData = getMaterialByValue(locationState.selectedMaterial);
+            if (materialData) {
+                message.success(`已选择材料: ${materialData.name}`);
+            }
+        }
+    }, []);
 
     // 初始化3D场景
     useEffect(() => {
@@ -685,28 +584,33 @@ const OnlineQuotation: React.FC = () => {
             message.info('正在替换当前模型...');
         }
 
-        // 上传文件到服务器
-        try {
-            message.loading('正在上传文件到服务器...', 0);
-            const uploadResponse = await uploadSTLFile(file);
-            
-            if (uploadResponse.status === 200) {
-                setUploadedFileUrl(uploadResponse.result.fileUrl);
-                message.destroy();
-                message.success('文件上传成功！');
-            } else {
-                message.destroy();
-                message.error(uploadResponse.message || '文件上传失败');
-                return false;
-            }
-        } catch (error) {
-            message.destroy();
-            message.error('文件上传失败，请重试');
-            console.error('Upload error:', error);
-            return false;
-        }
-        
+        // 先加载3D模型
         loadSTLModel(file);
+        
+        // 暂时使用文件名作为占位（本地预览模式）
+        setUploadedFileUrl(`local://${file.name}`);
+        
+        // TODO: 后续启用服务器上传功能
+        // try {
+        //     message.loading('正在上传文件到服务器...', 0);
+        //     const uploadResponse = await uploadSTLFile(file);
+        //     
+        //     if (uploadResponse.status === 200) {
+        //         setUploadedFileUrl(uploadResponse.result.fileUrl);
+        //         message.destroy();
+        //         message.success('文件上传成功！');
+        //     } else {
+        //         message.destroy();
+        //         message.error(uploadResponse.message || '文件上传失败');
+        //         return false;
+        //     }
+        // } catch (error) {
+        //     message.destroy();
+        //     message.error('文件上传失败，请重试');
+        //     console.error('Upload error:', error);
+        //     return false;
+        // }
+        
         return false; // 阻止自动上传，我们手动处理
     };
 
@@ -725,8 +629,8 @@ const OnlineQuotation: React.FC = () => {
                 return;
             }
 
-            if (!uploadedFileUrl) {
-                message.error('文件未成功上传到服务器，请重新上传');
+            if (!currentFile) {
+                message.error('请先上传STL文件');
                 return;
             }
 
@@ -800,9 +704,16 @@ const OnlineQuotation: React.FC = () => {
                                 label="选择工艺"
                                 rules={[{ required: true, message: '请选择3D打印工艺' }]}
                             >
-                                <Select placeholder="请选择3D打印工艺">
+                                <Select 
+                                    placeholder="请选择3D打印工艺"
+                                    optionLabelProp="label"
+                                >
                                     {printingProcesses.map(process => (
-                                        <Option key={process.value} value={process.value}>
+                                        <Option 
+                                            key={process.value} 
+                                            value={process.value}
+                                            label={process.label}
+                                        >
                                             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                                                 <div style={{ fontWeight: 500 }}>{process.label}</div>
                                                 <div style={{ fontSize: '12px', color: '#666' }}>
@@ -828,23 +739,103 @@ const OnlineQuotation: React.FC = () => {
                                 label="选择材料"
                                 rules={[{ required: true, message: '请选择3D打印材料' }]}
                             >
-                                <Select placeholder="请选择3D打印材料">
-                                    {materials.map(material => (
-                                        <Option key={material.value} value={material.value}>
-                                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                <div 
-                                                    style={{ 
-                                                        width: '12px', 
-                                                        height: '12px', 
-                                                        backgroundColor: `#${material.color.toString(16).padStart(6, '0')}`,
-                                                        borderRadius: '2px',
-                                                        border: '1px solid #ddd'
-                                                    }}
-                                                />
-                                                <span>{material.label}</span>
-                                            </div>
-                                        </Option>
-                                    ))}
+                                <Select 
+                                    placeholder="请选择3D打印材料"
+                                    showSearch
+                                    optionFilterProp="children"
+                                    filterOption={(input, option: any) => {
+                                        const materialData = getMaterialByValue(option.value);
+                                        if (!materialData) return false;
+                                        return materialData.name.toLowerCase().includes(input.toLowerCase()) ||
+                                               materialData.nameEn.toLowerCase().includes(input.toLowerCase()) ||
+                                               materialData.description.toLowerCase().includes(input.toLowerCase());
+                                    }}
+                                    optionLabelProp="label"
+                                >
+                                    {materials.map(material => {
+                                        const materialData = getMaterialByValue(material.value);
+                                        return (
+                                            <Option 
+                                                key={material.value} 
+                                                value={material.value}
+                                                label={
+                                                    <div style={{ 
+                                                        display: 'flex', 
+                                                        alignItems: 'center', 
+                                                        gap: '8px',
+                                                        justifyContent: 'space-between'
+                                                    }}>
+                                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                            <div 
+                                                                style={{ 
+                                                                    width: '12px', 
+                                                                    height: '12px', 
+                                                                    backgroundColor: `#${material.color.toString(16).padStart(6, '0')}`,
+                                                                    borderRadius: '2px',
+                                                                    border: '1px solid #ddd',
+                                                                    flexShrink: 0
+                                                                }}
+                                                            />
+                                                            <span>{material.label}</span>
+                                                        </div>
+                                                        {materialData && (
+                                                            <span style={{ fontSize: '12px', color: '#1890ff', fontWeight: 500 }}>
+                                                                {materialData.price}
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                }
+                                            >
+                                                <div style={{ 
+                                                    display: 'flex', 
+                                                    alignItems: 'center', 
+                                                    justifyContent: 'space-between',
+                                                    minHeight: '40px',
+                                                    gap: '12px'
+                                                }}>
+                                                    <div style={{ 
+                                                        display: 'flex', 
+                                                        alignItems: 'center', 
+                                                        gap: '8px', 
+                                                        flex: 1,
+                                                        minHeight: '40px'
+                                                    }}>
+                                                        <div 
+                                                            style={{ 
+                                                                width: '12px', 
+                                                                height: '12px', 
+                                                                backgroundColor: `#${material.color.toString(16).padStart(6, '0')}`,
+                                                                borderRadius: '2px',
+                                                                border: '1px solid #ddd',
+                                                                flexShrink: 0
+                                                            }}
+                                                        />
+                                                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                                                            <div style={{ fontWeight: 500, lineHeight: '1.4' }}>{material.label}</div>
+                                                            {materialData && (
+                                                                <div style={{ fontSize: '12px', color: '#999', lineHeight: '1.4', marginTop: '2px' }}>
+                                                                    {materialData.description.slice(0, 30)}...
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                    {materialData && (
+                                                        <span style={{ 
+                                                            fontSize: '12px', 
+                                                            color: '#1890ff', 
+                                                            fontWeight: 500,
+                                                            flexShrink: 0,
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            height: '40px'
+                                                        }}>
+                                                            {materialData.price}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </Option>
+                                        );
+                                    })}
                                 </Select>
                             </Form.Item>
 
@@ -985,7 +976,7 @@ const OnlineQuotation: React.FC = () => {
                             {/* 模型预览区域 */}
                             <Col span={24}>
                                 <Card title="模型预览" size="small">
-                                    <div className="preview-wrapper" ref={previewRef} style={{ height: '300px' }}>
+                                    <div className="preview-wrapper" ref={previewRef} style={{ height: '500px' }}>
                                 {!previewVisible ? (
                                     <Alert
                                         message="模型预览区"

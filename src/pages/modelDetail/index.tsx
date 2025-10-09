@@ -6,6 +6,7 @@ import './index.less';
 import * as THREE from 'three';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { MATERIALS, getMaterialByValue } from '@/data/materials';
 
 
 const { Title, Text, Paragraph } = Typography;
@@ -23,137 +24,21 @@ interface ModelDetail {
   description: string;
 }
 
-// 模拟材质数据
-const materials = [
-  { 
-    value: 'pla', 
-    label: 'PLA (聚乳酸)', 
-    color: 0x87CEEB,
-    properties: { 
-      roughness: 0.9, 
-      metalness: 0.0, 
-      transmission: 0,
-      clearcoat: 0.1,
-      clearcoatRoughness: 0.1,
-      sheen: 0.0,
-      sheenRoughness: 1.0,
-      emissive: 0x000000,
-      emissiveIntensity: 0
+// 材质数据（使用共享数据源）
+const materials = MATERIALS.map(m => ({
+    value: m.value,
+    label: m.label,
+    color: m.color || 0xCCCCCC,
+    properties: {
+        ...m.materialProps,
+        sheen: 0.0,
+        sheenRoughness: 1.0,
+        emissive: 0x000000,
+        emissiveIntensity: 0
     }
-  },
-  { 
-    value: 'abs', 
-    label: 'ABS (丙烯腈丁二烯苯乙烯)', 
-    color: 0x2E8B57,
-    properties: { 
-      roughness: 0.7, 
-      metalness: 0.0, 
-      transmission: 0,
-      clearcoat: 0.2,
-      clearcoatRoughness: 0.2,
-      sheen: 0.0,
-      sheenRoughness: 1.0,
-      emissive: 0x000000,
-      emissiveIntensity: 0
-    }
-  },
-  { 
-    value: 'petg', 
-    label: 'PETG (聚对苯二甲酸乙二醇酯)', 
-    color: 0xFFD700,
-    properties: { 
-      roughness: 0.2, 
-      metalness: 0.0, 
-      transmission: 0.15,
-      clearcoat: 0.8,
-      clearcoatRoughness: 0.1,
-      sheen: 0.5,
-      sheenRoughness: 0.3,
-      emissive: 0x000000,
-      emissiveIntensity: 0
-    }
-  },
-  { 
-    value: 'nylon', 
-    label: '尼龙 (PA6/PA12)', 
-    color: 0xF5DEB3,
-    properties: { 
-      roughness: 0.5, 
-      metalness: 0.1, 
-      transmission: 0,
-      clearcoat: 0.3,
-      clearcoatRoughness: 0.3,
-      sheen: 0.2,
-      sheenRoughness: 0.8,
-      emissive: 0x000000,
-      emissiveIntensity: 0
-    }
-  },
-  { 
-    value: 'metal_aluminum', 
-    label: '金属-铝合金', 
-    color: 0xC0C0C0,
-    properties: { 
-      roughness: 0.05, 
-      metalness: 0.95, 
-      transmission: 0,
-      clearcoat: 0.1,
-      clearcoatRoughness: 0.05,
-      sheen: 0.0,
-      sheenRoughness: 1.0,
-      emissive: 0x000000,
-      emissiveIntensity: 0
-    }
-  },
-  { 
-    value: 'wood_pla', 
-    label: '木纹PLA', 
-    color: 0x8B4513,
-    properties: { 
-      roughness: 0.95, 
-      metalness: 0.0, 
-      transmission: 0,
-      clearcoat: 0.0,
-      clearcoatRoughness: 0.1,
-      sheen: 0.0,
-      sheenRoughness: 1.0,
-      emissive: 0x000000,
-      emissiveIntensity: 0
-    }
-  },
-  { 
-    value: 'carbon_fiber', 
-    label: '碳纤维PLA', 
-    color: 0x2F2F2F,
-    properties: { 
-      roughness: 0.3, 
-      metalness: 0.8, 
-      transmission: 0,
-      clearcoat: 0.9,
-      clearcoatRoughness: 0.1,
-      sheen: 0.7,
-      sheenRoughness: 0.2,
-      emissive: 0x000000,
-      emissiveIntensity: 0
-    }
-  },
-  { 
-    value: 'transparent_pla', 
-    label: '透明PLA', 
-    color: 0xFFFFFF,
-    properties: { 
-      roughness: 0.1, 
-      metalness: 0.0, 
-      transmission: 0.8,
-      clearcoat: 0.9,
-      clearcoatRoughness: 0.05,
-      sheen: 0.0,
-      sheenRoughness: 1.0,
-      emissive: 0x000000,
-      emissiveIntensity: 0
-    }
-  },
-];
+}));
+
+// 注释: 旧材质数据已替换为共享数据源，现在使用 @/data/materials
 
 // 获取模型详情数据（模拟API请求）
 const getModelDetail = async (id: string): Promise<ModelDetail> => {

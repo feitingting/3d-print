@@ -22,12 +22,29 @@
 
 .search-container {
   margin-bottom: 32px;
+  display: flex;
+  justify-content: center;
 }
 
 .search-input {
   max-width: 600px;
-  margin: 0 auto;
-  display: block;
+  width: 100%;
+  
+  :global(.ant-input) {
+    height: 44px !important;
+    line-height: 22px !important;
+  }
+  
+  :global(.ant-input-affix-wrapper) {
+    height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+  
+  :global(.ant-input-prefix) {
+    display: flex !important;
+    align-items: center !important;
+  }
 }
 
 .model-grid {

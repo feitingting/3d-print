@@ -16,6 +16,7 @@ import zhCN from 'antd/lib/locale/zh_CN';
 import { PrinterOutlined, ToolOutlined, BulbOutlined, UserOutlined, LockOutlined, MailOutlined, FileTextOutlined, LogoutOutlined } from '@ant-design/icons';
 import ProLayout from '@ant-design/pro-layout';
 import styles from './index.module.scss';
+import '../global.css';
 // 在文件顶部导入新增的API
 import { userLogin, userRegister, sendVerificationCode } from '@/api/auth';
 import { generateCaptcha, isValidEmail, sendVerificationEmail } from '@/utils/emailService';
@@ -330,8 +331,9 @@ const HomePage: React.FC = (props: any) => {
             menuDataRender={() => [
               { path: '/home', name: '首页' },
               { path: '/online-quotation', name: '在线报价' },
+              { path: '/materials', name: '材料指南' },
               { path: '/industryCases', name: '行业案例' },
-              { path: '/software', name: '3D软件' },
+              // { path: '/software', name: '3D软件' },
               { path: '/model-library', name: '模型库' },
               { path: '/about', name: '关于我们' }
             ]}

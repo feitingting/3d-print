@@ -1,0 +1,298 @@
+.materialsPage {
+  min-height: 100vh;
+  background: #f9fafb;
+
+  .pageHeader {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 80px 24px 60px;
+    text-align: center;
+    color: white;
+
+    .headerContent {
+      max-width: 800px;
+      margin: 0 auto;
+
+      h1 {
+        font-size: 48px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        color: white;
+      }
+
+      p {
+        font-size: 18px;
+        margin-bottom: 40px;
+        opacity: 0.95;
+      }
+
+      .searchBar {
+        max-width: 600px;
+        margin: 0 auto;
+
+        :global(.ant-input-affix-wrapper) {
+          border-radius: 28px;
+          padding: 12px 24px;
+          font-size: 16px;
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+      }
+    }
+  }
+
+  .contentWrapper {
+    max-width: 1400px;
+    margin: -40px auto 0;
+    padding: 0 24px 80px;
+    position: relative;
+    z-index: 10;
+
+    .materialTabs {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+      :global(.ant-tabs-nav) {
+        margin-bottom: 32px;
+      }
+
+      :global(.ant-tabs-tab) {
+        font-size: 16px;
+        font-weight: 500;
+        padding: 12px 24px;
+      }
+    }
+
+    .materialCard {
+      height: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+
+      &:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 32px rgba(102, 126, 234, 0.15);
+        border-color: #667eea;
+      }
+
+      .cardCover {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+        background: #f5f5f5;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.3s ease;
+        }
+
+        &:hover img {
+          transform: scale(1.05);
+        }
+
+        .priceTag {
+          position: absolute;
+          top: 12px;
+          right: 12px;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          padding: 6px 16px;
+          border-radius: 20px;
+          font-weight: 600;
+          font-size: 14px;
+          box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+      }
+
+      h3 {
+        font-size: 20px;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 4px;
+      }
+
+      .nameEn {
+        font-size: 14px;
+        color: #999;
+        margin-bottom: 12px;
+        font-style: italic;
+      }
+
+      .description {
+        font-size: 14px;
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 16px;
+      }
+
+      .properties,
+      .specs,
+      .applications,
+      .colors {
+        margin-bottom: 16px;
+
+        h4 {
+          font-size: 14px;
+          font-weight: 600;
+          color: #333;
+          margin-bottom: 8px;
+        }
+      }
+
+      .tags,
+      .colorTags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .specs ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+          font-size: 13px;
+          color: #666;
+          padding: 4px 0;
+          border-bottom: 1px solid #f0f0f0;
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          strong {
+            color: #333;
+            display: inline-block;
+            min-width: 80px;
+          }
+        }
+      }
+
+      .applications p {
+        font-size: 13px;
+        color: #666;
+        line-height: 1.6;
+      }
+
+      .quoteButton {
+        margin-top: 16px;
+        height: 40px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        font-weight: 600;
+
+        &:hover {
+          background: linear-gradient(135deg, #5568d3 0%, #6a3e8d 100%);
+          box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+      }
+    }
+  }
+
+  .bottomCta {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 80px 24px;
+    text-align: center;
+    color: white;
+
+    h2 {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: white;
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 32px;
+      opacity: 0.95;
+    }
+
+    button {
+      height: 56px;
+      font-size: 18px;
+      padding: 0 48px;
+      border-radius: 28px;
+      background: white;
+      color: #667eea;
+      border: none;
+      font-weight: 600;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+        background: #f0f0f0;
+        color: #667eea;
+      }
+    }
+  }
+}
+
+// 移动端适配
+@media (max-width: 768px) {
+  .materialsPage {
+    .pageHeader {
+      padding: 60px 16px 40px;
+
+      .headerContent {
+        h1 {
+          font-size: 32px;
+        }
+
+        p {
+          font-size: 16px;
+          margin-bottom: 24px;
+        }
+      }
+    }
+
+    .contentWrapper {
+      margin-top: -30px;
+      padding: 0 16px 60px;
+
+      .materialTabs {
+        padding: 16px;
+
+        :global(.ant-tabs-tab) {
+          font-size: 14px;
+          padding: 8px 16px;
+        }
+      }
+
+      .materialCard {
+        .cardCover {
+          height: 180px;
+        }
+
+        h3 {
+          font-size: 18px;
+        }
+      }
+    }
+
+    .bottomCta {
+      padding: 60px 16px;
+
+      h2 {
+        font-size: 28px;
+      }
+
+      p {
+        font-size: 16px;
+        margin-bottom: 24px;
+      }
+
+      button {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+  }
+}
+

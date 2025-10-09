@@ -2,6 +2,376 @@
   min-height: 100vh;
   overflow-x: hidden;
 
+  // Hero Section样式
+  .heroSection {
+    background-image: url('./1.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 120px 24px 80px;
+    position: relative;
+    overflow: hidden;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to right, 
+        rgba(192, 192, 192, 0.92) 0%, 
+        rgba(211, 211, 211, 0.75) 25%, 
+        rgba(220, 220, 220, 0.60) 50%, 
+        rgba(235, 235, 235, 0.40) 100%, 
+        transparent 100%);
+      z-index: 1;
+    }
+
+    .heroContent {
+      max-width: 80%;
+      width: 100%;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      text-align: left;
+    }
+
+    .heroTitle {
+      font-size: 56px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 24px;
+      line-height: 1.2;
+      animation: fadeInUp 0.8s ease;
+      text-shadow: 0 2px 4px rgba(255, 255, 255, 0.3);
+
+      .highlight {
+        color: #0ea5e9;
+        position: relative;
+        
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 8px;
+          left: 0;
+          right: 0;
+          height: 12px;
+          background: rgba(14, 165, 233, 0.2);
+          z-index: -1;
+        }
+      }
+    }
+
+    .heroSubtitle {
+      font-size: 24px;
+      color: #334155;
+      margin-bottom: 16px;
+      animation: fadeInUp 0.8s ease 0.2s backwards;
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+    }
+
+    .heroDescription {
+      font-size: 18px;
+      color: #475569;
+      margin-bottom: 48px;
+      animation: fadeInUp 0.8s ease 0.3s backwards;
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+    }
+
+    .ctaButtons {
+      display: flex;
+      justify-content: flex-start;
+      gap: 24px;
+      margin-bottom: 64px;
+      animation: fadeInUp 0.8s ease 0.4s backwards;
+
+      .primaryCta {
+        height: 56px;
+        font-size: 18px;
+        padding: 0 48px;
+        border-radius: 28px;
+        background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+        border-color: #0ea5e9;
+        color: white;
+        font-weight: 600;
+        box-shadow: 0 8px 24px rgba(14, 165, 233, 0.3);
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 12px 32px rgba(14, 165, 233, 0.4);
+          background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+          border-color: #0284c7;
+          color: white;
+        }
+      }
+
+      .secondaryCta {
+        height: 56px;
+        font-size: 18px;
+        padding: 0 48px;
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.8);
+        border: 2px solid rgba(71, 85, 105, 0.3);
+        color: #1e293b;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.95);
+          border-color: rgba(71, 85, 105, 0.5);
+          color: #0ea5e9;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+      }
+    }
+
+    .stats {
+      animation: fadeInUp 0.8s ease 0.5s backwards;
+      max-width: 800px;
+
+      .statItem {
+        text-align: center;
+        padding: 24px 16px;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 12px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(148, 163, 184, 0.3);
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.85);
+          transform: translateY(-4px);
+          border-color: rgba(14, 165, 233, 0.4);
+          box-shadow: 0 8px 16px rgba(14, 165, 233, 0.15);
+        }
+
+        .statValue {
+          font-size: 36px;
+          font-weight: 700;
+          color: #0ea5e9;
+          margin-bottom: 8px;
+          text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+        }
+
+        .statLabel {
+          font-size: 14px;
+          color: #475569;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  // 流程步骤样式
+  .processSteps {
+    .stepCard {
+      text-align: center;
+      padding: 40px 24px;
+      border-radius: 12px;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      height: 100%;
+
+      &:hover {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        transform: translateY(-8px);
+      }
+
+      .stepNumber {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        font-size: 32px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 24px;
+      }
+
+      h3 {
+        font-size: 22px;
+        color: #333;
+        margin-bottom: 16px;
+        font-weight: 600;
+      }
+
+      p {
+        font-size: 15px;
+        color: #666;
+        line-height: 1.8;
+      }
+    }
+  }
+
+  // 材料快速访问卡片
+  .materialQuickAccess {
+    cursor: pointer;
+    border-radius: 16px;
+    border: 2px solid #e5e7eb;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
+
+    &:hover {
+      border-color: #667eea;
+      box-shadow: 0 12px 32px rgba(102, 126, 234, 0.15);
+      transform: translateY(-4px);
+    }
+
+    :global(.ant-card-body) {
+      padding: 40px;
+    }
+  }
+
+  // 优势展示样式 - 左右交替布局
+  .advantagesContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+
+    .advantageRow {
+      margin-bottom: 80px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .advantageImageWrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+
+      .advantageIconLarge {
+        width: 280px;
+        height: 280px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+          animation: rotate 10s linear infinite;
+        }
+
+        :global(.anticon) {
+          font-size: 120px;
+          color: white;
+          position: relative;
+          z-index: 1;
+        }
+
+        &:hover {
+          transform: scale(1.05) rotate(5deg);
+          box-shadow: 0 25px 80px rgba(102, 126, 234, 0.4);
+        }
+      }
+    }
+
+    .advantageContentCard {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+
+      &:hover {
+        box-shadow: 0 12px 40px rgba(102, 126, 234, 0.15);
+        transform: translateY(-4px);
+      }
+
+      .advantageNumber {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 80px;
+        font-weight: 900;
+        color: rgba(102, 126, 234, 0.08);
+        line-height: 1;
+      }
+
+      h3 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 12px;
+        line-height: 1.3;
+        position: relative;
+        z-index: 1;
+      }
+
+      h4 {
+        font-size: 16px;
+        font-weight: 500;
+        color: #667eea;
+        margin-bottom: 20px;
+        line-height: 1.4;
+      }
+
+      p {
+        font-size: 15px;
+        color: #666;
+        line-height: 1.9;
+        margin-bottom: 24px;
+        text-align: justify;
+      }
+
+      .highlights {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+
+        span {
+          background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+          color: #667eea;
+          padding: 8px 16px;
+          border-radius: 20px;
+          font-size: 14px;
+          font-weight: 500;
+          transition: all 0.3s ease;
+
+          &:hover {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+            transform: translateY(-2px);
+          }
+        }
+      }
+    }
+  }
+
   .carouselText {
     position: absolute;
     left: 10%;
@@ -51,12 +421,37 @@
   .section {
     width: 1600px;
     margin: 0 auto;
-    padding: 24px 0px;
+    padding: 80px 24px;
+    background: #f9fafb;
+
+    &:nth-child(even) {
+      background: white;
+    }
 
     &Title {
       text-align: center;
-      font-size: 28px;
-      margin-bottom: 48px;
+      font-size: 36px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+      position: relative;
+      
+      &::after {
+        content: '';
+        display: block;
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        margin: 24px auto 0;
+        border-radius: 2px;
+      }
+    }
+
+    &Subtitle {
+      text-align: center;
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 64px;
     }
 
     .caseGrid {
@@ -221,8 +616,193 @@
   }
 }
 
+@keyframes fadeInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 // 移动端适配
 @media (max-width: 768px) {
+  .homeLayout {
+    .heroSection {
+      padding: 80px 16px 60px;
+      min-height: 500px;
+
+      &::before {
+        background: linear-gradient(to bottom, 
+          rgba(192, 192, 192, 0.92) 0%, 
+          rgba(211, 211, 211, 0.75) 40%, 
+          rgba(235, 235, 235, 0.50) 70%, 
+          transparent 100%);
+      }
+
+      .heroContent {
+        text-align: left;
+      }
+
+      .heroTitle {
+        font-size: 32px;
+        margin-bottom: 16px;
+      }
+
+      .heroSubtitle {
+        font-size: 18px;
+        margin-bottom: 12px;
+      }
+
+      .heroDescription {
+        font-size: 16px;
+        margin-bottom: 32px;
+      }
+
+      .ctaButtons {
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 48px;
+        align-items: flex-start;
+
+        .primaryCta,
+        .secondaryCta {
+          width: 100%;
+          max-width: 300px;
+          height: 48px;
+          font-size: 16px;
+          padding: 0 32px;
+        }
+      }
+
+      .stats {
+        .statItem {
+          padding: 16px 8px;
+
+          .statValue {
+            font-size: 28px;
+          }
+
+          .statLabel {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+
+    .section {
+      width: 100%;
+      padding: 60px 16px;
+
+      &Title {
+        font-size: 28px;
+      }
+
+      &Subtitle {
+        font-size: 16px;
+        margin-bottom: 40px;
+      }
+    }
+
+    .processSteps {
+      .stepCard {
+        padding: 32px 20px;
+
+        .stepNumber {
+          width: 56px;
+          height: 56px;
+          font-size: 28px;
+          margin-bottom: 20px;
+        }
+
+        h3 {
+          font-size: 20px;
+        }
+
+        p {
+          font-size: 14px;
+        }
+      }
+    }
+
+    .advantagesContainer {
+      .advantageRow {
+        margin-bottom: 60px;
+
+        // 移动端图文上下排列
+        > :global(.ant-col) {
+          &:first-child {
+            order: 1;
+          }
+          &:last-child {
+            order: 2;
+          }
+        }
+      }
+
+      .advantageImageWrapper {
+        padding: 20px;
+
+        .advantageIconLarge {
+          width: 200px;
+          height: 200px;
+
+          :global(.anticon) {
+            font-size: 80px !important;
+          }
+        }
+      }
+
+      .advantageContentCard {
+        padding: 32px 24px;
+
+        .advantageNumber {
+          font-size: 60px;
+          top: 16px;
+          right: 16px;
+        }
+
+        h3 {
+          font-size: 22px;
+          margin-bottom: 10px;
+        }
+
+        h4 {
+          font-size: 15px;
+          margin-bottom: 16px;
+        }
+
+        p {
+          font-size: 14px;
+          line-height: 1.8;
+          margin-bottom: 20px;
+        }
+
+        .highlights {
+          gap: 8px;
+
+          span {
+            font-size: 13px;
+            padding: 6px 12px;
+          }
+        }
+      }
+    }
+  }
+
   .caseCardOverlay {
     border-radius: 4px;
   }
@@ -266,6 +846,43 @@
       }
     }
   }
+
+  .sectionDark {
+    padding: 60px 16px;
+  }
+
+  .equipmentGrid {
+    padding: 0 16px;
+  }
+
+}
+
+.sectionDark {
+  // background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  padding: 80px 24px;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid2" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid2)" /></svg>');
+    opacity: 0.5;
+  }
+
+  h2 {
+    // color: white !important;
+    position: relative;
+    z-index: 1;
+
+    &::after {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    }
+  }
 }
 
 .equipmentGrid {
@@ -277,20 +894,42 @@
 }
 
 .equipmentCard {
-  background: #fff;
-  border-radius: 8px;
-  padding: 24px;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s;
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transition: all 0.4s ease;
+  height: 100%;
+  border: 2px solid rgba(102, 126, 234, 0.1);
+  position: relative;
+  overflow: hidden;
 
-  &:hover {
-    transform: translateY(-4px);
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
   }
 
+
+
   h3 {
-    font-size: 18px;
+    font-size: 22px;
     color: #1890ff;
-    margin-bottom: 16px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 12px;
+
   }
 
   img {
@@ -336,4 +975,7 @@
     opacity: 0;
     transform: scale(0.75);
   }
+}.sectionTitle{
+  // font-size: 32px !important;
 }
+
