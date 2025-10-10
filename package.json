@@ -3,14 +3,11 @@
   "scripts": {
     "start": "export NODE_OPTIONS=--openssl-legacy-provider && umi dev",
     "build": "export NODE_OPTIONS=--openssl-legacy-provider && umi build",
-    "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "test": "umi-test",
     "test:coverage": "umi-test --coverage",
-    "docker:build": "docker build --platform linux/amd64 -f frontend/Dockerfile -t 3d-print .",
-    "docker:build:fast": "DOCKER_BUILDKIT=1 docker build --platform linux/amd64 -f frontend/Dockerfile.optimized -t 3d-print .",
-    "docker:build:no-cache": "docker build --no-cache --platform linux/amd64 -f frontend/Dockerfile -t 3d-print .",
-    "docker:run": "docker rm -f my-react-app || true && docker run -d -p 8080:80 --name my-react-app react-frontend --network=reaction-net"
+    "docker:build": "docker compose -f frontend/docker-compose.ionos.yml up -d --build",
+    "docker:run": "docker compose -f docker-compose.ionos.yml up -d"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

@@ -191,7 +191,7 @@ const OrderListPage: React.FC = () => {
       key: 'price',
       width: 100,
       render: (priceCalculation: any) => (
-        <Text strong style={{ color: '#1890ff' }}>
+        <Text strong style={{ color: '#667eea' }}>
           ¥{priceCalculation?.finalPrice?.toFixed(2) || '0.00'}
         </Text>
       )
@@ -310,7 +310,7 @@ const OrderListPage: React.FC = () => {
                   title="制作中"
                   value={orders.filter(o => o.status === 'processing').length}
                   prefix={<ClockCircleOutlined />}
-                  valueStyle={{ color: '#1890ff' }}
+                  valueStyle={{ color: '#667eea' }}
                 />
               </Card>
             </Col>
@@ -428,7 +428,7 @@ const OrderListPage: React.FC = () => {
                 ¥{selectedOrder.priceCalculation.totalCost.toFixed(2)}
               </Descriptions.Item>
               <Descriptions.Item label="最终价格" span={1}>
-                <Text strong style={{ color: '#1890ff', fontSize: '16px' }}>
+                <Text strong style={{ color: '#667eea', fontSize: '16px' }}>
                   ¥{selectedOrder.priceCalculation.finalPrice.toFixed(2)}
                 </Text>
               </Descriptions.Item>

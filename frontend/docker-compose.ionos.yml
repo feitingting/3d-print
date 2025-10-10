@@ -1,0 +1,31 @@
+services:
+  # 前端Nginx服务（IONOS SSL配置）
+  frontend:
+    build:
+      context: ..
+      dockerfile: ./frontend/Dockerfile
+    container_name: maphium-frontend-ssl
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      # SSL证书挂载（只读）
+      - ./ssl-certs:/etc/nginx/ssl:ro
+      # Nginx配置挂载（只读）
+      - ./nginx.ionos.conf:/etc/nginx/conf.d/default.conf:ro
+    restart: unless-stopped
+    networks:
+      - maphium-network
+    environment:
+      - TZ=Europe/Berlin
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  maphium-network:
+    driver: bridge
+

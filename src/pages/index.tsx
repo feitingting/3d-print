@@ -9,11 +9,11 @@ import {
   HistoryOutlined,
   HeatMapOutlined,
 } from '@ant-design/icons';
-import { history } from 'umi';
+import { history, useLocation } from 'umi';
 // 在根组件添加语言配置
 import { Carousel, Card, Row, Col, Layout, Menu, Button, Image, ConfigProvider, Modal, Form, Input, Tabs, message, Dropdown, Avatar } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
-import { PrinterOutlined, ToolOutlined, BulbOutlined, UserOutlined, LockOutlined, MailOutlined, FileTextOutlined, LogoutOutlined } from '@ant-design/icons';
+import { PrinterOutlined, ToolOutlined, BulbOutlined, UserOutlined, LockOutlined, MailOutlined, FileTextOutlined, LogoutOutlined, GlobalOutlined } from '@ant-design/icons';
 import ProLayout from '@ant-design/pro-layout';
 import styles from './index.module.scss';
 import '../global.css';
@@ -21,12 +21,15 @@ import '../global.css';
 import { userLogin, userRegister, sendVerificationCode } from '@/api/auth';
 import { generateCaptcha, isValidEmail, sendVerificationEmail } from '@/utils/emailService';
 import axios from 'axios';
+import { useTranslation, localeNames, type Locale } from '@/utils/i18n';
 
 const { Header, Sider, Content, Footer } = Layout;
 const { TabPane } = Tabs;
 
 const HomePage: React.FC = (props: any) => {
   const [loginModalVisible, setLoginModalVisible] = useState(false);
+  const { t, locale, setLocale } = useTranslation();
+  const location = useLocation();
 
   // 邮箱验证规则
   const emailRules = [
@@ -319,7 +322,7 @@ const HomePage: React.FC = (props: any) => {
                   display: 'flex', flexDirection: 'column', alignItems: 'center',
                   justifyContent: 'space-between', paddingTop: '5px', paddingBottom: '2px'
                 }}>
-                <img src={'http://maphium.com/assets/home/logo.jpg'} style={{ height: '80px' }} />
+                <img src={'/assets/home/logo.jpg'} style={{ height: '80px' }} />
                 {/* <span style={{ fontSize: '12px', lineHeight: '12px', color: '#000', marginTop: '2px', fontWeight: 600 }}>Dream it, Print it.</span> */}
               </div>
             )}
@@ -327,15 +330,14 @@ const HomePage: React.FC = (props: any) => {
             style={{ height: '80px' }} 
             layout="top"  // 修改布局模式为顶部导航
             fixedHeader={true} // 固定导航栏
-            location={{ pathname: '/' }}
+            location={location}
             menuDataRender={() => [
-              { path: '/home', name: '首页' },
-              { path: '/online-quotation', name: '在线报价' },
-              { path: '/materials', name: '材料指南' },
-              { path: '/industryCases', name: '行业案例' },
-              // { path: '/software', name: '3D软件' },
-              { path: '/model-library', name: '模型库' },
-              { path: '/about', name: '关于我们' }
+              { path: '/home', name: t('nav.home') },
+              { path: '/online-quotation', name: t('nav.quote') },
+              { path: '/materials', name: t('nav.materials') },
+              { path: '/industryCases', name: t('nav.cases') },
+              { path: '/model-library', name: t('nav.library') },
+              { path: '/about', name: t('nav.about') }
             ]}
             menuItemRender={(item, dom) => (
               <div
@@ -393,16 +395,37 @@ const HomePage: React.FC = (props: any) => {
 
               return (
                 <div className={styles.loginButtonGroup}>
+                  {/* 语言切换 */}
+                  <Dropdown
+                    overlay={
+                      <Menu selectedKeys={[locale]}>
+                        {(Object.keys(localeNames) as Locale[]).map(key => (
+                          <Menu.Item 
+                            key={key}
+                            onClick={() => setLocale(key)}
+                          >
+                            {localeNames[key]}
+                          </Menu.Item>
+                        ))}
+                      </Menu>
+                    }
+                    placement="bottomRight"
+                  >
+                    <Button icon={<GlobalOutlined />} size="large" style={{ marginRight: '12px' }}>
+                      {localeNames[locale]}
+                    </Button>
+                  </Dropdown>
+
                   <Button
                     className={styles.loginButton}
                     size="large"
                     onClick={showLoginModal}
                   >
-                    登录/注册
+                    {t('nav.login')}
                   </Button>
                   <Button size="large"
                     onClick={() => history.push('/more')}
-                    type="primary">在线下单</Button>
+                    type="primary">{t('nav.order')}</Button>
                 </div>
               );
             }}

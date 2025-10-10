@@ -218,7 +218,7 @@ const PaymentPage = () => {
                                         href={orderDetails.modelFileUrl} 
                                         target="_blank" 
                                         rel="noopener noreferrer"
-                                        style={{ color: '#1890ff' }}
+                                        style={{ color: '#667eea' }}
                                     >
                                         下载模型文件
                                     </a>
@@ -268,7 +268,7 @@ const PaymentPage = () => {
                                     value={orderDetails.priceCalculation.finalPrice}
                                     precision={2}
                                     prefix="¥"
-                                    valueStyle={{ color: '#1890ff', fontSize: '24px' }}
+                                    valueStyle={{ color: '#667eea', fontSize: '24px' }}
                                 />
                             </div>
 

@@ -779,7 +779,7 @@ const OnlineQuotation: React.FC = () => {
                                                             <span>{material.label}</span>
                                                         </div>
                                                         {materialData && (
-                                                            <span style={{ fontSize: '12px', color: '#1890ff', fontWeight: 500 }}>
+                                                            <span style={{ fontSize: '12px', color: '#667eea', fontWeight: 500 }}>
                                                                 {materialData.price}
                                                             </span>
                                                         )}
@@ -822,7 +822,7 @@ const OnlineQuotation: React.FC = () => {
                                                     {materialData && (
                                                         <span style={{ 
                                                             fontSize: '12px', 
-                                                            color: '#1890ff', 
+                                                            color: '#667eea', 
                                                             fontWeight: 500,
                                                             flexShrink: 0,
                                                             display: 'flex',
@@ -866,8 +866,8 @@ const OnlineQuotation: React.FC = () => {
                                         margin: '8px 0',
                                         display: 'block'
                                     }}
-                                    trackStyle={{ backgroundColor: '#1890ff' }}
-                                    handleStyle={{ borderColor: '#1890ff' }}
+                                    trackStyle={{ backgroundColor: '#667eea' }}
+                                    handleStyle={{ borderColor: '#667eea' }}
                                     railStyle={{ backgroundColor: '#f5f5f5' }}
                                 />
                             </Form.Item>
@@ -979,10 +979,16 @@ const OnlineQuotation: React.FC = () => {
                                     <div className="preview-wrapper" ref={previewRef} style={{ height: '500px' }}>
                                 {!previewVisible ? (
                                     <Alert
-                                        message="模型预览区"
-                                        description="上传STL文件后可在此处预览3D模型，并实时查看参数变化效果"
+                                        message={<span style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px' }}>模型预览区</span>}
+                                        description={<span style={{ color: '#ffffff' }}>上传STL文件后可在此处预览3D模型，并实时查看参数变化效果</span>}
                                         type="info"
                                         showIcon
+                                        className="preview-alert-custom"
+                                        style={{
+                                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                            border: 'none',
+                                            color: '#ffffff'
+                                        }}
                                     />
                                 ) : loadingModel ? (
                                     <div className="loading-overlay">
@@ -1045,7 +1051,7 @@ const OnlineQuotation: React.FC = () => {
                                                         <span>表面质量：</span>
                                                         <span style={{ 
                                                             color: processData.properties.surfaceQuality === 'very_high' ? '#52c41a' : 
-                                                                   processData.properties.surfaceQuality === 'high' ? '#1890ff' : 
+                                                                   processData.properties.surfaceQuality === 'high' ? '#667eea' : 
                                                                    processData.properties.surfaceQuality === 'medium' ? '#faad14' : '#f5222d'
                                                         }}>
                                                             {processData.properties.surfaceQuality === 'very_high' && '🎯 超高'}
@@ -1107,7 +1113,7 @@ const OnlineQuotation: React.FC = () => {
                                                     value={priceCalculation.finalPrice}
                                                     precision={2}
                                                     prefix="¥"
-                                                    valueStyle={{ color: '#1890ff', fontSize: '24px' }}
+                                                    valueStyle={{ color: '#667eea', fontSize: '24px' }}
                                                 />
                                             </Col>
                                         </Row>

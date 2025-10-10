@@ -112,7 +112,107 @@
 .ant-input-focused,
 .ant-select-focused .ant-select-selector,
 .ant-picker-focused {
-  border-color: #40a9ff !important;
-  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1) !important;
+  border-color: #667eea !important;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1) !important;
+}
+
+/* 统一主题色 - 覆盖Ant Design默认蓝色 */
+.ant-btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  border-color: #667eea !important;
+}
+
+.ant-btn-primary:hover,
+.ant-btn-primary:focus {
+  background: linear-gradient(135deg, #5568d3 0%, #6a3e8d 100%) !important;
+  border-color: #5568d3 !important;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #667eea !important;
+}
+
+.ant-tabs-ink-bar {
+  background: #667eea !important;
+}
+
+/* 导航栏菜单统一主题色 */
+/* ProLayout 顶部导航菜单 */
+.ant-pro-top-nav-header-menu .ant-menu-item-selected,
+.ant-pro-top-nav-header-menu .ant-menu-item-selected a,
+.ant-pro-top-nav-header-menu .ant-menu-submenu-selected {
+  color: #667eea !important;
+}
+
+.ant-pro-top-nav-header-menu .ant-menu-item:hover,
+.ant-pro-top-nav-header-menu .ant-menu-item:hover a,
+.ant-pro-top-nav-header-menu .ant-menu-submenu:hover,
+.ant-pro-top-nav-header-menu .ant-menu-item-active,
+.ant-pro-top-nav-header-menu .ant-menu-item-active a {
+  color: #667eea !important;
+}
+
+/* 导航下划线 */
+.ant-pro-top-nav-header-menu .ant-menu-item-selected::after,
+.ant-pro-top-nav-header-menu .ant-menu-item:hover::after,
+.ant-pro-top-nav-header-menu .ant-menu-item-active::after {
+  border-bottom-color: #667eea !important;
+}
+
+/* 通用菜单组件 */
+.ant-menu-light .ant-menu-item-selected,
+.ant-menu-light .ant-menu-item-selected a {
+  color: #667eea !important;
+}
+
+.ant-menu-light .ant-menu-item:hover,
+.ant-menu-light .ant-menu-item-active {
+  color: #667eea !important;
+}
+
+.ant-menu-light .ant-menu-item:hover a,
+.ant-menu-light .ant-menu-item-active a {
+  color: #667eea !important;
+}
+
+/* 水平菜单下划线 */
+.ant-menu-horizontal > .ant-menu-item-selected::after,
+.ant-menu-horizontal > .ant-menu-item:hover::after,
+.ant-menu-horizontal > .ant-menu-item-active::after,
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-selected::after,
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item:hover::after,
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-active::after {
+  border-bottom-color: #667eea !important;
+}
+
+/* 模型预览区自定义Alert样式 */
+.preview-alert-custom.ant-alert {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  border: none !important;
+}
+
+.preview-alert-custom .ant-alert-message {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+}
+
+.preview-alert-custom .ant-alert-description {
+  color: #ffffff !important;
+}
+
+.preview-alert-custom .ant-alert-icon,
+.preview-alert-custom .anticon {
+  color: #ffffff !important;
+}
+
+.preview-alert-custom .ant-alert-icon svg,
+.preview-alert-custom .anticon svg {
+  fill: #ffffff !important;
+}
+
+.preview-alert-custom span,
+.preview-alert-custom div {
+  color: #ffffff !important;
 }
 

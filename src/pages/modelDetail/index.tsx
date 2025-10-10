@@ -54,9 +54,9 @@ const getModelDetail = async (id: string): Promise<ModelDetail> => {
     category: '工业设计',
     description: '这是一个高精度3D模型，适用于各种工业设计场景。',
     images: [
-      `http://maphium.com/assets/library/${id}.jpg`,
-      `http://maphium.com/assets/library/${id}.jpg`,
-      `http://maphium.com/assets/library/${id}.jpg`
+      `/assets/library/${id}.jpg`,
+      `/assets/library/${id}.jpg`,
+      `/assets/library/${id}.jpg`
     ]
   };
 };
@@ -313,7 +313,7 @@ const ModelDetail: React.FC = () => {
     // 加载STL模型
     // const loader = new STLLoader();
     // try {
-    //   const stlPath = require(`http://maphium.com/assets/library/${modelId}.stl`);
+    //   const stlPath = require(`/assets/library/${modelId}.stl`);
 
     //   loader.load(stlPath, (geometry) => {
     //     // 获取材质颜色
@@ -684,8 +684,8 @@ const ModelDetail: React.FC = () => {
                           margin: '8px 0',
                           display: 'block'
                         }}
-                        trackStyle={{ backgroundColor: '#1890ff' }}
-                        handleStyle={{ borderColor: '#1890ff' }}
+                        trackStyle={{ backgroundColor: '#667eea' }}
+                        handleStyle={{ borderColor: '#667eea' }}
                         railStyle={{ backgroundColor: '#f5f5f5' }}
                       />
                     </div>

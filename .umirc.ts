@@ -167,6 +167,13 @@ export default defineConfig({
         '^/webapp': '', // 去除路径中的/webapp前缀
       },
     },
+    '/assets/': {
+      target: 'http://maphium.com/assets', // 后端服务地址
+      changeOrigin: true,
+      pathRewrite: {
+        '^/assets': '', // 去除路径中的/webapp前缀
+      },
+    },
   },
 
   // 开启 CSS Modules

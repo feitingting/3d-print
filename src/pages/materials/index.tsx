@@ -4,6 +4,7 @@ import { SearchOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import { history } from 'umi';
 import styles from './index.module.scss';
 import { MATERIALS, getMaterialsByCategory } from '@/data/materials';
+import { useTranslation } from '@/utils/i18n';
 
 const { TabPane } = Tabs;
 
@@ -25,7 +26,7 @@ const _oldMaterialsData = {
       applications: ['原型制作', '教育模型', '装饰品', '日用品'],
       colors: ['白色', '黑色', '红色', '蓝色', '绿色', '黄色', '透明'],
       price: '¥2-5/克',
-      image: 'http://maphium.com/assets/materials/pla.jpg',
+      image: '/assets/materials/pla.jpg',
       specs: {
         density: '1.24 g/cm³',
         tensile: '50 MPa',
@@ -41,7 +42,7 @@ const _oldMaterialsData = {
       applications: ['功能原型', '工具', '汽车零件', '外壳'],
       colors: ['白色', '黑色', '灰色', '红色', '蓝色'],
       price: '¥3-6/克',
-      image: 'http://maphium.com/assets/materials/abs.jpg',
+      image: '/assets/materials/abs.jpg',
       specs: {
         density: '1.04 g/cm³',
         tensile: '40 MPa',
@@ -57,7 +58,7 @@ const _oldMaterialsData = {
       applications: ['食品容器', '医疗器械', '防护用品', '功能件'],
       colors: ['透明', '白色', '黑色', '蓝色', '绿色'],
       price: '¥4-7/克',
-      image: 'http://maphium.com/assets/materials/petg.jpg',
+      image: '/assets/materials/petg.jpg',
       specs: {
         density: '1.27 g/cm³',
         tensile: '53 MPa',
@@ -73,7 +74,7 @@ const _oldMaterialsData = {
       applications: ['功能件', '齿轮', '轴承', '管道接头'],
       colors: ['自然白', '黑色', '灰色'],
       price: '¥15-25/克',
-      image: 'http://maphium.com/assets/materials/nylon.jpg',
+      image: '/assets/materials/nylon.jpg',
       specs: {
         density: '1.01 g/cm³',
         tensile: '48 MPa',
@@ -89,7 +90,7 @@ const _oldMaterialsData = {
       applications: ['鞋垫', '手机壳', '密封件', '缓冲垫'],
       colors: ['透明', '黑色', '红色', '蓝色'],
       price: '¥8-12/克',
-      image: 'http://maphium.com/assets/materials/tpu.jpg',
+      image: '/assets/materials/tpu.jpg',
       specs: {
         density: '1.20 g/cm³',
         tensile: '26 MPa',
@@ -107,7 +108,7 @@ const _oldMaterialsData = {
       applications: ['精密模型', '珠宝原型', '牙科模型', '手办'],
       colors: ['白色', '灰色', '黑色', '透明'],
       price: '¥10-15/克',
-      image: 'http://maphium.com/assets/materials/resin.jpg',
+      image: '/assets/materials/resin.jpg',
       specs: {
         density: '1.15 g/cm³',
         tensile: '60 MPa',
@@ -123,7 +124,7 @@ const _oldMaterialsData = {
       applications: ['功能原型', '卡扣件', '夹具', '工具'],
       colors: ['黑色', '灰色'],
       price: '¥15-20/克',
-      image: 'http://maphium.com/assets/materials/tough-resin.jpg',
+      image: '/assets/materials/tough-resin.jpg',
       specs: {
         density: '1.17 g/cm³',
         tensile: '55 MPa',
@@ -139,7 +140,7 @@ const _oldMaterialsData = {
       applications: ['密封圈', '软管', '防震垫', '可穿戴设备'],
       colors: ['透明', '黑色'],
       price: '¥18-25/克',
-      image: 'http://maphium.com/assets/materials/flexible-resin.jpg',
+      image: '/assets/materials/flexible-resin.jpg',
       specs: {
         density: '1.10 g/cm³',
         tensile: '8 MPa',
@@ -157,7 +158,7 @@ const _oldMaterialsData = {
       applications: ['医疗器械', '航空航天', '工具', '珠宝'],
       colors: ['金属银色'],
       price: '¥80-150/克',
-      image: 'http://maphium.com/assets/materials/316l.jpg',
+      image: '/assets/materials/316l.jpg',
       specs: {
         density: '7.99 g/cm³',
         tensile: '485 MPa',
@@ -173,7 +174,7 @@ const _oldMaterialsData = {
       applications: ['航空航天', '汽车零件', '散热器', '结构件'],
       colors: ['银灰色'],
       price: '¥60-100/克',
-      image: 'http://maphium.com/assets/materials/aluminum.jpg',
+      image: '/assets/materials/aluminum.jpg',
       specs: {
         density: '2.67 g/cm³',
         tensile: '345 MPa',
@@ -189,7 +190,7 @@ const _oldMaterialsData = {
       applications: ['航空航天', '医疗植入物', '高端部件', '赛车'],
       colors: ['银白色'],
       price: '¥200-400/克',
-      image: 'http://maphium.com/assets/materials/titanium.jpg',
+      image: '/assets/materials/titanium.jpg',
       specs: {
         density: '4.43 g/cm³',
         tensile: '895 MPa',
@@ -205,7 +206,7 @@ const _oldMaterialsData = {
       applications: ['涡轮叶片', '航空发动机', '热交换器', '化工设备'],
       colors: ['银灰色'],
       price: '¥300-500/克',
-      image: 'http://maphium.com/assets/materials/inconel.jpg',
+      image: '/assets/materials/inconel.jpg',
       specs: {
         density: '8.19 g/cm³',
         tensile: '1035 MPa',
@@ -219,6 +220,7 @@ const _oldMaterialsData = {
 const Materials: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('plastics');
+  const { t } = useTranslation();
 
   const filterMaterials = (materials: any[]) => {
     if (!searchTerm) return materials;
@@ -234,10 +236,10 @@ const Materials: React.FC = () => {
       {/* 页面头部 */}
       <div className={styles.pageHeader}>
         <div className={styles.headerContent}>
-          <h1>材料指南</h1>
-          <p>Maphium提供广泛的材料选择，包括塑料、金属以及每种材料的各种表面处理和颜色</p>
+          <h1>{t('materials.title')}</h1>
+          <p>{t('materials.subtitle')}</p>
           <Input
-            placeholder="搜索材料名称或应用场景..."
+            placeholder={t('materials.search')}
             allowClear
             size="large"
             prefix={<SearchOutlined />}
@@ -255,7 +257,7 @@ const Materials: React.FC = () => {
           size="large"
           className={styles.materialTabs}
         >
-          <TabPane tab={`塑料材料 (${materialsData.plastics.length})`} key="plastics">
+          <TabPane tab={`${t('materials.plastics')} (${materialsData.plastics.length})`} key="plastics">
             <Row gutter={[24, 24]}>
               {filterMaterials(materialsData.plastics).map((material, index) => (
                 <Col xs={24} sm={12} lg={8} key={index}>
@@ -274,7 +276,7 @@ const Materials: React.FC = () => {
                     <p className={styles.description}>{material.description}</p>
                     
                     <div className={styles.properties}>
-                      <h4>特性</h4>
+                      <h4>{t('materials.properties')}</h4>
                       <div className={styles.tags}>
                         {material.properties.map((prop: string, i: number) => (
                           <Tag key={i} icon={<CheckCircleOutlined />} color="blue">{prop}</Tag>
@@ -283,22 +285,22 @@ const Materials: React.FC = () => {
                     </div>
 
                     <div className={styles.specs}>
-                      <h4>技术参数</h4>
+                      <h4>{t('materials.specs')}</h4>
                       <ul>
-                        <li><strong>密度:</strong> {material.specs.density}</li>
-                        <li><strong>拉伸强度:</strong> {material.specs.tensile}</li>
-                        <li><strong>打印温度:</strong> {material.specs.temperature}</li>
-                        <li><strong>柔韧性:</strong> {material.specs.flexibility}</li>
+                        <li><strong>{t('materials.density')}:</strong> {material.specs.density}</li>
+                        <li><strong>{t('materials.tensile')}:</strong> {material.specs.tensile}</li>
+                        <li><strong>{t('materials.temperature')}:</strong> {material.specs.temperature}</li>
+                        <li><strong>{t('materials.flexibility')}:</strong> {material.specs.flexibility}</li>
                       </ul>
                     </div>
 
                     <div className={styles.applications}>
-                      <h4>应用场景</h4>
+                      <h4>{t('materials.applications')}</h4>
                       <p>{material.applications.join(' · ')}</p>
                     </div>
 
                     <div className={styles.colors}>
-                      <h4>可选颜色</h4>
+                      <h4>{t('materials.colors')}</h4>
                       <div className={styles.colorTags}>
                         {material.colors.map((color: string, i: number) => (
                           <Tag key={i}>{color}</Tag>
@@ -315,7 +317,7 @@ const Materials: React.FC = () => {
                       })}
                       className={styles.quoteButton}
                     >
-                      使用此材料报价
+                      {t('materials.useForQuote')}
                     </Button>
                   </Card>
                 </Col>
@@ -323,7 +325,7 @@ const Materials: React.FC = () => {
             </Row>
           </TabPane>
 
-          <TabPane tab={`树脂材料 (${materialsData.resins.length})`} key="resins">
+          <TabPane tab={`${t('materials.resins')} (${materialsData.resins.length})`} key="resins">
             <Row gutter={[24, 24]}>
               {filterMaterials(materialsData.resins).map((material, index) => (
                 <Col xs={24} sm={12} lg={8} key={index}>
@@ -342,7 +344,7 @@ const Materials: React.FC = () => {
                     <p className={styles.description}>{material.description}</p>
                     
                     <div className={styles.properties}>
-                      <h4>特性</h4>
+                      <h4>{t('materials.properties')}</h4>
                       <div className={styles.tags}>
                         {material.properties.map((prop: string, i: number) => (
                           <Tag key={i} icon={<CheckCircleOutlined />} color="purple">{prop}</Tag>
@@ -383,7 +385,7 @@ const Materials: React.FC = () => {
                       })}
                       className={styles.quoteButton}
                     >
-                      使用此材料报价
+                      {t('materials.useForQuote')}
                     </Button>
                   </Card>
                 </Col>
@@ -391,7 +393,7 @@ const Materials: React.FC = () => {
             </Row>
           </TabPane>
 
-          <TabPane tab={`金属材料 (${materialsData.metals.length})`} key="metals">
+          <TabPane tab={`${t('materials.metals')} (${materialsData.metals.length})`} key="metals">
             <Row gutter={[24, 24]}>
               {filterMaterials(materialsData.metals).map((material, index) => (
                 <Col xs={24} sm={12} lg={8} key={index}>
@@ -410,7 +412,7 @@ const Materials: React.FC = () => {
                     <p className={styles.description}>{material.description}</p>
                     
                     <div className={styles.properties}>
-                      <h4>特性</h4>
+                      <h4>{t('materials.properties')}</h4>
                       <div className={styles.tags}>
                         {material.properties.map((prop: string, i: number) => (
                           <Tag key={i} icon={<CheckCircleOutlined />} color="gold">{prop}</Tag>
@@ -451,7 +453,7 @@ const Materials: React.FC = () => {
                       })}
                       className={styles.quoteButton}
                     >
-                      使用此材料报价
+                      {t('materials.useForQuote')}
                     </Button>
                   </Card>
                 </Col>
@@ -463,14 +465,15 @@ const Materials: React.FC = () => {
 
       {/* 底部CTA */}
       <div className={styles.bottomCta}>
-        <h2>找到合适的材料了吗？</h2>
-        <p>立即上传您的3D模型，获取精准报价</p>
+        <h2>{t('materials.cta.title')}</h2>
+        <p>{t('materials.cta.desc')}</p>
         <Button 
+          style={{color:'#fff'}}
           type="primary" 
           size="large"
           onClick={() => history.push('/online-quotation')}
         >
-          开始报价
+          {t('materials.cta.button')}
         </Button>
       </div>
     </div>

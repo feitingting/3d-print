@@ -65,16 +65,18 @@
       .checkout-button {
         width: 100%;
         padding: 1rem;
-        background: linear-gradient(135deg, #607D8B 0%, #78909C 100%);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
         border: none;
         border-radius: 4px;
         font-size: 1.1rem;
         cursor: pointer;
         transition: background 0.3s;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 
         &:hover {
-          background: linear-gradient(135deg, #455A64 0%, #546E7A 100%);
+          background: linear-gradient(135deg, #5568d3 0%, #6a3e8d 100%);
+          box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
         }
       }
     }

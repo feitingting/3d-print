@@ -37,7 +37,7 @@ export const MATERIALS: Material[] = [
     colors: ['白色', '黑色', '红色', '蓝色', '绿色', '黄色', '透明'],
     price: '¥2-5/克',
     priceRange: { min: 2, max: 5 },
-    image: 'http://maphium.com/assets/materials/pla.jpg',
+    image: '/assets/materials/pla.jpg',
     specs: {
       density: '1.24 g/cm³',
       tensile: '50 MPa',
@@ -65,7 +65,7 @@ export const MATERIALS: Material[] = [
     colors: ['白色', '黑色', '灰色', '红色', '蓝色'],
     price: '¥3-6/克',
     priceRange: { min: 3, max: 6 },
-    image: 'http://maphium.com/assets/materials/abs.jpg',
+    image: '/assets/materials/abs.jpg',
     specs: {
       density: '1.04 g/cm³',
       tensile: '40 MPa',
@@ -93,7 +93,7 @@ export const MATERIALS: Material[] = [
     colors: ['透明', '白色', '黑色', '蓝色', '绿色'],
     price: '¥4-7/克',
     priceRange: { min: 4, max: 7 },
-    image: 'http://maphium.com/assets/materials/petg.jpg',
+    image: '/assets/materials/petg.jpg',
     specs: {
       density: '1.27 g/cm³',
       tensile: '53 MPa',
@@ -121,7 +121,7 @@ export const MATERIALS: Material[] = [
     colors: ['自然白', '黑色', '灰色'],
     price: '¥15-25/克',
     priceRange: { min: 15, max: 25 },
-    image: 'http://maphium.com/assets/materials/nylon.jpg',
+    image: '/assets/materials/nylon.jpg',
     specs: {
       density: '1.01 g/cm³',
       tensile: '48 MPa',
@@ -149,7 +149,7 @@ export const MATERIALS: Material[] = [
     colors: ['透明', '黑色', '红色', '蓝色'],
     price: '¥8-12/克',
     priceRange: { min: 8, max: 12 },
-    image: 'http://maphium.com/assets/materials/tpu.jpg',
+    image: '/assets/materials/tpu.jpg',
     specs: {
       density: '1.20 g/cm³',
       tensile: '26 MPa',
@@ -179,7 +179,7 @@ export const MATERIALS: Material[] = [
     colors: ['白色', '灰色', '黑色', '透明'],
     price: '¥10-15/克',
     priceRange: { min: 10, max: 15 },
-    image: 'http://maphium.com/assets/materials/resin.jpg',
+    image: '/assets/materials/resin.jpg',
     specs: {
       density: '1.15 g/cm³',
       tensile: '60 MPa',
@@ -207,7 +207,7 @@ export const MATERIALS: Material[] = [
     colors: ['黑色', '灰色'],
     price: '¥15-20/克',
     priceRange: { min: 15, max: 20 },
-    image: 'http://maphium.com/assets/materials/tough-resin.jpg',
+    image: '/assets/materials/tough-resin.jpg',
     specs: {
       density: '1.17 g/cm³',
       tensile: '55 MPa',
@@ -235,7 +235,7 @@ export const MATERIALS: Material[] = [
     colors: ['透明', '黑色'],
     price: '¥18-25/克',
     priceRange: { min: 18, max: 25 },
-    image: 'http://maphium.com/assets/materials/flexible-resin.jpg',
+    image: '/assets/materials/flexible-resin.jpg',
     specs: {
       density: '1.10 g/cm³',
       tensile: '8 MPa',
@@ -265,7 +265,7 @@ export const MATERIALS: Material[] = [
     colors: ['金属银色'],
     price: '¥80-150/克',
     priceRange: { min: 80, max: 150 },
-    image: 'http://maphium.com/assets/materials/316l.jpg',
+    image: '/assets/materials/316l.jpg',
     specs: {
       density: '7.99 g/cm³',
       tensile: '485 MPa',
@@ -293,7 +293,7 @@ export const MATERIALS: Material[] = [
     colors: ['银灰色'],
     price: '¥60-100/克',
     priceRange: { min: 60, max: 100 },
-    image: 'http://maphium.com/assets/materials/aluminum.jpg',
+    image: '/assets/materials/aluminum.jpg',
     specs: {
       density: '2.67 g/cm³',
       tensile: '345 MPa',
@@ -321,7 +321,7 @@ export const MATERIALS: Material[] = [
     colors: ['银白色'],
     price: '¥200-400/克',
     priceRange: { min: 200, max: 400 },
-    image: 'http://maphium.com/assets/materials/titanium.jpg',
+    image: '/assets/materials/titanium.jpg',
     specs: {
       density: '4.43 g/cm³',
       tensile: '895 MPa',
@@ -349,7 +349,7 @@ export const MATERIALS: Material[] = [
     colors: ['银灰色'],
     price: '¥300-500/克',
     priceRange: { min: 300, max: 500 },
-    image: 'http://maphium.com/assets/materials/inconel.jpg',
+    image: '/assets/materials/inconel.jpg',
     specs: {
       density: '8.19 g/cm³',
       tensile: '1035 MPa',

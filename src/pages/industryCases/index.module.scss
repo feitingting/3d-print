@@ -167,10 +167,10 @@
     .solutionHighlight {
       margin-top: 24px;
       padding: 16px;
-      background-color: #e6f7ff;
+      background-color: rgba(102, 126, 234, 0.1);
       border-radius: 8px;
       font-size: 16px;
-      color: #1890ff;
+      color: #667eea;
     }
   }
 }
@@ -310,7 +310,7 @@
     h3 {
       font-size: 18px;
       margin-bottom: 16px;
-      color: #1890ff;
+      color: #667eea;
     }
 
     p {
@@ -347,7 +347,7 @@
   }
 
   blockquote {
-    border-left: 4px solid #1890ff;
+    border-left: 4px solid #667eea;
     padding-left: 16px;
     font-style: italic;
     color: #666;
@@ -355,7 +355,7 @@
 
   .benefits {
     font-weight: bold;
-    color: #1890ff;
+    color: #667eea;
   }
 
   .ctaContainer {
@@ -482,8 +482,8 @@
   margin-bottom: 12px;
 
   &.medical {
-    background-color: #e6f7ff;
-    color: #1890ff;
+    background-color: rgba(102, 126, 234, 0.1);
+    color: #667eea;
   }
 
   &.aerospace {
@@ -504,7 +504,7 @@
 
 // 高亮文本
 .highlight {
-  color: #1890ff;
+  color: #667eea;
   font-weight: 500;
   margin: 12px 0;
 }
@@ -530,10 +530,10 @@
   .solutionHighlight {
     margin-top: 24px;
     padding: 16px;
-    background-color: #e6f7ff;
+    background-color: rgba(102, 126, 234, 0.1);
     border-radius: 8px;
     font-size: 16px;
-    color: #1890ff;
+    color: #667eea;
   }
 }
 

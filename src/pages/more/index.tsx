@@ -8,7 +8,7 @@ const importAll = (r: any) => {
 
 // 假设所有图片都在assets/more目录下
 const images = Array.from({length: 26}, (_, i) => 
-  `http://maphium.com/assets/more/${i.toString().padStart(2, '0')}.jpg`
+  `/assets/more/${i.toString().padStart(2, '0')}.jpg`
 );
 
 const WaterfallGallery: React.FC = () => {

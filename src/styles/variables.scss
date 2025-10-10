@@ -1,0 +1,69 @@
+// 主题色配置
+// 主色调 - 紫色渐变
+$primary-color: #667eea;
+$primary-color-dark: #5568d3;
+$primary-color-light: #7e8ef5;
+$secondary-color: #764ba2;
+$secondary-color-dark: #6a3e8d;
+
+// 渐变色
+$gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+$gradient-primary-hover: linear-gradient(135deg, #5568d3 0%, #6a3e8d 100%);
+$gradient-light: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+
+// 文本颜色
+$text-primary: #1a1a1a;
+$text-secondary: #666;
+$text-light: #999;
+$text-white: #fff;
+
+// 背景颜色
+$bg-white: #ffffff;
+$bg-light: #f9fafb;
+$bg-gray: #f5f5f5;
+$bg-dark: #001529;
+
+// 边框颜色
+$border-color: #e5e7eb;
+$border-light: #f0f0f0;
+
+// 状态颜色
+$success-color: #52c41a;
+$warning-color: #fa8c16;
+$error-color: #f5222d;
+$info-color: #1890ff;
+
+// 阴影
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
+$shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+$shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+$shadow-primary: 0 8px 24px rgba(102, 126, 234, 0.3);
+$shadow-primary-lg: 0 12px 32px rgba(102, 126, 234, 0.4);
+
+// 圆角
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 12px;
+$radius-xl: 16px;
+$radius-round: 20px;
+
+// 间距
+$spacing-xs: 8px;
+$spacing-sm: 12px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-xxl: 48px;
+
+// 字体大小
+$font-xs: 12px;
+$font-sm: 14px;
+$font-md: 16px;
+$font-lg: 18px;
+$font-xl: 24px;
+$font-xxl: 36px;
+
+// 过渡效果
+$transition-base: all 0.3s ease;
+$transition-fast: all 0.2s ease;
+
