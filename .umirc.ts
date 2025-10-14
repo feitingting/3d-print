@@ -92,31 +92,6 @@ export default defineConfig({
         // { path: '/', redirect: '/index' },
         { path: '/', component: '@/pages/home', title: '首页' },
         {
-          path: '/experiment-management',
-          component: '@/pages/experimentManagement',
-          title: '实验管理',
-        },
-        {
-          path: '/production-record',
-          component: '@/pages/productionRecord',
-          title: '生产记录',
-        },
-        {
-          path: '/mixArea-setting',
-          component: '@/pages/mixAreaSetting',
-          title: '拌料区设置',
-        },
-        {
-          path: '/material-management',
-          component: '@/pages/materialManagement',
-          title: '原料管理',
-        },
-        {
-          path: '/warning-record',
-          component: '@/pages/warningRecord',
-          title: '报警记录',
-        },
-        {
           path: '/online-quotation',
           component: '@/pages/onlineQuotation',
           title: '在线报价',
@@ -125,11 +100,6 @@ export default defineConfig({
           path: '/model-library',
           component: '@/pages/modelLibrary',
           title: '3D模型库',
-        },
-        { 
-          path: '/log', 
-          component: '@/pages/log', 
-          title: '日志' 
         },
         { 
           path:'/model-detail',

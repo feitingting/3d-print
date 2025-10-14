@@ -1,0 +1,1843 @@
+{
+  "project_info": {
+    "project_name": {
+      "chinese": "3D打印服务平台",
+      "german": ""
+    },
+    "description": {
+      "chinese": "3d-print项目中文文案导出，供德语翻译者使用",
+      "german": ""
+    },
+    "export_date": {
+      "chinese": "2024-12-19",
+      "german": ""
+    },
+    "total_texts": 150,
+    "note": {
+      "chinese": "排除代码注释，仅包含用户界面显示的中文文案",
+      "german": ""
+    }
+  },
+  "navigation": {
+    "nav_home": {
+      "chinese": "首页",
+      "german": ""
+    },
+    "nav_quote": {
+      "chinese": "在线报价",
+      "german": ""
+    },
+    "nav_materials": {
+      "chinese": "材料指南",
+      "german": ""
+    },
+    "nav_cases": {
+      "chinese": "行业案例",
+      "german": ""
+    },
+    "nav_software": {
+      "chinese": "3D软件",
+      "german": ""
+    },
+    "nav_library": {
+      "chinese": "模型库",
+      "german": ""
+    },
+    "nav_about": {
+      "chinese": "关于我们",
+      "german": ""
+    },
+    "nav_login": {
+      "chinese": "登录/注册",
+      "german": ""
+    },
+    "nav_order": {
+      "chinese": "在线下单",
+      "german": ""
+    },
+    "nav_myOrders": {
+      "chinese": "我的订单",
+      "german": ""
+    },
+    "nav_logout": {
+      "chinese": "退出登录",
+      "german": ""
+    }
+  },
+  "home_page": {
+    "hero_title": {
+      "chinese": "您的专业",
+      "german": ""
+    },
+    "hero_title_highlight": {
+      "chinese": "3D打印",
+      "german": ""
+    },
+    "hero_title_suffix": {
+      "chinese": "服务平台",
+      "german": ""
+    },
+    "hero_subtitle": {
+      "chinese": "从原型到生产 · 即时报价 · 最快24小时交付",
+      "german": ""
+    },
+    "hero_description": {
+      "chinese": "上传您的3D模型文件，选择材料和工艺，立即获取精准报价",
+      "german": ""
+    },
+    "hero_viewMaterials": {
+      "chinese": "查看所有可用材料 →",
+      "german": ""
+    },
+    "hero_getQuote": {
+      "chinese": "立即获取报价",
+      "german": ""
+    },
+    "hero_browseLibrary": {
+      "chinese": "浏览模型库",
+      "german": ""
+    },
+    "hero_stats_parts": {
+      "chinese": "已打印零件",
+      "german": ""
+    },
+    "hero_stats_companies": {
+      "chinese": "服务企业",
+      "german": ""
+    },
+    "hero_stats_materials": {
+      "chinese": "材料种类",
+      "german": ""
+    },
+    "hero_stats_technologies": {
+      "chinese": "打印技术",
+      "german": ""
+    },
+    "carousel_titles": [
+      {
+        "chinese": "工业级精密打印",
+        "german": ""
+      },
+      {
+        "chinese": "极速在线报价",
+        "german": ""
+      },
+      {
+        "chinese": "百种打印材料",
+        "german": ""
+      },
+      {
+        "chinese": "批量生产支持",
+        "german": ""
+      },
+      {
+        "chinese": "专业后处理",
+        "german": ""
+      },
+      {
+        "chinese": "7×24技术咨询",
+        "german": ""
+      }
+    ],
+    "carousel_descriptions": [
+      {
+        "chinese": "50μm超高精度 · 支持复杂结构成型",
+        "german": ""
+      },
+      {
+        "chinese": "AI智能估价 · 30秒获取详细报价单",
+        "german": ""
+      },
+      {
+        "chinese": "工程塑料/金属粉末/柔性材料 一应俱全",
+        "german": ""
+      },
+      {
+        "chinese": "工业级打印集群 · 日产能5000+标准件",
+        "german": ""
+      },
+      {
+        "chinese": "打磨/喷砂/上色 全流程工艺支持",
+        "german": ""
+      },
+      {
+        "chinese": "资深工程师团队 · 全程技术护航",
+        "german": ""
+      }
+    ]
+  },
+  "process_section": {
+    "title": {
+      "chinese": "三步完成订单",
+      "german": ""
+    },
+    "subtitle": {
+      "chinese": "简单、快速、专业",
+      "german": ""
+    },
+    "step1_title": {
+      "chinese": "上传3D模型",
+      "german": ""
+    },
+    "step1_desc": {
+      "chinese": "支持STL、OBJ、STEP等35+文件格式\n上传安全且保密",
+      "german": ""
+    },
+    "step2_title": {
+      "chinese": "选择材料和工艺",
+      "german": ""
+    },
+    "step2_desc": {
+      "chinese": "20+打印技术，100+材料选择\n多种表面处理和颜色可选",
+      "german": ""
+    },
+    "step3_title": {
+      "chinese": "下单并收货",
+      "german": ""
+    },
+    "step3_desc": {
+      "chinese": "选择最优报价，在线支付\n快速交付，全程可追踪",
+      "german": ""
+    }
+  },
+  "materials_section": {
+    "quickAccess_title": {
+      "chinese": "探索我们的材料库",
+      "german": ""
+    },
+    "quickAccess_desc": {
+      "chinese": "包括塑料、树脂、金属在内的100+种材料，满足您的各种应用需求",
+      "german": ""
+    },
+    "quickAccess_button": {
+      "chinese": "查看完整材料指南",
+      "german": ""
+    },
+    "title": {
+      "chinese": "材料指南",
+      "german": ""
+    },
+    "subtitle": {
+      "chinese": "Maphium提供广泛的材料选择，包括塑料、金属以及每种材料的各种表面处理和颜色",
+      "german": ""
+    },
+    "search": {
+      "chinese": "搜索材料名称或应用场景...",
+      "german": ""
+    },
+    "plastics": {
+      "chinese": "塑料材料",
+      "german": ""
+    },
+    "resins": {
+      "chinese": "树脂材料",
+      "german": ""
+    },
+    "metals": {
+      "chinese": "金属材料",
+      "german": ""
+    },
+    "properties": {
+      "chinese": "特性",
+      "german": ""
+    },
+    "specs": {
+      "chinese": "技术参数",
+      "german": ""
+    },
+    "density": {
+      "chinese": "密度",
+      "german": ""
+    },
+    "tensile": {
+      "chinese": "拉伸强度",
+      "german": ""
+    },
+    "temperature": {
+      "chinese": "打印温度",
+      "german": ""
+    },
+    "meltingPoint": {
+      "chinese": "熔点",
+      "german": ""
+    },
+    "flexibility": {
+      "chinese": "柔韧性",
+      "german": ""
+    },
+    "applications": {
+      "chinese": "应用场景",
+      "german": ""
+    },
+    "colors": {
+      "chinese": "可选颜色",
+      "german": ""
+    },
+    "useForQuote": {
+      "chinese": "使用此材料报价",
+      "german": ""
+    },
+    "cta_title": {
+      "chinese": "找到合适的材料了吗？",
+      "german": ""
+    },
+    "cta_desc": {
+      "chinese": "立即上传您的3D模型，获取精准报价",
+      "german": ""
+    },
+    "cta_button": {
+      "chinese": "开始报价",
+      "german": ""
+    }
+  },
+  "advantages_section": {
+    "title": {
+      "chinese": "为什么选择我们",
+      "german": ""
+    },
+    "subtitle": {
+      "chinese": "专业、透明、高效的3D打印服务",
+      "german": ""
+    },
+    "advantage1_title": {
+      "chinese": "透明定价，无最低订单要求",
+      "german": ""
+    },
+    "advantage1_subtitle": {
+      "chinese": "所见即所得的价格体验",
+      "german": ""
+    },
+    "advantage1_content": {
+      "chinese": "与其他3D打印服务不同，我们从不收取任何隐藏的服务费或要求最低订单量。只需上传您的3D模型，系统会立即为您计算精准报价，包含材料成本、加工费用、工艺系数等所有细节。无论您需要打印1件还是1000件，我们都提供同样透明、公平的价格。每一分钱的去向都清清楚楚，让您放心下单。",
+      "german": ""
+    },
+    "advantage1_highlight1": {
+      "chinese": "零服务费",
+      "german": ""
+    },
+    "advantage1_highlight2": {
+      "chinese": "无最低订单",
+      "german": ""
+    },
+    "advantage1_highlight3": {
+      "chinese": "价格透明",
+      "german": ""
+    },
+    "advantage2_title": {
+      "chinese": "市场上最多的技术选择",
+      "german": ""
+    },
+    "advantage2_subtitle": {
+      "chinese": "满足您的所有制造需求",
+      "german": ""
+    },
+    "advantage2_content": {
+      "chinese": "我们不断扩展技术网络和材料库，致力于为客户提供业界最全面的制造解决方案。从传统的FDM、SLA到先进的SLS、DMLS金属打印，从基础的PLA塑料到航空级钛合金，涵盖20+种打印技术和100+种材料选择。无论您的项目是原型验证、小批量生产还是功能测试，我们都能提供最适合的技术方案和材料组合。",
+      "german": ""
+    },
+    "advantage2_highlight1": {
+      "chinese": "20+打印技术",
+      "german": ""
+    },
+    "advantage2_highlight2": {
+      "chinese": "100+材料选择",
+      "german": ""
+    },
+    "advantage2_highlight3": {
+      "chinese": "多种表面处理",
+      "german": ""
+    },
+    "advantage3_title": {
+      "chinese": "专业支持与成功团队",
+      "german": ""
+    },
+    "advantage3_subtitle": {
+      "chinese": "全程陪伴，确保满意",
+      "german": ""
+    },
+    "advantage3_content": {
+      "chinese": "我们的承诺不仅仅是完成生产，更是确保您的成功。从项目咨询、文件检查到生产跟踪、质量把控，我们的专业团队会在每一个环节为您提供支持。7×24小时技术咨询热线，资深工程师随时为您解答技术难题。遇到复杂项目？我们提供免费的工艺优化建议，帮助您降低成本、提升质量。您的满意是我们唯一的追求。",
+      "german": ""
+    },
+    "advantage3_highlight1": {
+      "chinese": "7×24技术支持",
+      "german": ""
+    },
+    "advantage3_highlight2": {
+      "chinese": "工艺优化建议",
+      "german": ""
+    },
+    "advantage3_highlight3": {
+      "chinese": "质量保证",
+      "german": ""
+    },
+    "advantage4_title": {
+      "chinese": "即时价格对比系统",
+      "german": ""
+    },
+    "advantage4_subtitle": {
+      "chinese": "确保您获得最优价格",
+      "german": ""
+    },
+    "advantage4_content": {
+      "chinese": "我们创新的智能报价系统会实时对比您所在地区和全球范围内的优质制造商价格，为您筛选出性价比最高的方案。通过大数据分析历史订单、材料价格趋势、以及制造商产能情况，确保您以最具竞争力的价格获得工业级品质零件。不仅如此，我们还会根据您的订单量、交付时间等因素，为您推荐最优的生产方案，帮助您在质量、价格和时间之间找到完美平衡。",
+      "german": ""
+    },
+    "advantage4_highlight1": {
+      "chinese": "实时价格对比",
+      "german": ""
+    },
+    "advantage4_highlight2": {
+      "chinese": "智能方案推荐",
+      "german": ""
+    },
+    "advantage4_highlight3": {
+      "chinese": "最优性价比",
+      "german": ""
+    }
+  },
+  "cases_section": {
+    "title": {
+      "chinese": "行业应用案例",
+      "german": ""
+    },
+    "viewMore": {
+      "chinese": "查看更多",
+      "german": ""
+    }
+  },
+  "equipment_section": {
+    "title": {
+      "chinese": "工业级打印设备",
+      "german": ""
+    },
+    "sls": {
+      "chinese": "SLS 激光烧结设备",
+      "german": ""
+    },
+    "dlp": {
+      "chinese": "DLP 光固化设备",
+      "german": ""
+    },
+    "fdm": {
+      "chinese": "FDM 熔融沉积设备",
+      "german": ""
+    }
+  },
+  "online_quotation": {
+    "title": {
+      "chinese": "3D打印在线报价",
+      "german": ""
+    },
+    "modelInfo": {
+      "chinese": "模型信息与参数",
+      "german": ""
+    },
+    "selectProcess": {
+      "chinese": "选择工艺",
+      "german": ""
+    },
+    "selectMaterial": {
+      "chinese": "选择材料",
+      "german": ""
+    },
+    "hollowSolid": {
+      "chinese": "空心/实心",
+      "german": ""
+    },
+    "hollow": {
+      "chinese": "空心",
+      "german": ""
+    },
+    "solid": {
+      "chinese": "实心",
+      "german": ""
+    },
+    "infillRate": {
+      "chinese": "填充率",
+      "german": ""
+    },
+    "quantity": {
+      "chinese": "打印数量",
+      "german": ""
+    },
+    "uploadFile": {
+      "chinese": "上传STL文件",
+      "german": ""
+    },
+    "clickUpload": {
+      "chinese": "点击上传STL文件",
+      "german": ""
+    },
+    "replaceFile": {
+      "chinese": "替换STL文件",
+      "german": ""
+    },
+    "preview": {
+      "chinese": "模型预览",
+      "german": ""
+    },
+    "clearModel": {
+      "chinese": "清除模型",
+      "german": ""
+    },
+    "submit": {
+      "chinese": "生成报价并提交订单",
+      "german": ""
+    },
+    "pleaseSelectProcess": {
+      "chinese": "请选择3D打印工艺",
+      "german": ""
+    },
+    "pleaseSelectMaterial": {
+      "chinese": "请选择3D打印材料",
+      "german": ""
+    },
+    "pleaseUploadModel": {
+      "chinese": "请上传3D模型文件",
+      "german": ""
+    },
+    "pleaseEnterQuantity": {
+      "chinese": "请输入打印数量",
+      "german": ""
+    },
+    "uploadSTLFile": {
+      "chinese": "请上传STL格式的3D模型文件",
+      "german": ""
+    },
+    "modelLoadedSuccess": {
+      "chinese": "模型加载成功！",
+      "german": ""
+    },
+    "modelLoadFailed": {
+      "chinese": "模型加载失败，请确保文件格式正确",
+      "german": ""
+    },
+    "pleaseUploadSTL": {
+      "chinese": "请先上传STL文件",
+      "german": ""
+    },
+    "pleaseCompleteParams": {
+      "chinese": "请完善所有参数以计算价格",
+      "german": ""
+    },
+    "orderSubmitted": {
+      "chinese": "订单提交成功！",
+      "german": ""
+    },
+    "orderSubmitFailed": {
+      "chinese": "订单提交失败",
+      "german": ""
+    },
+    "submittingOrder": {
+      "chinese": "正在提交订单...",
+      "german": ""
+    },
+    "replacingModel": {
+      "chinese": "正在替换当前模型...",
+      "german": ""
+    },
+    "modelRemoved": {
+      "chinese": "模型已移除",
+      "german": ""
+    },
+    "modelCleared": {
+      "chinese": "模型已清除",
+      "german": ""
+    },
+    "dragRotateZoom": {
+      "chinese": "提示：可拖动鼠标旋转模型，滚轮缩放",
+      "german": ""
+    },
+    "modelPreviewArea": {
+      "chinese": "模型预览区",
+      "german": ""
+    },
+    "uploadSTLPreview": {
+      "chinese": "上传STL文件后可在此处预览3D模型，并实时查看参数变化效果",
+      "german": ""
+    },
+    "loadingModel": {
+      "chinese": "正在加载模型...",
+      "german": ""
+    },
+    "volume": {
+      "chinese": "体积",
+      "german": ""
+    },
+    "surfaceArea": {
+      "chinese": "表面积",
+      "german": ""
+    },
+    "maxSize": {
+      "chinese": "最大尺寸",
+      "german": ""
+    },
+    "processFeatures": {
+      "chinese": "工艺特性",
+      "german": ""
+    },
+    "surfaceQuality": {
+      "chinese": "表面质量",
+      "german": ""
+    },
+    "surfaceTreatment": {
+      "chinese": "表面处理",
+      "german": ""
+    },
+    "layerThickness": {
+      "chinese": "层厚",
+      "german": ""
+    },
+    "supportRequired": {
+      "chinese": "支撑要求",
+      "german": ""
+    },
+    "priceCalculationDetails": {
+      "chinese": "价格计算详情",
+      "german": ""
+    },
+    "materialCost": {
+      "chinese": "材料成本",
+      "german": ""
+    },
+    "processingFee": {
+      "chinese": "加工费",
+      "german": ""
+    },
+    "totalPrice": {
+      "chinese": "总价格",
+      "german": ""
+    },
+    "material": {
+      "chinese": "材料",
+      "german": ""
+    },
+    "process": {
+      "chinese": "工艺",
+      "german": ""
+    },
+    "complexity": {
+      "chinese": "复杂度",
+      "german": ""
+    },
+    "sizeLevel": {
+      "chinese": "尺寸等级",
+      "german": ""
+    },
+    "processCoefficient": {
+      "chinese": "工艺系数",
+      "german": ""
+    },
+    "infillCoefficient": {
+      "chinese": "填充系数",
+      "german": ""
+    },
+    "complexityCoefficient": {
+      "chinese": "复杂度系数",
+      "german": ""
+    },
+    "sizeCoefficient": {
+      "chinese": "尺寸系数",
+      "german": ""
+    },
+    "supportCoefficient": {
+      "chinese": "支撑系数",
+      "german": ""
+    },
+    "quantity_pieces": {
+      "chinese": "数量",
+      "german": ""
+    },
+    "estimatedPrintTime": {
+      "chinese": "预估打印时间",
+      "german": ""
+    },
+    "calculationMethod": {
+      "chinese": "计算方法",
+      "german": ""
+    },
+    "calculationResult": {
+      "chinese": "计算结果",
+      "german": ""
+    },
+    "valid": {
+      "chinese": "有效",
+      "german": ""
+    },
+    "mayBeInaccurate": {
+      "chinese": "可能不准确",
+      "german": ""
+    },
+    "pieces": {
+      "chinese": "件",
+      "german": ""
+    }
+  },
+  "materials_page": {
+    "title": {
+      "chinese": "材料指南",
+      "german": ""
+    },
+    "subtitle": {
+      "chinese": "Maphium提供广泛的材料选择，包括塑料、金属以及每种材料的各种表面处理和颜色",
+      "german": ""
+    },
+    "search": {
+      "chinese": "搜索材料名称或应用场景...",
+      "german": ""
+    },
+    "plastics": {
+      "chinese": "塑料材料",
+      "german": ""
+    },
+    "resins": {
+      "chinese": "树脂材料",
+      "german": ""
+    },
+    "metals": {
+      "chinese": "金属材料",
+      "german": ""
+    },
+    "properties": {
+      "chinese": "特性",
+      "german": ""
+    },
+    "specs": {
+      "chinese": "技术参数",
+      "german": ""
+    },
+    "density": {
+      "chinese": "密度",
+      "german": ""
+    },
+    "tensile": {
+      "chinese": "拉伸强度",
+      "german": ""
+    },
+    "temperature": {
+      "chinese": "打印温度",
+      "german": ""
+    },
+    "flexibility": {
+      "chinese": "柔韧性",
+      "german": ""
+    },
+    "applications": {
+      "chinese": "应用场景",
+      "german": ""
+    },
+    "colors": {
+      "chinese": "可选颜色",
+      "german": ""
+    },
+    "useForQuote": {
+      "chinese": "使用此材料报价",
+      "german": ""
+    },
+    "cta_title": {
+      "chinese": "找到合适的材料了吗？",
+      "german": ""
+    },
+    "cta_desc": {
+      "chinese": "立即上传您的3D模型，获取精准报价",
+      "german": ""
+    },
+    "cta_button": {
+      "chinese": "开始报价",
+      "german": ""
+    }
+  },
+  "model_library": {
+    "title": {
+      "chinese": "3D模型库",
+      "german": ""
+    },
+    "description": {
+      "chinese": "浏览我们丰富的3D打印模型库，找到适合您项目的设计",
+      "german": ""
+    },
+    "searchPlaceholder": {
+      "chinese": "搜索模型名称或描述...",
+      "german": ""
+    },
+    "loadingModels": {
+      "chinese": "加载模型中...",
+      "german": ""
+    },
+    "noResults": {
+      "chinese": "没有找到匹配的模型，请尝试其他搜索关键词",
+      "german": ""
+    },
+    "download": {
+      "chinese": "下载",
+      "german": ""
+    },
+    "addToQuote": {
+      "chinese": "加入报价",
+      "german": ""
+    },
+    "previewModel": {
+      "chinese": "预览模型",
+      "german": ""
+    },
+    "downloadModel": {
+      "chinese": "开始下载模型",
+      "german": ""
+    },
+    "addModelToQuote": {
+      "chinese": "已将模型添加到报价列表",
+      "german": ""
+    }
+  },
+  "model_detail": {
+    "title": {
+      "chinese": "模型详情",
+      "german": ""
+    },
+    "modelInfo": {
+      "chinese": "模型信息",
+      "german": ""
+    },
+    "modelName": {
+      "chinese": "模型名称",
+      "german": ""
+    },
+    "modelType": {
+      "chinese": "模型类型",
+      "german": ""
+    },
+    "fileSize": {
+      "chinese": "文件大小",
+      "german": ""
+    },
+    "modelOperations": {
+      "chinese": "模型操作",
+      "german": ""
+    },
+    "showGrid": {
+      "chinese": "显示网格",
+      "german": ""
+    },
+    "selectMaterial": {
+      "chinese": "选择材质",
+      "german": ""
+    },
+    "hollowSolid": {
+      "chinese": "空心/实心",
+      "german": ""
+    },
+    "infillRate": {
+      "chinese": "填充率",
+      "german": ""
+    },
+    "flip": {
+      "chinese": "翻转",
+      "german": ""
+    },
+    "reloadModel": {
+      "chinese": "重新加载模型",
+      "german": ""
+    },
+    "modelPreview": {
+      "chinese": "3D模型预览",
+      "german": ""
+    },
+    "dragRotateZoom": {
+      "chinese": "提示：可拖动鼠标旋转模型，滚轮缩放",
+      "german": ""
+    },
+    "modelFromLibrary": {
+      "chinese": "模型来自于共享库，如有侵权，请联系删除",
+      "german": ""
+    },
+    "modelNotExists": {
+      "chinese": "模型不存在",
+      "german": ""
+    },
+    "backToLibrary": {
+      "chinese": "返回模型库",
+      "german": ""
+    },
+    "loadingModelDetails": {
+      "chinese": "加载模型详情中...",
+      "german": ""
+    },
+    "modelLoadedSuccess": {
+      "chinese": "3D模型加载成功",
+      "german": ""
+    },
+    "modelLoadFailed": {
+      "chinese": "3D模型加载失败",
+      "german": ""
+    },
+    "modelIdNotExists": {
+      "chinese": "模型ID不存在",
+      "german": ""
+    }
+  },
+  "order_list": {
+    "title": {
+      "chinese": "我的订单",
+      "german": ""
+    },
+    "refresh": {
+      "chinese": "刷新",
+      "german": ""
+    },
+    "noOrders": {
+      "chinese": "暂无订单",
+      "german": ""
+    },
+    "noOrdersDesc": {
+      "chinese": "您还没有任何订单，去在线报价页面创建您的第一个订单吧！",
+      "german": ""
+    },
+    "goToQuote": {
+      "chinese": "去报价",
+      "german": ""
+    },
+    "orderNumber": {
+      "chinese": "订单号",
+      "german": ""
+    },
+    "serviceName": {
+      "chinese": "服务名称",
+      "german": ""
+    },
+    "process": {
+      "chinese": "工艺",
+      "german": ""
+    },
+    "material": {
+      "chinese": "材料",
+      "german": ""
+    },
+    "quantity": {
+      "chinese": "数量",
+      "german": ""
+    },
+    "price": {
+      "chinese": "价格",
+      "german": ""
+    },
+    "status": {
+      "chinese": "状态",
+      "german": ""
+    },
+    "createTime": {
+      "chinese": "创建时间",
+      "german": ""
+    },
+    "action": {
+      "chinese": "操作",
+      "german": ""
+    },
+    "details": {
+      "chinese": "详情",
+      "german": ""
+    },
+    "pay": {
+      "chinese": "支付",
+      "german": ""
+    },
+    "pending": {
+      "chinese": "待支付",
+      "german": ""
+    },
+    "paid": {
+      "chinese": "已支付",
+      "german": ""
+    },
+    "processing": {
+      "chinese": "制作中",
+      "german": ""
+    },
+    "completed": {
+      "chinese": "已完成",
+      "german": ""
+    },
+    "cancelled": {
+      "chinese": "已取消",
+      "german": ""
+    },
+    "totalOrders": {
+      "chinese": "总订单数",
+      "german": ""
+    },
+    "pendingPayment": {
+      "chinese": "待支付",
+      "german": ""
+    },
+    "processingOrders": {
+      "chinese": "制作中",
+      "german": ""
+    },
+    "completedOrders": {
+      "chinese": "已完成",
+      "german": ""
+    },
+    "totalOrdersCount": {
+      "chinese": "共 {total} 条订单",
+      "german": ""
+    },
+    "orderDetails": {
+      "chinese": "订单详情",
+      "german": ""
+    },
+    "close": {
+      "chinese": "关闭",
+      "german": ""
+    },
+    "goToPayment": {
+      "chinese": "去支付",
+      "german": ""
+    },
+    "orderNumber_full": {
+      "chinese": "订单号",
+      "german": ""
+    },
+    "serviceName_full": {
+      "chinese": "服务名称",
+      "german": ""
+    },
+    "status_full": {
+      "chinese": "状态",
+      "german": ""
+    },
+    "process_full": {
+      "chinese": "工艺",
+      "german": ""
+    },
+    "material_full": {
+      "chinese": "材料",
+      "german": ""
+    },
+    "infillType": {
+      "chinese": "填充率",
+      "german": ""
+    },
+    "quantity_pieces": {
+      "chinese": "数量",
+      "german": ""
+    },
+    "estimatedTime": {
+      "chinese": "预计时间",
+      "german": ""
+    },
+    "modelInfo_title": {
+      "chinese": "模型信息",
+      "german": ""
+    },
+    "volume": {
+      "chinese": "体积",
+      "german": ""
+    },
+    "surfaceArea": {
+      "chinese": "表面积",
+      "german": ""
+    },
+    "dimensions": {
+      "chinese": "尺寸 (长×宽×高)",
+      "german": ""
+    },
+    "modelFile": {
+      "chinese": "模型文件",
+      "german": ""
+    },
+    "downloadModelFile": {
+      "chinese": "下载模型文件",
+      "german": ""
+    },
+    "priceDetails": {
+      "chinese": "价格明细",
+      "german": ""
+    },
+    "materialCost": {
+      "chinese": "材料成本",
+      "german": ""
+    },
+    "processingFee": {
+      "chinese": "加工费",
+      "german": ""
+    },
+    "totalCost": {
+      "chinese": "总成本",
+      "german": ""
+    },
+    "finalPrice": {
+      "chinese": "最终价格",
+      "german": ""
+    },
+    "customerInfo": {
+      "chinese": "客户信息",
+      "german": ""
+    },
+    "name": {
+      "chinese": "姓名",
+      "german": ""
+    },
+    "email": {
+      "chinese": "邮箱",
+      "german": ""
+    },
+    "phone": {
+      "chinese": "电话",
+      "german": ""
+    },
+    "address": {
+      "chinese": "地址",
+      "german": ""
+    },
+    "timeInfo": {
+      "chinese": "时间信息",
+      "german": ""
+    },
+    "createTime_full": {
+      "chinese": "创建时间",
+      "german": ""
+    },
+    "updateTime": {
+      "chinese": "更新时间",
+      "german": ""
+    },
+    "pleaseLoginFirst": {
+      "chinese": "请先登录",
+      "german": ""
+    },
+    "getOrderListFailed": {
+      "chinese": "获取订单列表失败",
+      "german": ""
+    },
+    "getOrderDetailsFailed": {
+      "chinese": "获取订单详情失败",
+      "german": ""
+    },
+    "orderStatusNotAllowed": {
+      "chinese": "该订单状态不允许支付",
+      "german": ""
+    },
+    "pleaseEnterQuantity": {
+      "chinese": "请输入打印数量",
+      "german": ""
+    }
+  },
+  "payment": {
+    "title": {
+      "chinese": "订单支付",
+      "german": ""
+    },
+    "orderDetails": {
+      "chinese": "订单详情",
+      "german": ""
+    },
+    "paymentInfo": {
+      "chinese": "支付信息",
+      "german": ""
+    },
+    "priceDetails": {
+      "chinese": "价格明细",
+      "german": ""
+    },
+    "paymentMethod": {
+      "chinese": "支付方式",
+      "german": ""
+    },
+    "securePayment": {
+      "chinese": "安全支付 · 支持Visa/MasterCard等主流信用卡",
+      "german": ""
+    },
+    "payNow": {
+      "chinese": "立即支付",
+      "german": ""
+    },
+    "backToOrders": {
+      "chinese": "返回订单列表",
+      "german": ""
+    },
+    "loadingOrderInfo": {
+      "chinese": "加载订单信息中...",
+      "german": ""
+    },
+    "orderNumber": {
+      "chinese": "订单号",
+      "german": ""
+    },
+    "serviceName": {
+      "chinese": "服务名称",
+      "german": ""
+    },
+    "status": {
+      "chinese": "状态",
+      "german": ""
+    },
+    "pendingPayment": {
+      "chinese": "待支付",
+      "german": ""
+    },
+    "process": {
+      "chinese": "工艺",
+      "german": ""
+    },
+    "material": {
+      "chinese": "材料",
+      "german": ""
+    },
+    "infillType": {
+      "chinese": "填充类型",
+      "german": ""
+    },
+    "infillRate": {
+      "chinese": "填充率",
+      "german": ""
+    },
+    "quantity": {
+      "chinese": "数量",
+      "german": ""
+    },
+    "estimatedTime": {
+      "chinese": "预计时间",
+      "german": ""
+    },
+    "modelInfo": {
+      "chinese": "模型信息",
+      "german": ""
+    },
+    "volume": {
+      "chinese": "体积",
+      "german": ""
+    },
+    "surfaceArea": {
+      "chinese": "表面积",
+      "german": ""
+    },
+    "dimensions": {
+      "chinese": "尺寸 (长×宽×高)",
+      "german": ""
+    },
+    "modelFile": {
+      "chinese": "模型文件",
+      "german": ""
+    },
+    "downloadModelFile": {
+      "chinese": "下载模型文件",
+      "german": ""
+    },
+    "materialCost": {
+      "chinese": "材料成本",
+      "german": ""
+    },
+    "processingFee": {
+      "chinese": "加工费",
+      "german": ""
+    },
+    "totalCost": {
+      "chinese": "总成本",
+      "german": ""
+    },
+    "finalPrice": {
+      "chinese": "最终价格",
+      "german": ""
+    },
+    "processCoefficient": {
+      "chinese": "工艺系数",
+      "german": ""
+    },
+    "infillCoefficient": {
+      "chinese": "填充系数",
+      "german": ""
+    },
+    "complexityCoefficient": {
+      "chinese": "复杂度系数",
+      "german": ""
+    },
+    "sizeCoefficient": {
+      "chinese": "尺寸系数",
+      "german": ""
+    },
+    "supportCoefficient": {
+      "chinese": "支撑系数",
+      "german": ""
+    },
+    "complexity": {
+      "chinese": "复杂度",
+      "german": ""
+    },
+    "sizeLevel": {
+      "chinese": "尺寸等级",
+      "german": ""
+    },
+    "paymentSuccess": {
+      "chinese": "支付成功！您将收到一封确认邮件。",
+      "german": ""
+    },
+    "orderCancelled": {
+      "chinese": "订单已取消 - 您可以继续浏览并在准备好时重新支付。",
+      "german": ""
+    },
+    "orderInfoNotFound": {
+      "chinese": "未找到订单信息",
+      "german": ""
+    },
+    "paymentSessionFailed": {
+      "chinese": "创建支付会话失败",
+      "german": ""
+    },
+    "paymentRequestFailed": {
+      "chinese": "支付请求失败，请重试",
+      "german": ""
+    }
+  },
+  "industry_cases": {
+    "featuredCases": {
+      "chinese": "精选案例",
+      "german": ""
+    },
+    "viewMore": {
+      "chinese": "查看更多",
+      "german": ""
+    },
+    "industrySolutions": {
+      "chinese": "行业解决方案",
+      "german": ""
+    },
+    "customerReviews": {
+      "chinese": "客户评价",
+      "german": ""
+    },
+    "cooperationCustomers": {
+      "chinese": "合作客户",
+      "german": ""
+    },
+    "readyToStart": {
+      "chinese": "准备好开始您的3D打印之旅了吗？",
+      "german": ""
+    },
+    "expertTeamReady": {
+      "chinese": "我们的专家团队随时为您提供定制化解决方案",
+      "german": ""
+    },
+    "customSolution": {
+      "chinese": "为您的行业定制解决方案",
+      "german": ""
+    },
+    "consultExperts": {
+      "chinese": "咨询我们的3D打印专家",
+      "german": ""
+    },
+    "phoneNumber": {
+      "chinese": "400-123-4567",
+      "german": ""
+    },
+    "onlineConsultation": {
+      "chinese": "在线咨询",
+      "german": ""
+    },
+    "caseDetails": {
+      "chinese": "案例详情",
+      "german": ""
+    },
+    "projectBackground": {
+      "chinese": "项目背景与挑战",
+      "german": ""
+    },
+    "solutionOverview": {
+      "chinese": "解决方案概述",
+      "german": ""
+    },
+    "technicalParams": {
+      "chinese": "技术参数",
+      "german": ""
+    },
+    "beforeAfterComparison": {
+      "chinese": "前后对比",
+      "german": ""
+    },
+    "customerReview": {
+      "chinese": "客户评价",
+      "german": ""
+    },
+    "benefits": {
+      "chinese": "取得的效益",
+      "german": ""
+    },
+    "getSimilarSolution": {
+      "chinese": "获取类似解决方案",
+      "german": ""
+    },
+    "allIndustries": {
+      "chinese": "全部行业",
+      "german": ""
+    },
+    "medical": {
+      "chinese": "医疗健康",
+      "german": ""
+    },
+    "aerospace": {
+      "chinese": "航空航天",
+      "german": ""
+    },
+    "automotive": {
+      "chinese": "汽车制造",
+      "german": ""
+    },
+    "education": {
+      "chinese": "教育科研",
+      "german": ""
+    },
+    "consumer": {
+      "chinese": "消费品",
+      "german": ""
+    },
+    "construction": {
+      "chinese": "建筑",
+      "german": ""
+    }
+  },
+  "more_page": {
+    "title": {
+      "chinese": "更多工业零件",
+      "german": ""
+    },
+    "loadingImages": {
+      "chinese": "加载图片中...",
+      "german": ""
+    }
+  },
+  "common": {
+    "pieces": {
+      "chinese": "件",
+      "german": ""
+    },
+    "volume": {
+      "chinese": "体积",
+      "german": ""
+    },
+    "surfaceArea": {
+      "chinese": "表面积",
+      "german": ""
+    },
+    "size": {
+      "chinese": "尺寸",
+      "german": ""
+    },
+    "price": {
+      "chinese": "价格",
+      "german": ""
+    },
+    "loading": {
+      "chinese": "加载中...",
+      "german": ""
+    },
+    "confirm": {
+      "chinese": "确定",
+      "german": ""
+    },
+    "cancel": {
+      "chinese": "取消",
+      "german": ""
+    },
+    "edit": {
+      "chinese": "编辑",
+      "german": ""
+    },
+    "delete": {
+      "chinese": "删除",
+      "german": ""
+    },
+    "add": {
+      "chinese": "新增",
+      "german": ""
+    },
+    "view": {
+      "chinese": "查看",
+      "german": ""
+    },
+    "submit": {
+      "chinese": "提交",
+      "german": ""
+    },
+    "save": {
+      "chinese": "保存",
+      "german": ""
+    },
+    "reset": {
+      "chinese": "重置",
+      "german": ""
+    },
+    "search": {
+      "chinese": "搜索",
+      "german": ""
+    },
+    "filter": {
+      "chinese": "筛选",
+      "german": ""
+    },
+    "refresh": {
+      "chinese": "刷新",
+      "german": ""
+    },
+    "back": {
+      "chinese": "返回",
+      "german": ""
+    },
+    "next": {
+      "chinese": "下一步",
+      "german": ""
+    },
+    "previous": {
+      "chinese": "上一步",
+      "german": ""
+    },
+    "close": {
+      "chinese": "关闭",
+      "german": ""
+    },
+    "open": {
+      "chinese": "打开",
+      "german": ""
+    },
+    "upload": {
+      "chinese": "上传",
+      "german": ""
+    },
+    "download": {
+      "chinese": "下载",
+      "german": ""
+    },
+    "preview": {
+      "chinese": "预览",
+      "german": ""
+    },
+    "success": {
+      "chinese": "成功",
+      "german": ""
+    },
+    "error": {
+      "chinese": "错误",
+      "german": ""
+    },
+    "warning": {
+      "chinese": "警告",
+      "german": ""
+    },
+    "info": {
+      "chinese": "信息",
+      "german": ""
+    },
+    "please": {
+      "chinese": "请",
+      "german": ""
+    },
+    "enter": {
+      "chinese": "输入",
+      "german": ""
+    },
+    "select": {
+      "chinese": "选择",
+      "german": ""
+    },
+    "click": {
+      "chinese": "点击",
+      "german": ""
+    },
+    "drag": {
+      "chinese": "拖动",
+      "german": ""
+    },
+    "zoom": {
+      "chinese": "缩放",
+      "german": ""
+    },
+    "rotate": {
+      "chinese": "旋转",
+      "german": ""
+    },
+    "hours": {
+      "chinese": "小时",
+      "german": ""
+    },
+    "minutes": {
+      "chinese": "分钟",
+      "german": ""
+    },
+    "seconds": {
+      "chinese": "秒",
+      "german": ""
+    },
+    "grams": {
+      "chinese": "克",
+      "german": ""
+    },
+    "milliliters": {
+      "chinese": "毫升",
+      "german": ""
+    },
+    "cubic_centimeters": {
+      "chinese": "立方厘米",
+      "german": ""
+    },
+    "square_centimeters": {
+      "chinese": "平方厘米",
+      "german": ""
+    },
+    "millimeters": {
+      "chinese": "毫米",
+      "german": ""
+    },
+    "centimeters": {
+      "chinese": "厘米",
+      "german": ""
+    },
+    "meters": {
+      "chinese": "米",
+      "german": ""
+    }
+  },
+  "process_names": {
+    "fdm": {
+      "chinese": "FDM (熔融沉积建模)",
+      "german": ""
+    },
+    "sla": {
+      "chinese": "SLA (立体光固化)",
+      "german": ""
+    },
+    "sls": {
+      "chinese": "SLS (选择性激光烧结)",
+      "german": ""
+    },
+    "dlp": {
+      "chinese": "DLP (数字光处理)",
+      "german": ""
+    },
+    "polyjet": {
+      "chinese": "PolyJet (聚合物喷射)",
+      "german": ""
+    },
+    "slm": {
+      "chinese": "SLM (选择性激光熔化)",
+      "german": ""
+    },
+    "ebm": {
+      "chinese": "EBM (电子束熔化)",
+      "german": ""
+    }
+  },
+  "material_names": {
+    "pla": {
+      "chinese": "PLA (聚乳酸)",
+      "german": ""
+    },
+    "abs": {
+      "chinese": "ABS (丙烯腈丁二烯苯乙烯)",
+      "german": ""
+    },
+    "petg": {
+      "chinese": "PETG",
+      "german": ""
+    },
+    "nylon": {
+      "chinese": "Nylon PA12 (尼龙)",
+      "german": ""
+    },
+    "tpu": {
+      "chinese": "TPU (热塑性聚氨酯)",
+      "german": ""
+    },
+    "resin": {
+      "chinese": "Standard Resin (标准树脂)",
+      "german": ""
+    },
+    "tough_resin": {
+      "chinese": "Tough Resin (韧性树脂)",
+      "german": ""
+    },
+    "flexible_resin": {
+      "chinese": "Flexible Resin (柔性树脂)",
+      "german": ""
+    },
+    "stainless_steel": {
+      "chinese": "316L 不锈钢",
+      "german": ""
+    },
+    "aluminum": {
+      "chinese": "AlSi10Mg 铝合金",
+      "german": ""
+    },
+    "titanium": {
+      "chinese": "Ti6Al4V 钛合金",
+      "german": ""
+    },
+    "inconel": {
+      "chinese": "Inconel 718",
+      "german": ""
+    }
+  },
+  "complexity_levels": {
+    "simple": {
+      "chinese": "简单",
+      "german": ""
+    },
+    "moderate": {
+      "chinese": "中等",
+      "german": ""
+    },
+    "complex": {
+      "chinese": "复杂",
+      "german": ""
+    },
+    "very_complex": {
+      "chinese": "非常复杂",
+      "german": ""
+    }
+  },
+  "size_levels": {
+    "small": {
+      "chinese": "小型",
+      "german": ""
+    },
+    "medium": {
+      "chinese": "中型",
+      "german": ""
+    },
+    "large": {
+      "chinese": "大型",
+      "german": ""
+    },
+    "xlarge": {
+      "chinese": "超大型",
+      "german": ""
+    }
+  },
+  "status_texts": {
+    "pending": {
+      "chinese": "待支付",
+      "german": ""
+    },
+    "paid": {
+      "chinese": "已支付",
+      "german": ""
+    },
+    "processing": {
+      "chinese": "制作中",
+      "german": ""
+    },
+    "completed": {
+      "chinese": "已完成",
+      "german": ""
+    },
+    "cancelled": {
+      "chinese": "已取消",
+      "german": ""
+    },
+    "notStarted": {
+      "chinese": "未开始",
+      "german": ""
+    },
+    "ongoing": {
+      "chinese": "进行中",
+      "german": ""
+    },
+    "completed_experiment": {
+      "chinese": "已结束",
+      "german": ""
+    },
+    "ingredientReady": {
+      "chinese": "备料区就位",
+      "german": ""
+    },
+    "inReaction": {
+      "chinese": "反应中",
+      "german": ""
+    }
+  },
+  "error_messages": {
+    "loginFailed": {
+      "chinese": "登录失败",
+      "german": ""
+    },
+    "registerFailed": {
+      "chinese": "注册失败",
+      "german": ""
+    },
+    "sendCodeFailed": {
+      "chinese": "发送验证码失败",
+      "german": ""
+    },
+    "logoutFailed": {
+      "chinese": "退出登录失败",
+      "german": ""
+    },
+    "getUserInfoFailed": {
+      "chinese": "获取用户信息失败",
+      "german": ""
+    },
+    "fileUploadFailed": {
+      "chinese": "文件上传失败",
+      "german": ""
+    },
+    "modelLoadFailed": {
+      "chinese": "模型加载失败",
+      "german": ""
+    },
+    "orderSubmitFailed": {
+      "chinese": "订单提交失败",
+      "german": ""
+    },
+    "paymentFailed": {
+      "chinese": "支付失败",
+      "german": ""
+    },
+    "networkError": {
+      "chinese": "网络错误",
+      "german": ""
+    },
+    "serverError": {
+      "chinese": "服务器错误",
+      "german": ""
+    },
+    "unknownError": {
+      "chinese": "未知错误",
+      "german": ""
+    }
+  },
+  "success_messages": {
+    "loginSuccess": {
+      "chinese": "登录成功",
+      "german": ""
+    },
+    "registerSuccess": {
+      "chinese": "注册成功",
+      "german": ""
+    },
+    "codeSent": {
+      "chinese": "验证码已发送",
+      "german": ""
+    },
+    "logoutSuccess": {
+      "chinese": "退出成功",
+      "german": ""
+    },
+    "fileUploadSuccess": {
+      "chinese": "文件上传成功",
+      "german": ""
+    },
+    "modelLoadSuccess": {
+      "chinese": "模型加载成功",
+      "german": ""
+    },
+    "orderSubmitSuccess": {
+      "chinese": "订单提交成功",
+      "german": ""
+    },
+    "paymentSuccess": {
+      "chinese": "支付成功",
+      "german": ""
+    },
+    "operationSuccess": {
+      "chinese": "操作成功",
+      "german": ""
+    }
+  }
+}

@@ -28,12 +28,14 @@ FROM --platform=linux/amd64 nginx:alpine
 # 复制构建产物
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# 复制nginx配置
+# 复制nginx主配置（性能优化）
+COPY ./frontend/nginx-performance.conf /etc/nginx/nginx.conf
+
+# 复制server配置
 COPY ./frontend/nginx.ionos.conf /etc/nginx/conf.d/default.conf
-# COPY ./frontend/nginx.conf /etc/nginx/conf.d/default.conf
 
 # 暴露端口
-EXPOSE 80
+EXPOSE 80 443
 
 # 启动nginx
 CMD ["nginx", "-g", "daemon off;"]

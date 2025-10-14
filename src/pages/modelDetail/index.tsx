@@ -31,10 +31,10 @@ const materials = MATERIALS.map(m => ({
     color: m.color || 0xCCCCCC,
     properties: {
         ...m.materialProps,
-        sheen: 0.0,
-        sheenRoughness: 1.0,
-        emissive: 0x000000,
-        emissiveIntensity: 0
+        sheen: m.materialProps?.sheen ?? 0.0,
+        sheenRoughness: m.materialProps?.sheenRoughness ?? 1.0,
+        emissive: m.materialProps?.emissive ?? 0x000000,
+        emissiveIntensity: m.materialProps?.emissiveIntensity ?? 0
     }
 }));
 
@@ -275,21 +275,53 @@ const ModelDetail: React.FC = () => {
     // camera.position.z = 50;
     cameraRef.current = camera;
 
-    // 创建渲染器
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight); 
-   
+    // 创建渲染器（优化金属材质渲染）
+    const renderer = new THREE.WebGLRenderer({ 
+      antialias: true,
+      alpha: true
+    });
+    renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
+    
+    // 色调映射 - 增强高光和金属质感
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.8;  // 大幅提升曝光度（从 1.2 → 1.8）
+    
     containerRef.current.innerHTML = '';
     containerRef.current.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
-    // 添加灯光
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    // 优化灯光系统 - 极强光照，专为金属材质优化
+    
+    // 环境光 - 提供基础亮度（大幅提升）
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);  // 从 0.6 → 1.0
     scene.add(ambientLight);
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    
+    // 半球光 - 模拟天空和地面的漫反射（对金属材质很重要）
+    const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x888888, 1.5);  // 从 0.8 → 1.5，地面更亮
+    hemisphereLight.position.set(0, 50, 0);
+    scene.add(hemisphereLight);
+    
+    // 主方向光 - 模拟太阳光（大幅增强）
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 2.0);  // 从 1.2 → 2.0
     directionalLight.position.set(10, 10, 10);
+    directionalLight.castShadow = false;
     scene.add(directionalLight);
+    
+    // 辅助方向光 - 从另一侧照亮模型（增强）
+    const directionalLight2 = new THREE.DirectionalLight(0xffffff, 1.5);  // 从 0.8 → 1.5
+    directionalLight2.position.set(-10, 10, -10);
+    scene.add(directionalLight2);
+    
+    // 顶部点光源 - 增强顶部亮度
+    const pointLight1 = new THREE.PointLight(0xffffff, 1.2, 150);  // 从 0.6 → 1.2，范围增大
+    pointLight1.position.set(0, 30, 0);
+    scene.add(pointLight1);
+    
+    // 前方点光源 - 增强正面亮度
+    const pointLight2 = new THREE.PointLight(0xffffff, 1.0, 150);  // 从 0.5 → 1.0，范围增大
+    pointLight2.position.set(0, 10, 30);
+    scene.add(pointLight2);
 
     // 添加网格辅助线
     const grid = new THREE.GridHelper(100, 20, 0x888888, 0x444444);
@@ -386,6 +418,7 @@ const ModelDetail: React.FC = () => {
   const handleMaterialChange = (value: string) => {
     setSelectedMaterial(value);
     const materialData = materials.find(m => m.value === value);
+    const fullMaterialData = getMaterialByValue(value);  // 获取完整材质数据
     
     if (modelRef.current && materialData) {
       const material = modelRef.current.material as THREE.MeshPhysicalMaterial;
@@ -421,26 +454,39 @@ const ModelDetail: React.FC = () => {
         material.opacity = 1;
       }
       
+      // 强制更新材质
       material.needsUpdate = true;
+      
+      // 触发渲染更新
+      if (rendererRef.current && sceneRef.current && cameraRef.current) {
+        rendererRef.current.render(sceneRef.current, cameraRef.current);
+      }
     }
     
     // 同时更新空心模型的颜色
-    if (hollowModelRef.current && materialData) {
+    if (hollowModelRef.current && materialData && fullMaterialData) {
       const hollowMaterial = hollowModelRef.current.material as THREE.LineBasicMaterial;
-      hollowMaterial.color.set(materialData.color);
       
-      // 根据材质调整线宽
-      if (materialData.value === 'metal_aluminum' || materialData.value === 'carbon_fiber') {
-        hollowMaterial.linewidth = 3; // 金属和碳纤维用更粗的线条
-      } else if (materialData.value === 'transparent_pla') {
-        hollowMaterial.linewidth = 1; // 透明材质用细线条
+      // 为金属材质使用更亮的颜色，确保可见性
+      if (fullMaterialData.category === 'metal') {
+        // 金属材质用白色线条，确保在所有背景下可见
+        hollowMaterial.color.set(0xFFFFFF);
+        hollowMaterial.linewidth = 4; // 金属用更粗的线条
+        hollowMaterial.opacity = 0.9;
+        hollowMaterial.transparent = true;
+      } else if (fullMaterialData.value === 'transparent_pla') {
+        hollowMaterial.color.set(materialData.color || 0x87CEEB);
+        hollowMaterial.linewidth = 1;
         hollowMaterial.opacity = 0.7;
         hollowMaterial.transparent = true;
       } else {
-        hollowMaterial.linewidth = 2; // 默认线宽
+        hollowMaterial.color.set(materialData.color || 0x87CEEB);
+        hollowMaterial.linewidth = 2;
         hollowMaterial.opacity = 1;
         hollowMaterial.transparent = false;
       }
+      
+      hollowMaterial.needsUpdate = true;
     }
   };
 

@@ -119,13 +119,13 @@ const printingProcesses = [
 const materials = MATERIALS.map(m => ({
     value: m.value,
     label: m.label,
-    color: m.color || 0xCCCCCC,
+    color: m.color,
     properties: {
         ...m.materialProps,
-        sheen: 0.0,
-        sheenRoughness: 1.0,
-        emissive: 0x000000,
-        emissiveIntensity: 0
+        sheen: m.materialProps?.sheen ?? 0.0,
+        sheenRoughness: m.materialProps?.sheenRoughness ?? 1.0,
+        emissive: m.materialProps?.emissive ?? 0x000000,
+        emissiveIntensity: m.materialProps?.emissiveIntensity ?? 0
     }
 }));
 
@@ -180,34 +180,77 @@ const OnlineQuotation: React.FC = () => {
         scene.background = new THREE.Color(0xf5f5f5);
         sceneRef.current = scene;
 
-        // 创建相机
-        const camera = new THREE.PerspectiveCamera(75, previewRef.current.clientWidth / previewRef.current.clientHeight, 0.1, 1000);
-        camera.position.z = 50;
+        // 创建相机（参照modelDetail页面配置）
+        const camera = new THREE.PerspectiveCamera(90, previewRef.current.clientWidth / previewRef.current.clientHeight, 0.1, 1000);
+        // 设置相机初始位置
+        camera.position.set(0, 30, 50);
+        camera.lookAt(0, 0, 0);
         cameraRef.current = camera;
 
-        // 创建渲染器
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        // 创建渲染器（优化金属材质渲染）
+        const renderer = new THREE.WebGLRenderer({ 
+            antialias: true,
+            alpha: true
+        });
         renderer.setSize(previewRef.current.clientWidth, previewRef.current.clientHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
+        
+        // 色调映射 - 增强高光和金属质感
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.8;  // 大幅提升曝光度（从 1.2 → 1.8）
+        
         previewRef.current.appendChild(renderer.domElement);
         rendererRef.current = renderer;
 
-        // 添加灯光
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        // 优化灯光系统 - 极强光照，专为金属材质优化
+        
+        // 环境光 - 提供基础亮度（大幅提升）
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);  // 从 0.6 → 1.0
         scene.add(ambientLight);
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        
+        // 半球光 - 模拟天空和地面的漫反射（对金属材质很重要）
+        const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x888888, 1.5);  // 从 0.8 → 1.5，地面更亮
+        hemisphereLight.position.set(0, 50, 0);
+        scene.add(hemisphereLight);
+        
+        // 主方向光 - 模拟太阳光（大幅增强）
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 2.0);  // 从 1.2 → 2.0
         directionalLight.position.set(10, 10, 10);
+        directionalLight.castShadow = false;
         scene.add(directionalLight);
+        
+        // 辅助方向光 - 从另一侧照亮模型（增强）
+        const directionalLight2 = new THREE.DirectionalLight(0xffffff, 1.5);  // 从 0.8 → 1.5
+        directionalLight2.position.set(-10, 10, -10);
+        scene.add(directionalLight2);
+        
+        // 顶部点光源 - 增强顶部亮度
+        const pointLight1 = new THREE.PointLight(0xffffff, 1.2, 150);  // 从 0.6 → 1.2，范围增大
+        pointLight1.position.set(0, 30, 0);
+        scene.add(pointLight1);
+        
+        // 前方点光源 - 增强正面亮度
+        const pointLight2 = new THREE.PointLight(0xffffff, 1.0, 150);  // 从 0.5 → 1.0，范围增大
+        pointLight2.position.set(0, 10, 30);
+        scene.add(pointLight2);
+
+        // 添加网格辅助线
+        const gridHelper = new THREE.GridHelper(100, 20, 0x888888, 0x444444);
+        gridHelper.position.y = 0; // 确保网格在y=0平面
+        scene.add(gridHelper);
+
+        // 添加坐标轴辅助线
+        const axesHelper = new THREE.AxesHelper(50);
+        scene.add(axesHelper);
 
         // 添加控制器
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
         controls.dampingFactor = 0.25;
+        controls.target.set(0, 0, 0); // 控制器目标点设为原点
+        controls.minDistance = 10; // 最小缩放距离
+        controls.maxDistance = 200; // 最大缩放距离
         controlsRef.current = controls;
-
-        // 添加网格辅助线
-        const gridHelper = new THREE.GridHelper(100, 10);
-        scene.add(gridHelper);
 
         // 动画循环
         const animate = () => {
@@ -240,9 +283,10 @@ const OnlineQuotation: React.FC = () => {
 
         // 根据选择的材料和工艺更新模型材质
         const materialData = materials.find(m => m.value === activeParams.material);
+        const fullMaterialData = getMaterialByValue(activeParams.material);  // 获取完整材质数据
         const processData = printingProcesses.find(p => p.value === activeParams.process);
         
-        if (modelRef.current && materialData) {
+        if (modelRef.current && materialData && materialData.color !== undefined) {
             const material = modelRef.current.material as THREE.MeshPhysicalMaterial;
             
             // 应用基础材质属性
@@ -281,26 +325,39 @@ const OnlineQuotation: React.FC = () => {
                 applyProcessEffects(material, processData, materialData);
             }
             
+            // 强制更新材质
             material.needsUpdate = true;
+            
+            // 触发渲染更新
+            if (rendererRef.current && sceneRef.current && cameraRef.current) {
+                rendererRef.current.render(sceneRef.current, cameraRef.current);
+            }
         }
         
         // 同时更新空心模型的颜色
-        if (hollowModelRef.current && materialData) {
+        if (hollowModelRef.current && materialData && fullMaterialData) {
             const hollowMaterial = hollowModelRef.current.material as THREE.LineBasicMaterial;
-            hollowMaterial.color.set(materialData.color);
             
-            // 根据材质调整线宽
-            if (materialData.value === 'metal_aluminum' || materialData.value === 'carbon_fiber') {
-                hollowMaterial.linewidth = 3; // 金属和碳纤维用更粗的线条
-            } else if (materialData.value === 'transparent_pla') {
-                hollowMaterial.linewidth = 1; // 透明材质用细线条
+            // 为金属材质使用更亮的颜色，确保可见性
+            if (fullMaterialData.category === 'metal') {
+                // 金属材质用白色线条，确保在所有背景下可见
+                hollowMaterial.color.set(0xFFFFFF);
+                hollowMaterial.linewidth = 4; // 金属用更粗的线条
+                hollowMaterial.opacity = 0.9;
+                hollowMaterial.transparent = true;
+            } else if (fullMaterialData.value === 'transparent_pla') {
+                hollowMaterial.color.set(materialData.color || 0x87CEEB);
+                hollowMaterial.linewidth = 1;
                 hollowMaterial.opacity = 0.7;
                 hollowMaterial.transparent = true;
             } else {
-                hollowMaterial.linewidth = 2; // 默认线宽
+                hollowMaterial.color.set(materialData.color || 0x87CEEB);
+                hollowMaterial.linewidth = 2;
                 hollowMaterial.opacity = 1;
                 hollowMaterial.transparent = false;
             }
+            
+            hollowMaterial.needsUpdate = true;
         }
 
         // 计算价格
@@ -428,20 +485,32 @@ const OnlineQuotation: React.FC = () => {
                 const calculatedModelInfo = calculateModelInfo(geometry);
                 setModelInfo(calculatedModelInfo);
 
-                // 计算模型尺寸并居中
+                // 计算模型尺寸并居中（参照modelDetail页面的完整居中逻辑）
                 const box = new THREE.Box3().setFromObject(solidMesh);
                 const center = new THREE.Vector3();
+                // 将模型中心移动到包围盒中心
                 box.getCenter(center);
                 solidMesh.position.sub(center);
                 hollowMesh.position.sub(center);
-
-                // 缩放模型以适应视图
+                
+                // 确保模型底部在网格上
                 const size = new THREE.Vector3();
                 box.getSize(size);
+
+                const bottomOffset = size.y / 2; // 模型底部到中心的距离
+                solidMesh.position.y = bottomOffset; // 将模型底部放在网格上
+                hollowMesh.position.y = bottomOffset; // 空心模型同样位置
+
+                // 缩放模型以适应视图
                 const maxDim = Math.max(size.x, size.y, size.z);
                 const scale = 40 / maxDim;
+                // 缩放后再次居中
                 solidMesh.scale.set(scale, scale, scale);
                 hollowMesh.scale.set(scale, scale, scale);
+                box.setFromObject(solidMesh); 
+                box.getCenter(center);
+                solidMesh.position.sub(center);
+                hollowMesh.position.sub(center);
 
                 // 默认显示实心模型
                 sceneRef.current.add(solidMesh);
@@ -770,7 +839,7 @@ const OnlineQuotation: React.FC = () => {
                                                                 style={{ 
                                                                     width: '12px', 
                                                                     height: '12px', 
-                                                                    backgroundColor: `#${material.color.toString(16).padStart(6, '0')}`,
+                                                                    backgroundColor: `#${(material.color || 0xCCCCCC).toString(16).padStart(6, '0')}`,
                                                                     borderRadius: '2px',
                                                                     border: '1px solid #ddd',
                                                                     flexShrink: 0
@@ -804,7 +873,7 @@ const OnlineQuotation: React.FC = () => {
                                                             style={{ 
                                                                 width: '12px', 
                                                                 height: '12px', 
-                                                                backgroundColor: `#${material.color.toString(16).padStart(6, '0')}`,
+                                                                backgroundColor: `#${(material.color || 0xCCCCCC).toString(16).padStart(6, '0')}`,
                                                                 borderRadius: '2px',
                                                                 border: '1px solid #ddd',
                                                                 flexShrink: 0

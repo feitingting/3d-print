@@ -273,13 +273,15 @@ export const MATERIALS: Material[] = [
       flexibility: '低'
     },
     category: 'metal',
-    color: 0xC0C0C0,
+    color: 0xD0D8E8, // 冷蓝银色（明显的蓝色调，医用不锈钢特征）
     materialProps: {
-      roughness: 0.2,
+      roughness: 0.05,
       metalness: 1.0,
       transmission: 0,
-      clearcoat: 0.5,
-      clearcoatRoughness: 0.1
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.01,
+      emissive: 0xD0D8E8,  // 与基础颜色相同
+      emissiveIntensity: 0.15
     }
   },
   {
@@ -301,13 +303,15 @@ export const MATERIALS: Material[] = [
       flexibility: '低'
     },
     category: 'metal',
-    color: 0xA8A8A8,
+    color: 0xF0F0F0, // 纯银白色（最亮，轻质金属特征）
     materialProps: {
-      roughness: 0.3,
+      roughness: 0.15,
       metalness: 1.0,
       transmission: 0,
-      clearcoat: 0.4,
-      clearcoatRoughness: 0.2
+      clearcoat: 0.75,
+      clearcoatRoughness: 0.10,
+      emissive: 0xF0F0F0,
+      emissiveIntensity: 0.12
     }
   },
   {
@@ -329,13 +333,15 @@ export const MATERIALS: Material[] = [
       flexibility: '低'
     },
     category: 'metal',
-    color: 0xE6E6E6,
+    color: 0xE8DCC0, // 金铜色（明显的暖金色调，高端钛合金特征）
     materialProps: {
-      roughness: 0.15,
+      roughness: 0.12,
       metalness: 1.0,
       transmission: 0,
-      clearcoat: 0.6,
-      clearcoatRoughness: 0.1
+      clearcoat: 0.92,
+      clearcoatRoughness: 0.06,
+      emissive: 0xE8DCC0,
+      emissiveIntensity: 0.12
     }
   },
   {
@@ -357,13 +363,15 @@ export const MATERIALS: Material[] = [
       flexibility: '低'
     },
     category: 'metal',
-    color: 0x8B8B8B,
+    color: 0x8C9098, // 深炭灰色（最暗，工业镍基合金特征）
     materialProps: {
-      roughness: 0.25,
-      metalness: 1.0,
+      roughness: 0.30,
+      metalness: 0.95,
       transmission: 0,
-      clearcoat: 0.3,
-      clearcoatRoughness: 0.2
+      clearcoat: 0.4,
+      clearcoatRoughness: 0.25,
+      emissive: 0x8C9098,
+      emissiveIntensity: 0.10
     }
   }
 ];
