@@ -59,7 +59,7 @@ class HttpService {
       }
 
       // 兼容处理
-      if (!endpoint.includes('webapp')) {
+      if (!endpoint.includes('webapp')) { 
         const data: { status: number; result?: T; message?: string } =
           await response.json();
 

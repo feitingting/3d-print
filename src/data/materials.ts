@@ -273,7 +273,7 @@ export const MATERIALS: Material[] = [
       flexibility: '低'
     },
     category: 'metal',
-    color: 0xD0D8E8, // 冷蓝银色（明显的蓝色调，医用不锈钢特征）
+    color: 0xE6E6FA, // 银白色，抛光不锈钢的真实颜色
     materialProps: {
       roughness: 0.05,
       metalness: 1.0,
@@ -303,15 +303,15 @@ export const MATERIALS: Material[] = [
       flexibility: '低'
     },
     category: 'metal',
-    color: 0xF0F0F0, // 纯银白色（最亮，轻质金属特征）
+    color: 0xC0C0C0, // 亮银色，铝合金特征
     materialProps: {
-      roughness: 0.15,
+      roughness: 0.1, // 降低粗糙度，增加反射
       metalness: 1.0,
       transmission: 0,
-      clearcoat: 0.75,
-      clearcoatRoughness: 0.10,
-      emissive: 0xF0F0F0,
-      emissiveIntensity: 0.12
+      clearcoat: 0.9, // 增加清漆层，提高光泽
+      clearcoatRoughness: 0.05, // 降低清漆粗糙度
+      emissive: 0xFFFFFF, // 使用白色发光
+      emissiveIntensity: 0.2 // 增加发光强度
     }
   },
   {
@@ -333,7 +333,7 @@ export const MATERIALS: Material[] = [
       flexibility: '低'
     },
     category: 'metal',
-    color: 0xE8DCC0, // 金铜色（明显的暖金色调，高端钛合金特征）
+    color: 0x8B8B8B, // 深银灰色，钛合金的真实颜色
     materialProps: {
       roughness: 0.12,
       metalness: 1.0,
@@ -363,7 +363,7 @@ export const MATERIALS: Material[] = [
       flexibility: '低'
     },
     category: 'metal',
-    color: 0x8C9098, // 深炭灰色（最暗，工业镍基合金特征）
+    color: 0x696969, // 深灰色，Inconel 718特征
     materialProps: {
       roughness: 0.30,
       metalness: 0.95,

@@ -474,12 +474,19 @@ const OnlineQuotation: React.FC = () => {
 
                 // 创建空心模型（使用EdgeGeometry显示边缘）
                 const hollowGeometry = new THREE.EdgesGeometry(geometry);
+                const defaultColor = defaultMaterial?.color || 0x87CEEB;
+                console.log(`🏗️ 创建空心模型，默认颜色: #${defaultColor.toString(16).padStart(6, '0').toUpperCase()}`);
+                
                 const hollowMaterial = new THREE.LineBasicMaterial({ 
-                    color: defaultMaterial?.color || 0x87CEEB,
-                    linewidth: 2
+                    color: defaultColor,
+                    // linewidth: 3, // WebGL中可能不支持，移除
+                    transparent: false,
+                    opacity: 1.0
                 });
                 const hollowMesh = new THREE.LineSegments(hollowGeometry, hollowMaterial);
                 hollowModelRef.current = hollowMesh;
+                
+                console.log(`✅ 空心模型创建完成，材质颜色: #${hollowMaterial.color.getHex().toString(16).padStart(6, '0').toUpperCase()}`);
 
                 // 计算模型信息
                 const calculatedModelInfo = calculateModelInfo(geometry);
@@ -514,7 +521,8 @@ const OnlineQuotation: React.FC = () => {
 
                 // 默认显示实心模型
                 sceneRef.current.add(solidMesh);
-                // 空心模型暂时隐藏
+                // 空心模型添加到场景但暂时隐藏
+                sceneRef.current.add(hollowMesh);
                 hollowMesh.visible = false;
 
                 // 更新相机位置以完整显示模型
@@ -536,21 +544,24 @@ const OnlineQuotation: React.FC = () => {
     // 处理空心/实心切换
     const handleHollowChange = (checked: boolean) => {
         setIsHollow(checked);
-        if (modelRef.current && hollowModelRef.current && sceneRef.current) {
+        if (modelRef.current && hollowModelRef.current) {
             if (checked) {
                 // 显示空心模型，隐藏实心模型
                 modelRef.current.visible = false;
                 hollowModelRef.current.visible = true;
-                if (!sceneRef.current.children.includes(hollowModelRef.current)) {
-                    sceneRef.current.add(hollowModelRef.current);
+                
+                // 切换到空心模式时，同步当前选择的材质颜色
+                const formValues = form.getFieldsValue();
+                if (formValues.material) {
+                    updateModelMaterial(formValues.material);
                 }
+                
+                console.log('切换到空心模型');
             } else {
                 // 显示实心模型，隐藏空心模型
                 modelRef.current.visible = true;
                 hollowModelRef.current.visible = false;
-                if (sceneRef.current.children.includes(hollowModelRef.current)) {
-                    sceneRef.current.remove(hollowModelRef.current);
-                }
+                console.log('切换到实心模型');
             }
         }
     };
@@ -745,6 +756,96 @@ const OnlineQuotation: React.FC = () => {
         }
     };
 
+    // 更新模型材质
+    const updateModelMaterial = (materialValue: string) => {
+        if (!modelRef.current || !sceneRef.current) return;
+        
+        const materialData = materials.find(m => m.value === materialValue);
+        if (!materialData) {
+            console.log(`❌ 找不到材质数据: ${materialValue}`);
+            return;
+        }
+        
+        console.log(`🔄 开始更新材质: ${materialData.label}`);
+        console.log(`当前模式: ${isHollow ? '空心' : '实心'}`);
+        
+        // 更新实心模型材质（始终更新，为切换做准备）
+        const mesh = modelRef.current;
+        const currentMaterial = mesh.material as THREE.MeshPhysicalMaterial;
+        
+        // 更新材质属性
+        currentMaterial.color.setHex(materialData.color || 0xCCCCCC);
+        currentMaterial.roughness = materialData.properties.roughness || 0.5;
+        currentMaterial.metalness = materialData.properties.metalness || 0.0;
+        currentMaterial.transmission = materialData.properties.transmission || 0;
+        currentMaterial.clearcoat = materialData.properties.clearcoat || 0.1;
+        currentMaterial.clearcoatRoughness = materialData.properties.clearcoatRoughness || 0.1;
+        currentMaterial.sheen = materialData.properties.sheen || 0.0;
+        currentMaterial.sheenRoughness = materialData.properties.sheenRoughness || 1.0;
+        currentMaterial.emissive.setHex(materialData.properties.emissive || 0x000000);
+        currentMaterial.emissiveIntensity = materialData.properties.emissiveIntensity || 0;
+        currentMaterial.needsUpdate = true;
+        
+        console.log(`✅ 实心模型材质已更新: ${materialData.label}`);
+        
+        // 更新空心模型的颜色（始终更新，为切换做准备）
+        if (hollowModelRef.current) {
+            const hollowMaterial = hollowModelRef.current.material as THREE.LineBasicMaterial;
+            const newColor = materialData.color || 0xCCCCCC;
+            
+            console.log(`🔄 更新空心模型材质: ${materialData.label}`);
+            console.log(`材质数据:`, materialData);
+            console.log(`原始颜色值: ${materialData.color}`);
+            console.log(`新颜色: #${newColor.toString(16).padStart(6, '0').toUpperCase()}`);
+            console.log(`空心模型可见性: ${hollowModelRef.current.visible}`);
+            console.log(`当前isHollow状态: ${isHollow}`);
+            
+            // 检查当前材质颜色
+            const currentColor = hollowMaterial.color.getHex();
+            console.log(`当前空心模型颜色: #${currentColor.toString(16).padStart(6, '0').toUpperCase()}`);
+            
+            // 确保颜色正确设置
+            hollowMaterial.color.setHex(newColor);
+            hollowMaterial.needsUpdate = true;
+            
+            // 强制重新创建材质实例以确保更新生效
+            const newHollowMaterial = new THREE.LineBasicMaterial({ 
+                color: newColor,
+                transparent: false,
+                opacity: 1.0
+            });
+            
+            // 清理旧材质
+            if (hollowModelRef.current.material) {
+                if (Array.isArray(hollowModelRef.current.material)) {
+                    hollowModelRef.current.material.forEach(mat => mat.dispose());
+                } else {
+                    hollowModelRef.current.material.dispose();
+                }
+            }
+            
+            // 设置新材质
+            hollowModelRef.current.material = newHollowMaterial;
+            
+            // 验证新材质颜色
+            const verifiedColor = (hollowModelRef.current.material as THREE.LineBasicMaterial).color.getHex();
+            console.log(`验证新材质颜色: #${verifiedColor.toString(16).padStart(6, '0').toUpperCase()}`);
+            
+            // 根据当前模式显示相应的更新信息
+            if (isHollow && hollowModelRef.current.visible) {
+                console.log(`✅ 空心模式 - 空心模型颜色已更新为: #${newColor.toString(16).padStart(6, '0').toUpperCase()}`);
+            } else if (!isHollow && modelRef.current.visible) {
+                console.log(`✅ 实心模式 - 实心模型颜色已更新为: #${newColor.toString(16).padStart(6, '0').toUpperCase()}`);
+            } else {
+                console.log(`⚠️ 材质已设置，但当前模式为: ${isHollow ? '空心' : '实心'}`);
+            }
+        } else {
+            console.log(`❌ 空心模型引用不存在`);
+        }
+        
+        console.log(`🎨 材质更新完成: ${materialData.label}`);
+    };
+
     // 监听表单值变化
     const handleFormValuesChange = (changedValues: any, allValues: any) => {
         setActiveParams(allValues);
@@ -752,6 +853,22 @@ const OnlineQuotation: React.FC = () => {
         // 跟踪工艺选择状态
         if (changedValues.process) {
             setSelectedProcess(changedValues.process);
+        }
+        
+        // 更新材质
+        if (changedValues.material) {
+            updateModelMaterial(changedValues.material);
+        }
+        
+        // 应用工艺效果
+        if (changedValues.material || changedValues.process) {
+            const processData = printingProcesses.find(p => p.value === allValues.process);
+            const materialData = materials.find(m => m.value === allValues.material);
+            
+            if (processData && materialData && modelRef.current) {
+                const material = modelRef.current.material as THREE.MeshPhysicalMaterial;
+                applyProcessEffects(material, processData, materialData);
+            }
         }
     };
 
@@ -913,7 +1030,7 @@ const OnlineQuotation: React.FC = () => {
                                     checked={isHollow} 
                                     onChange={handleHollowChange}
                                     checkedChildren="空心" 
-                                    unCheckedChildren="实心"
+                                    unCheckedChildren="空心"
                                 />
                             </Form.Item>
 

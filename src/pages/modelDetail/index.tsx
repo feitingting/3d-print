@@ -93,7 +93,7 @@ const ModelDetail: React.FC = () => {
   const animateRef = useRef<number | null>(null);
 
       // 加载STL模型的函数
-    const loadSTLModel = async (stlUrl: string) => {
+     const loadSTLModel = async (stlUrl: string) => {
       try {
         setLoading(true);
         // Step 1: 从URL获取文件并转换为File对象
@@ -469,11 +469,12 @@ const ModelDetail: React.FC = () => {
       
       // 为金属材质使用更亮的颜色，确保可见性
       if (fullMaterialData.category === 'metal') {
-        // 金属材质用白色线条，确保在所有背景下可见
-        hollowMaterial.color.set(0xFFFFFF);
+        // 金属材质使用其实际颜色，而不是硬编码的白色
+        hollowMaterial.color.set(materialData.color || 0xFFFFFF);
         hollowMaterial.linewidth = 4; // 金属用更粗的线条
         hollowMaterial.opacity = 0.9;
         hollowMaterial.transparent = true;
+        console.log(`🔧 ModelDetail - 金属材质空心模型颜色设置为: #${(materialData.color || 0xFFFFFF).toString(16).padStart(6, '0').toUpperCase()}`);
       } else if (fullMaterialData.value === 'transparent_pla') {
         hollowMaterial.color.set(materialData.color || 0x87CEEB);
         hollowMaterial.linewidth = 1;
@@ -495,8 +496,11 @@ const ModelDetail: React.FC = () => {
     setRotationAxis(e.target.value);
     const rotationValue = Math.PI / 2;
     
-    // 同时旋转实心和空心模型
+    // 同时旋转实心和空心模型，确保以网格中心为旋转中心
     if (modelRef.current) {
+      // 先重置位置到网格中心
+      modelRef.current.position.set(0, 0, 0);
+      
       switch(e.target.value) {
         case 'x':
           modelRef.current.rotation.set(rotationValue, 0, 0);
@@ -510,9 +514,22 @@ const ModelDetail: React.FC = () => {
         default:
           modelRef.current.rotation.set(0, 0, 0);
       }
+      
+      // 旋转后重新计算包围盒并居中
+      const box = new THREE.Box3().setFromObject(modelRef.current);
+      const center = new THREE.Vector3();
+      box.getCenter(center);
+      
+      // 将模型中心移动到网格中心
+      modelRef.current.position.sub(center);
+      
+      console.log(`🔄 实心模型旋转到: ${e.target.value}轴, 重新居中后位置: (${modelRef.current.position.x}, ${modelRef.current.position.y}, ${modelRef.current.position.z})`);
     }
     
     if (hollowModelRef.current) {
+      // 先重置位置到网格中心
+      hollowModelRef.current.position.set(0, 0, 0);
+      
       switch(e.target.value) {
         case 'x':
           hollowModelRef.current.rotation.set(rotationValue, 0, 0);
@@ -526,6 +543,16 @@ const ModelDetail: React.FC = () => {
         default:
           hollowModelRef.current.rotation.set(0, 0, 0);
       }
+      
+      // 旋转后重新计算包围盒并居中
+      const hollowBox = new THREE.Box3().setFromObject(hollowModelRef.current);
+      const hollowCenter = new THREE.Vector3();
+      hollowBox.getCenter(hollowCenter);
+      
+      // 将空心模型中心移动到网格中心
+      hollowModelRef.current.position.sub(hollowCenter);
+      
+      console.log(`🔄 空心模型旋转到: ${e.target.value}轴, 重新居中后位置: (${hollowModelRef.current.position.x}, ${hollowModelRef.current.position.y}, ${hollowModelRef.current.position.z})`);
     }
   };
 
@@ -703,7 +730,7 @@ const ModelDetail: React.FC = () => {
                       checked={isHollow} 
                       onChange={handleHollowChange}
                       checkedChildren="空心" 
-                      unCheckedChildren="实心"
+                      unCheckedChildren="空心"
                     />
                   </div>
 

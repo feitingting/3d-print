@@ -1,23 +1,4 @@
 {
-  "project_info": {
-    "project_name": {
-      "chinese": "3D打印服务平台",
-      "german": ""
-    },
-    "description": {
-      "chinese": "3d-print项目中文文案导出，供德语翻译者使用",
-      "german": ""
-    },
-    "export_date": {
-      "chinese": "2024-12-19",
-      "german": ""
-    },
-    "total_texts": 150,
-    "note": {
-      "chinese": "排除代码注释，仅包含用户界面显示的中文文案",
-      "german": ""
-    }
-  },
   "navigation": {
     "nav_home": {
       "chinese": "首页",
