@@ -118,7 +118,11 @@ export default defineConfig({
         },
         { path: '/payment', component: '@/pages/payment' },
         { path: '/order-list', component: '@/pages/orderList' },
-        { path: '/materials', component: '@/pages/materials' }
+        { path: '/materials', component: '@/pages/materials' },
+        { path: '/login', component: '@/pages/login' },
+        { path: '/register', component: '@/pages/register' },
+        { path: '/verification', component: '@/pages/verification' },
+
       ],
     },
   ],

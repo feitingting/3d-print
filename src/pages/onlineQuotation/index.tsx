@@ -965,7 +965,7 @@ const OnlineQuotation: React.FC = () => {
                                                             <span>{material.label}</span>
                                                         </div>
                                                         {materialData && (
-                                                            <span style={{ fontSize: '12px', color: '#667eea', fontWeight: 500 }}>
+                                                            <span style={{ fontSize: '12px', color: '#2c3e50', fontWeight: 500 }}>
                                                                 {materialData.price}
                                                             </span>
                                                         )}
@@ -1008,7 +1008,7 @@ const OnlineQuotation: React.FC = () => {
                                                     {materialData && (
                                                         <span style={{ 
                                                             fontSize: '12px', 
-                                                            color: '#667eea', 
+                                                            color: '#2c3e50', 
                                                             fontWeight: 500,
                                                             flexShrink: 0,
                                                             display: 'flex',
@@ -1052,8 +1052,8 @@ const OnlineQuotation: React.FC = () => {
                                         margin: '8px 0',
                                         display: 'block'
                                     }}
-                                    trackStyle={{ backgroundColor: '#667eea' }}
-                                    handleStyle={{ borderColor: '#667eea' }}
+                                    trackStyle={{ backgroundColor: '#2c3e50' }}
+                                    handleStyle={{ borderColor: '#2c3e50' }}
                                     railStyle={{ backgroundColor: '#f5f5f5' }}
                                 />
                             </Form.Item>
@@ -1171,7 +1171,7 @@ const OnlineQuotation: React.FC = () => {
                                         showIcon
                                         className="preview-alert-custom"
                                         style={{
-                                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                            background: 'linear-gradient(135deg, #2c3e50 0%, #e74c3c 100%)',
                                             border: 'none',
                                             color: '#ffffff'
                                         }}
@@ -1237,7 +1237,7 @@ const OnlineQuotation: React.FC = () => {
                                                         <span>表面质量：</span>
                                                         <span style={{ 
                                                             color: processData.properties.surfaceQuality === 'very_high' ? '#52c41a' : 
-                                                                   processData.properties.surfaceQuality === 'high' ? '#667eea' : 
+                                                                   processData.properties.surfaceQuality === 'high' ? '#2c3e50' : 
                                                                    processData.properties.surfaceQuality === 'medium' ? '#faad14' : '#f5222d'
                                                         }}>
                                                             {processData.properties.surfaceQuality === 'very_high' && '🎯 超高'}
@@ -1299,7 +1299,7 @@ const OnlineQuotation: React.FC = () => {
                                                     value={priceCalculation.finalPrice}
                                                     precision={2}
                                                     prefix="¥"
-                                                    valueStyle={{ color: '#667eea', fontSize: '24px' }}
+                                                    valueStyle={{ color: '#2c3e50', fontSize: '24px' }}
                                                 />
                                             </Col>
                                         </Row>

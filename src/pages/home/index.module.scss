@@ -188,7 +188,7 @@
         width: 64px;
         height: 64px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #2c3e50 0%, #e74c3c 100%);
         color: white;
         font-size: 32px;
         font-weight: 700;
@@ -222,7 +222,7 @@
     background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
 
     &:hover {
-      border-color: #667eea;
+      // border-color: #2c3e50;
       box-shadow: 0 12px 32px rgba(102, 126, 234, 0.15);
       transform: translateY(-4px);
     }
@@ -254,7 +254,7 @@
       .advantageIconLarge {
         width: 280px;
         height: 280px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #2c3e50 0%, #e74c3c 100%);
         border-radius: 24px;
         display: flex;
         align-items: center;
@@ -305,7 +305,7 @@
         left: 0;
         width: 4px;
         height: 100%;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #2c3e50 0%, #e74c3c 100%);
       }
 
       &:hover {
@@ -336,7 +336,7 @@
       h4 {
         font-size: 16px;
         font-weight: 500;
-        color: #667eea;
+        color: #2c3e50;
         margin-bottom: 20px;
         line-height: 1.4;
       }
@@ -356,7 +356,7 @@
 
         span {
           background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-          color: #667eea;
+          color: #2c3e50;
           padding: 8px 16px;
           border-radius: 20px;
           font-size: 14px;
@@ -441,7 +441,7 @@
         display: block;
         width: 80px;
         height: 4px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #2c3e50 0%, #e74c3c 100%);
         margin: 24px auto 0;
         border-radius: 2px;
       }
@@ -880,7 +880,7 @@
     z-index: 1;
 
     &::after {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+      background: linear-gradient(135deg, #2c3e50 0%, #e74c3c 100%) !important;
     }
   }
 }
@@ -911,7 +911,7 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #2c3e50 0%, #e74c3c 100%);
     transform: scaleX(0);
     transition: transform 0.3s ease;
   }
@@ -921,7 +921,7 @@
   h3 {
     font-size: 22px;
     font-weight: 700;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #2c3e50 0%, #e74c3c 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

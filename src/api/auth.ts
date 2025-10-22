@@ -24,6 +24,7 @@ export const userRegister = async (params: {
   email: string; 
   password: string;
   captcha: string;
+  username?: string;
 }): Promise<any> => {
   try {
     const { result } = await httpService.post('/auth/register', params);

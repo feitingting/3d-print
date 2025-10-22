@@ -757,8 +757,8 @@ const ModelDetail: React.FC = () => {
                           margin: '8px 0',
                           display: 'block'
                         }}
-                        trackStyle={{ backgroundColor: '#667eea' }}
-                        handleStyle={{ borderColor: '#667eea' }}
+                        trackStyle={{ backgroundColor: '#2c3e50' }}
+                        handleStyle={{ borderColor: '#2c3e50' }}
                         railStyle={{ backgroundColor: '#f5f5f5' }}
                       />
                     </div>

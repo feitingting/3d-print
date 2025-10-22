@@ -136,6 +136,7 @@ export default () => {
               <Button 
                 type="primary" 
                 size="large"
+                style={{border:'none'}}
                 icon={<PrinterOutlined />}
                 onClick={() => history.push('/online-quotation')}
                 className={styles.primaryCta}
@@ -144,6 +145,7 @@ export default () => {
               </Button>
               <Button 
                 size="large"
+                style={{border:'none'}}
                 onClick={() => history.push('/model-library')}
                 className={styles.secondaryCta}
               >
@@ -219,7 +221,7 @@ export default () => {
                   type="primary" 
                   size="large"
                   icon={<ToolOutlined />}
-                  style={{ height: '48px', fontSize: '16px', borderRadius: '24px' }}
+                  style={{ height: '48px', fontSize: '16px', borderRadius: '24px',border:'none' }}
                 >
                   {t('materials.quickAccess.button')}
                 </Button>

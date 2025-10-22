@@ -170,7 +170,7 @@
       background-color: rgba(102, 126, 234, 0.1);
       border-radius: 8px;
       font-size: 16px;
-      color: #667eea;
+      color: #2c3e50;
     }
   }
 }
@@ -310,7 +310,7 @@
     h3 {
       font-size: 18px;
       margin-bottom: 16px;
-      color: #667eea;
+      color: #2c3e50;
     }
 
     p {
@@ -347,7 +347,7 @@
   }
 
   blockquote {
-    border-left: 4px solid #667eea;
+    border-left: 4px solid #2c3e50;
     padding-left: 16px;
     font-style: italic;
     color: #666;
@@ -355,7 +355,7 @@
 
   .benefits {
     font-weight: bold;
-    color: #667eea;
+    color: #2c3e50;
   }
 
   .ctaContainer {
@@ -483,7 +483,7 @@
 
   &.medical {
     background-color: rgba(102, 126, 234, 0.1);
-    color: #667eea;
+    color: #2c3e50;
   }
 
   &.aerospace {
@@ -497,14 +497,14 @@
   }
 
   &.education {
-    background-color: #f9f0ff;
-    color: #722ed1;
+    background-color: #fdf2f2;
+    color: #e74c3c;
   }
 }
 
 // 高亮文本
 .highlight {
-  color: #667eea;
+  color: #2c3e50;
   font-weight: 500;
   margin: 12px 0;
 }
@@ -533,7 +533,7 @@
     background-color: rgba(102, 126, 234, 0.1);
     border-radius: 8px;
     font-size: 16px;
-    color: #667eea;
+    color: #2c3e50;
   }
 }
 

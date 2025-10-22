@@ -1,15 +1,15 @@
 // 主题色配置
 // 主色调 - 紫色渐变
-$primary-color: #667eea;
-$primary-color-dark: #5568d3;
-$primary-color-light: #7e8ef5;
-$secondary-color: #764ba2;
-$secondary-color-dark: #6a3e8d;
+$primary-color: #2c3e50;
+$primary-color-dark: #1a252f;
+$primary-color-light: #34495e;
+$secondary-color: #e74c3c;
+$secondary-color-dark: #c0392b;
 
 // 渐变色
-$gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-$gradient-primary-hover: linear-gradient(135deg, #5568d3 0%, #6a3e8d 100%);
-$gradient-light: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+$gradient-primary: linear-gradient(135deg, #2c3e50 0%, #e74c3c 100%);
+$gradient-primary-hover: linear-gradient(135deg, #1a252f 0%, #c0392b 100%);
+$gradient-light: linear-gradient(135deg, rgba(44, 62, 80, 0.1) 0%, rgba(231, 76, 60, 0.1) 100%);
 
 // 文本颜色
 $text-primary: #1a1a1a;

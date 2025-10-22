@@ -11,59 +11,31 @@ import {
 } from '@ant-design/icons';
 import { history, useLocation } from 'umi';
 // 在根组件添加语言配置
-import { Carousel, Card, Row, Col, Layout, Menu, Button, Image, ConfigProvider, Modal, Form, Input, Tabs, message, Dropdown, Avatar } from 'antd';
+import { Carousel, Card, Row, Col, Layout, Menu, Button, Image, ConfigProvider, message, Dropdown, Avatar } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
-import { PrinterOutlined, ToolOutlined, BulbOutlined, UserOutlined, LockOutlined, MailOutlined, FileTextOutlined, LogoutOutlined, GlobalOutlined } from '@ant-design/icons';
+import { PrinterOutlined, ToolOutlined, BulbOutlined, FileTextOutlined, LogoutOutlined, GlobalOutlined } from '@ant-design/icons';
 import ProLayout from '@ant-design/pro-layout';
 import styles from './index.module.scss';
 import '../global.css';
-// 在文件顶部导入新增的API
-import { userLogin, userRegister, sendVerificationCode } from '@/api/auth';
-import { generateCaptcha, isValidEmail, sendVerificationEmail } from '@/utils/emailService';
-import axios from 'axios';
 import { useTranslation, localeNames, type Locale } from '@/utils/i18n';
 
 const { Header, Sider, Content, Footer } = Layout;
-const { TabPane } = Tabs;
 
 const HomePage: React.FC = (props: any) => {
-  const [loginModalVisible, setLoginModalVisible] = useState(false);
   const { t, locale, setLocale } = useTranslation();
   const location = useLocation();
 
-  // 邮箱验证规则
-  const emailRules = [
-    { required: true, message: '请输入邮箱地址' },
-    { type: 'email', message: '请输入有效的邮箱地址' }
-  ] as any;
+  // 检查是否为认证相关页面（登录、注册、验证码）
+  const isAuthPage = ['/login', '/register', '/verification'].includes(location.pathname);
 
-  // 密码验证规则
-  const passwordRules = [
-    { required: true, message: '请输入密码' },
-    { min: 6, message: '密码长度至少为6位' }
-  ];
-
-  // 显示登录弹窗
-  const showLoginModal = () => {
-    setLoginModalVisible(true);
-    // setFormType('login'); // 默认显示登录表单
+  // 跳转到登录页面
+  const goToLogin = () => {
+    history.push('/login');
   };
 
-
-  // 处理登录
-  const handleLogin = async (values: any) => {
-    try {
-      const result = await userLogin(values);
-      if (result?.token) {
-        localStorage.setItem('token', result.token);
-        localStorage.setItem('userInfo', JSON.stringify(result.userInfo));
-        message.success('登录成功！');
-      }
-      setLoginModalVisible(false);
-      // 可以在这里添加登录成功后的跳转逻辑
-    } catch (error) {
-      // message.error('登录失败，请检查邮箱和密码是否正确');
-    }
+  // 跳转到注册页面
+  const goToRegister = () => {
+    history.push('/register');
   };
 
   useEffect(() => {
@@ -79,234 +51,14 @@ const HomePage: React.FC = (props: any) => {
     return unlisten;
   }, [])
 
-  const LoginModal = (props: any) => {
-    const [loginForm] = Form.useForm();
-    const [registerForm] = Form.useForm();
-    const [captchaCountdown, setCaptchaCountdown] = useState(0);
 
-    // const [loginModalVisible, setLoginModalVisible] = useState(false);
-    const [captchaLoading, setCaptchaLoading] = useState(false);
-    // 控制显示登录还是注册表单
-    const [formType, setFormType] = useState<'login' | 'register'>('login');
-    useEffect(() => {
-      if (formType == 'login') {
-        loginForm.resetFields();
-      } else {
-        registerForm.resetFields();
-      }
-    }, [formType])
-
-    // 关闭登录弹窗
-    const handleCloseLoginModal = () => {
-      setLoginModalVisible(false);
-      loginForm.resetFields();
-      //  registerForm.resetFields();
-      setFormType('login'); // 重置为登录表单
-    };
-
-    // 处理注册
-    const handleRegister = async (values: any) => {
-      try {
-        const { result } = await userRegister(values);
-        if (result) {
-          message.success('注册成功！请登录');
-          setFormType('login'); // 注册成功后切换到登录表单
-          loginForm.setFieldsValue({ email: values.email }); // 预填充邮箱
-        }
-      } catch (error) {
-        message.error('注册失败，请重试');
-      }
-    };
-
-    // 发送验证码
-    const sendCaptcha = async () => {
-      debugger;
-      try {
-        const email = await registerForm.getFieldValue('email');
-        if (!email) {
-          message.error('请先输入邮箱地址');
-          return;
-        }
-
-        if (!isValidEmail(email)) {
-          message.error('请输入有效的邮箱地址');
-          return;
-        }
-
-        setCaptchaLoading(true);
-
-        // 调用API发送验证码
-        const captchaCode = generateCaptcha();
-
-        // 发送邮件
-        const success = await sendVerificationEmail(email, captchaCode);
-
-        if (success) {
-          message.success('验证码已发送到您的邮箱');
-          setCaptchaCountdown(60);
-
-          // 倒计时
-          const timer = setInterval(() => {
-            setCaptchaCountdown(prev => {
-              if (prev <= 1) {
-                clearInterval(timer);
-                return 0;
-              }
-              return prev - 1;
-            });
-          }, 1000);
-        } else {
-          message.error('发送验证码失败，请稍后重试');
-        }
-
-        setCaptchaLoading(false);
-      } catch (error) {
-        message.error('发送验证码失败，请稍后重试');
-        setCaptchaLoading(false);
-      }
-    };
-
+  // 如果是认证页面，直接渲染子组件，不显示头部和底部
+  if (isAuthPage) {
     return (
-      <Modal
-        title="登录/注册"
-        open={props.visible}
-        // destroyOnClose={false}
-        onCancel={handleCloseLoginModal}
-        footer={null}
-        width={600}
-        className={styles.loginModal}
-      >
-        {formType === 'login' ? (
-          <>
-            <Form
-              form={loginForm}
-              onFinish={handleLogin}
-              key={formType}
-              className={styles.loginForm}
-            >
-              <Form.Item
-                name="email"
-                rules={emailRules}
-                initialValue={''}
-              >
-                <Input
-                  prefix={<MailOutlined />}
-                  placeholder="请输入邮箱"
-                  size="large"
-                />
-              </Form.Item>
-              <Form.Item
-                name="password"
-                rules={passwordRules}
-              >
-                <Input.Password
-                  prefix={<LockOutlined />}
-                  placeholder="请输入密码"
-                  size="large"
-                />
-              </Form.Item>
-              <Form.Item>
-                <Button
-                  className={styles.loginBtn}
-                  type="primary"
-                  htmlType="submit" size="large" block
-                >
-                  登录
-                </Button>
-              </Form.Item>
-            </Form>
-            <div className={styles.registerLink}>
-              <span>
-                还没有账号？ <a onClick={() => setFormType('register')}>前去注册</a>
-              </span>
-            </div>
-          </>
-        ) : (
-          <>
-            <Form
-              form={registerForm}
-              key={formType}
-              onFinish={handleRegister}
-              className={styles.loginForm}
-            >
-              <Form.Item
-                name="email"
-                rules={emailRules}
-                initialValue={''}
-              >
-                <Input
-                  prefix={<MailOutlined />}
-                  placeholder="请输入邮箱"
-                  size="large"
-                />
-              </Form.Item>
-              <Form.Item
-                name="captcha"
-                rules={[{ required: true, message: '请输入验证码' }]}
-              >
-                <Input
-                  addonAfter={
-                    <Button
-                      type="link"
-                      size="small"
-                      onClick={sendCaptcha}
-                      loading={captchaLoading}
-                      disabled={captchaCountdown > 0}
-                      className={styles.captchaButton}
-                    >
-                      {captchaCountdown > 0 ? `${captchaCountdown}s` : '获取验证码'}
-                    </Button>
-                  }
-                  placeholder="请输入验证码"
-                  size="large"
-                />
-              </Form.Item>
-              <Form.Item
-                name="password"
-                rules={passwordRules}
-              >
-                <Input.Password
-                  prefix={<LockOutlined />}
-                  placeholder="请输入密码"
-                  size="large"
-                />
-              </Form.Item>
-              <Form.Item
-                name="confirmPassword"
-                dependencies={['password']}
-                rules={[
-                  { required: true, message: '请确认密码' },
-                  ({ getFieldValue }) => ({
-                    validator(_, value) {
-                      if (!value || getFieldValue('password') === value) {
-                        return Promise.resolve();
-                      }
-                      return Promise.reject(new Error('两次输入的密码不一致'));
-                    },
-                  }),
-                ]}
-              >
-                <Input.Password
-                  prefix={<LockOutlined />}
-                  placeholder="请确认密码"
-                  size="large"
-                />
-              </Form.Item>
-              <Form.Item>
-                <Button type="primary" htmlType="submit" size="large" block>
-                  注册
-                </Button>
-              </Form.Item>
-            </Form>
-            <div className={styles.registerLink}>
-              <span>
-                已有账号？ <a onClick={() => setFormType('login')}>去登录</a>
-              </span>
-            </div>
-          </>
-        )}
-      </Modal>
-    )
+      <ConfigProvider locale={zhCN}>
+        {props.children}
+      </ConfigProvider>
+    );
   }
 
   return (
@@ -419,7 +171,7 @@ const HomePage: React.FC = (props: any) => {
                   <Button
                     className={styles.loginButton}
                     size="large"
-                    onClick={showLoginModal}
+                    onClick={goToLogin}
                   >
                     {t('nav.login')}
                   </Button>
@@ -436,12 +188,6 @@ const HomePage: React.FC = (props: any) => {
         </header>
         <Content>
           {props.children}
-          {
-            loginModalVisible &&
-            <LoginModal
-              visible={loginModalVisible} />
-          }
-
         </Content>
         {/* 底部导航 */}
         <Footer className={styles.footer}>

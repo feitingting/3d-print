@@ -202,14 +202,15 @@ const ModelLibrary: React.FC = () => {
                   <Space size="small">
                     <Button
                       icon={<DownloadOutlined />}
-                      size="small"
+                      // size="small"
                       onClick={() => handleDownload(model.id)}
                     >
                       下载
                     </Button>
                     <Button
+                      style={{border:'none'}}
                       icon={<ShoppingCartOutlined />}
-                      size="small"
+                      // size="large"
                       type="primary"
                       onClick={() => handleAddToQuote(model.id)}
                     >

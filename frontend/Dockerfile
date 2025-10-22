@@ -29,7 +29,7 @@ FROM --platform=linux/amd64 nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 # 复制nginx主配置（性能优化）
-COPY ./frontend/nginx-performance.conf /etc/nginx/nginx.conf
+# COPY ./frontend/nginx.conf /etc/nginx/nginx.conf
 
 # 复制server配置
 COPY ./frontend/nginx.ionos.conf /etc/nginx/conf.d/default.conf

@@ -10,7 +10,7 @@
     "docker:run": "docker compose -f docker-compose.ionos.yml up -d"
   },
   "gitHooks": {
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged" 
   },
   "lint-staged": {
     "*.{js,jsx,less,md,json}": [
